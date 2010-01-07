@@ -1,0 +1,10 @@
+name: dfki.base
+
+constants:
+    GIT_ROOT: $DFKI_SHARE/projects/all/Intelligent_Mobility/development/software/git
+
+version_control:
+    - base:
+        type: git
+        url: $GIT_ROOT/$PACKAGE.git
+
