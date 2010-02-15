@@ -1,1 +1,3 @@
-cmake_package 'base'
+cmake_package 'base' do |pkg|
+    pkg.depends_on 'external/sisl'
+end
