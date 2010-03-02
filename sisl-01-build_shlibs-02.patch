@@ -1,0 +1,53 @@
+--- ../sisl_4.4_gpl/makefile_template	2005-08-22 16:29:12.000000000 +0200
++++ makefile_template	2010-02-04 16:09:29.248643986 +0100
+@@ -70,10 +70,10 @@ ifeq "$(PLATFORM)" "linux"
+   CC		=gcc
+ 
+   ifeq "$(MODE)" "opt"
+-    CFLAGS	=-O2 -Wall
++    CFLAGS	=-O2 -Wall -fPIC
+     CDEFS	=-DNDEBUG
+   else
+-    CFLAGS	=-g -Wall
++    CFLAGS	=-g -Wall -fPIC
+     CDEFS	=
+   endif
+ 
+@@ -105,10 +105,10 @@ ifeq "$(PLATFORM)" "linux"
+     CXX		=g++
+     LDXX	=$(CXX)
+   ifeq "$(MODE)" "opt"
+-    CXXFLAGS	=-O2 -Wall
++    CXXFLAGS	=-fPIC -O2 -Wall
+     CXXDEFS	=-DNDEBUG
+   else
+-    CXXFLAGS	=-g -Wall
++    CXXFLAGS	=-fPIC -g -Wall
+     CXXDEFS	=
+   endif
+ endif
+@@ -127,7 +127,7 @@ ifdef WINDOWS_TYPE_PLATFORM
+ endif
+ 
+ ifeq "$(PLATFORM)" "linux"
+-  LIBNAME	=lib$(notdir $(shell pwd))_$(MODE).a
++  LIBNAME	=lib$(notdir $(shell pwd))_$(MODE).so
+ endif
+ 
+ #------------------------------------------------------------
+@@ -173,7 +173,7 @@ $(LIBNAME):	$(COBJS) $(CXXOBJS)
+   ifdef WINDOWS_TYPE_PLATFORM
+ 		link -lib $(LDXXFLAGS) /out:"lib/$(LIBNAME)" $^
+   else
+-		ar -sr lib/$(LIBNAME) $^
++		$(LDXX) -shared -fPIC -o lib/$(LIBNAME) $^
+   endif
+ 
+ lib/%.o:	src/%.c
+@@ -231,4 +231,4 @@ default:;	@echo ""
+ 		@echo "You need to edit the Makefile to set the required"
+ 		@echo "variables for your platform type."
+ 		@echo ""
+-endif
+\ No newline at end of file
++endif

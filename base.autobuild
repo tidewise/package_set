@@ -1,3 +1,27 @@
+def base_has_sisl?
+    !defined?(BASE_USE_SISL) || BASE_USE_SISL
+end
+
+if base_has_sisl?
+    import_package 'external/sisl' do |pkg|
+        pkg.post_install do
+            pkg.progress "building %s"
+            pkg.run('build', Autobuild.tool(:make), "-j#{pkg.parallel_build_level}", '-C', 'sisl')
+            pkg.progress "installing %s"
+
+            include_dir = File.join(pkg.prefix, 'include', 'sisl')
+            lib_dir     = File.join(pkg.prefix, 'lib')
+            FileUtils.rm_rf include_dir
+            FileUtils.mkdir_p File.dirname(include_dir)
+            FileUtils.mkdir_p lib_dir
+            FileUtils.cp   File.join('sisl', 'lib', 'libsisl_opt.so'), File.join(lib_dir, 'libsisl.so')
+            FileUtils.cp_r File.join('sisl', 'include'), include_dir
+        end
+    end
+end
+
 cmake_package 'base' do |pkg|
-    pkg.depends_on 'external/sisl'
+    if base_has_sisl?
+        pkg.depends_on 'external/sisl'
+    end
 end
