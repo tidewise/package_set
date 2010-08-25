@@ -4,8 +4,11 @@ version_control:
     - .*:
         type: git
         url: $GITORIOUS_ROOT/orocos-dfki-toolchain/$PACKAGE.git
+    - orocos.rb:
+        type: git
+        url: $GITORIOUS_ROOT/orocos-dfki-toolchain/orocos-rb.git
 
 overrides:
-    - orogen:
-        url: $GITORIOUS_ROOT/orocos-dfki-toolchain/$PACKAGE.git
+    - (orogen|typelib):
+        url: $GITORIOUS_ROOT/+orocos-dfki-maintainers/orocos-toolchain/dfki-ric-$PACKAGE.git
 
