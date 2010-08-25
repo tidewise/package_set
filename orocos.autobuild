@@ -1,59 +1,8 @@
-configuration_option 'rtt_target', 'string',
-    :default => 'gnulinux',
-    :values => %w{gnulinux xenomai},
-    :doc => "the target operating system for Orocos/RTT (gnulinux or xenomai)"
-
-configuration_option 'rtt_corba', 'boolean',
-    :default => 'true',
-    :doc => "build RTT-related software with CORBA support"
-
-Autobuild::Orogen.corba = user_config('rtt_corba')
-env_set 'OROCOS_TARGET', user_config('rtt_target')
-
-cmake_package 'rtt' do |pkg|
-    pkg.always_reconfigure = true
-    pkg.doc_dir = File.join('doc', 'api', 'html')
-    pkg.with_doc('docapi')
-
-    target = user_config('rtt_target')
-    pkg.define "OROCOS_TARGET", target
-
-    # Used by the oroGen handler
-    pkg.provides "pkgconfig/orocos-rtt-#{target}"
-
-    # Disable building the test suite because it needs a lot of time and memory
-    #
-    # To reenable for your installation, add
-    #   Autobuild::Package['rtt'].define "BUILD_TESTING", "ON"
-    # to autoproj/overrides.rb
-    pkg.define "BUILD_TESTING", "OFF"
-
-    pkg.define "ENABLE_CORBA", (user_config('rtt_corba') ? "ON" : "OFF")
-    if user_config('rtt_corba')
-        # We depend on the omniorb to be there ...
-        pkg.depends_on_os_package 'omniorb'
+ruby_package  'orocos.rb' do |pkg|
+    def pkg.prepare
+        super
+        Autobuild.update_environment srcdir
+        Autoproj.env_add_path 'ROBY_PLUGIN_PATH', File.join(srcdir, "lib", "orocos", "roby")
     end
-    pkg.define "CORBA_IMPLEMENTATION", "OMNIORB"
-end
-
-# Install the OCL only to get the task browser
-cmake_package 'ocl' do |pkg|
-    pkg.always_reconfigure = true
-    pkg.doc_dir = File.join('doc', 'api', 'html')
-    pkg.with_doc('docapi')
-
-    target = user_config('rtt_target')
-    pkg.define "OROCOS_TARGET", target
-end
-
-ruby_package 'utilrb'
-cmake_package 'utilmm'
-cmake_package 'typelib' do |pkg|
-    pkg.define "RUBY_EXECUTABLE", Autoproj.find_in_path(Config::CONFIG['RUBY_INSTALL_NAME'])
-    pkg.parallel_build_level = 1
-end
-
-ruby_package 'orogen' do |pkg|
-    pkg.provides "orogen"
 end
 

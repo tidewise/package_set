@@ -1,7 +1,11 @@
-name: orocos.toolchain
+name: orocos.dfki.toolchain
 
 version_control:
     - .*:
         type: git
-        url: $GITORIOUS_ROOT/orocos-toolchain/$PACKAGE.git
+        url: $GITORIOUS_ROOT/orocos-dfki-toolchain/$PACKAGE.git
+
+overrides:
+    - orogen:
+        url: $GITORIOUS_ROOT/orocos-dfki-toolchain/$PACKAGE.git
 
