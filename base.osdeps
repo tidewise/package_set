@@ -1,5 +1,4 @@
 eigen2:
-    debian,ubuntu:
-        squeeze/sid,9.04,9.10,10.04: [libeigen2-dev]
+    debian,ubuntu: [libeigen2-dev]
     gentoo: dev-cpp/eigen
 
