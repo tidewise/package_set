@@ -1,4 +1,8 @@
-name: orocos.dfki.toolchain
+name: rise.toolchain
+
+imports:
+    - type: git
+      url: $GITORIOUS_ROOT/orocos-toolchain/autoproj.git
 
 version_control:
     - .*:
