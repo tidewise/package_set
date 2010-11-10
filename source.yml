@@ -15,4 +15,5 @@ version_control:
 overrides:
     - (orogen|typelib):
         url: $GITORIOUS_ROOT/+orocos-dfki-maintainers/orocos-toolchain/dfki-ric-$PACKAGE.git
+        branch: master
 
