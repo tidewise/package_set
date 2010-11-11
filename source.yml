@@ -7,10 +7,13 @@ imports:
 version_control:
     - .*:
         type: git
-        url: $GITORIOUS_ROOT/orocos-dfki-toolchain/$PACKAGE.git
-    - orocos.rb:
+        url: $GITORIOUS_ROOT/rise-toolchain/$PACKAGE_BASENAME.git
+    - modules/.*:
         type: git
-        url: $GITORIOUS_ROOT/orocos-dfki-toolchain/orocos-rb.git
+        url: $GITORIOUS_ROOT/rise-toolchain/orogen-$PACKAGE_BASENAME.git
+    - tools/orocos.rb:
+        type: git
+        url: $GITORIOUS_ROOT/rise-toolchain/orocos-rb.git
 
 overrides:
     - (orogen|typelib):

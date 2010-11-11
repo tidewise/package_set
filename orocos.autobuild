@@ -1,8 +1,13 @@
-ruby_package  'orocos.rb' do |pkg|
+ruby_package  'tools/orocos.rb' do |pkg|
     def pkg.prepare
         super
         Autobuild.update_environment srcdir
         Autoproj.env_add_path 'ROBY_PLUGIN_PATH', File.join(srcdir, "lib", "orocos", "roby")
     end
 end
+
+ruby_package 'tools/pocolog'
+ruby_package 'tools/reigen'
+orogen_package 'modules/logger'
+orogen_package 'modules/base'
 
