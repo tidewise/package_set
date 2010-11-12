@@ -4,6 +4,7 @@ version_control:
     - base:
         type: git
         url: $GITORIOUS_ROOT/rise-base/$PACKAGE.git
+        push_to: $GITORIOUS_PUSH_ROOT/rise-base/$PACKAGE_BASENAME.git
     - external/sisl:
         type: archive
         url: http://www.sintef.no/upload/IKT/9011/geometri/sisl/sisl_4.4_GPL.tgz
