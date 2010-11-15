@@ -1,4 +1,4 @@
-name: rise.toolchain
+name: rock.toolchain
 
 imports:
     - type: git
@@ -8,16 +8,16 @@ imports:
 version_control:
     - .*:
         type: git
-        url: $GITORIOUS_ROOT/rise-toolchain/$PACKAGE_BASENAME.git
-        push_to: $GITORIOUS_PUSH_ROOT/rise-toolchain/$PACKAGE_BASENAME.git
+        url: $GITORIOUS_ROOT/rock-toolchain/$PACKAGE_BASENAME.git
+        push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/$PACKAGE_BASENAME.git
     - modules/.*:
         type: git
-        url: $GITORIOUS_ROOT/rise-toolchain/orogen-$PACKAGE_BASENAME.git
-        push_to: $GITORIOUS_PUSH_ROOT/rise-toolchain/orogen-$PACKAGE_BASENAME.git
+        url: $GITORIOUS_ROOT/rock-toolchain/orogen-$PACKAGE_BASENAME.git
+        push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/orogen-$PACKAGE_BASENAME.git
     - tools/orocos.rb:
         type: git
-        url: $GITORIOUS_ROOT/rise-toolchain/orocos-rb.git
-        push_to: $GITORIOUS_PUSH_ROOT/rise-toolchain/orocos-rb.git
+        url: $GITORIOUS_ROOT/rock-toolchain/orocos-rb.git
+        push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/orocos-rb.git
 
 overrides:
     - (orogen|typelib|rtt):
