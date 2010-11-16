@@ -15,5 +15,7 @@ import_package 'external/sisl' do |pkg|
 end
 
 cmake_package 'base' do |pkg|
-    pkg.optional_dependency 'external/sisl'
+    if sisl = package('external/sisl')
+        pkg.define 'SISL_PREFIX', sisl.prefix
+    end
 end
