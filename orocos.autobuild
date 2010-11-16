@@ -9,5 +9,9 @@ end
 ruby_package 'tools/pocolog'
 ruby_package 'tools/reigen'
 orogen_package 'modules/logger'
-orogen_package 'modules/base'
+orogen_package 'modules/base' do |pkg|
+    if package_enabled?('external/sisl')
+        pkg.define "SISL_PREFIX", package('external/sisl').prefix
+    end
+end
 
