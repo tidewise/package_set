@@ -15,7 +15,7 @@ import_package 'external/sisl' do |pkg|
 end
 
 cmake_package 'base' do |pkg|
-    if sisl = package('external/sisl')
-        pkg.define 'SISL_PREFIX', sisl.prefix
+    if package_enabled?('external/sisl')
+        pkg.define 'SISL_PREFIX', package('external/sisl').prefix
     end
 end
