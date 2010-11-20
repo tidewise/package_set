@@ -21,7 +21,7 @@ version_control:
 
 overrides:
     - (orogen|typelib|rtt):
-        url: $GITORIOUS_ROOT/+orocos-dfki-maintainers/orocos-toolchain/dfki-ric-$PACKAGE_BASENAME.git
-        push_to: $GITORIOUS_PUSH_ROOT/+orocos-dfki-maintainers/orocos-toolchain/dfki-ric-$PACKAGE_BASENAME.git
+        url: $GITORIOUS_ROOT/orocos-toolchain/rock-$PACKAGE_BASENAME.git
+        push_to: $GITORIOUS_PUSH_ROOT/orocos-toolchain/rock-$PACKAGE_BASENAME.git
         branch: master
 
