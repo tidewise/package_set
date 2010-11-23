@@ -6,11 +6,19 @@ imports:
       push_to: $GITORIOUS_PUSH_ROOT/orocos-toolchain/autoproj.git
 
 version_control:
-    - .*:
+    - base/.*:
         type: git
         url: $GITORIOUS_ROOT/rock-toolchain/$PACKAGE_BASENAME.git
         push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/$PACKAGE_BASENAME.git
-    - modules/.*:
+    - base/orogen/.*:
+        type: git
+        url: $GITORIOUS_ROOT/rock-toolchain/orogen-$PACKAGE_BASENAME.git
+        push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/orogen-$PACKAGE_BASENAME.git
+    - tools/.*:
+        type: git
+        url: $GITORIOUS_ROOT/rock-toolchain/$PACKAGE_BASENAME.git
+        push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/$PACKAGE_BASENAME.git
+    - tools/orogen/.*:
         type: git
         url: $GITORIOUS_ROOT/rock-toolchain/orogen-$PACKAGE_BASENAME.git
         push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/orogen-$PACKAGE_BASENAME.git

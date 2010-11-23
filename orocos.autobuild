@@ -8,11 +8,16 @@ end
 
 ruby_package 'tools/pocolog'
 ruby_package 'tools/reigen'
-orogen_package 'modules/logger'
-orogen_package 'modules/base' do |pkg|
-    if package_enabled?('external/sisl')
+orogen_package 'tools/logger'
+orogen_package 'base/orogen/types' do |pkg|
+    if package_selected?('external/sisl')
         pkg.define "SISL_PREFIX", package('external/sisl').prefix
     end
 end
 ruby_package 'tools/roby'
+
+move_package 'rtt', 'tools'
+move_package 'typelib', 'tools'
+move_package 'orogen', 'tools'
+move_package 'ocl', 'tools'
 
