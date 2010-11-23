@@ -14,4 +14,5 @@ orogen_package 'modules/base' do |pkg|
         pkg.define "SISL_PREFIX", package('external/sisl').prefix
     end
 end
+ruby_package 'tools/roby'
 
