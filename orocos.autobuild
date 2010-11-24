@@ -10,6 +10,7 @@ ruby_package 'tools/pocolog'
 ruby_package 'tools/reigen'
 orogen_package 'tools/logger'
 orogen_package 'base/orogen/types' do |pkg|
+    pkg.orogen_file = "base.orogen"
     if package_selected?('external/sisl')
         pkg.define "SISL_PREFIX", package('external/sisl').prefix
     end
@@ -20,4 +21,6 @@ move_package 'rtt', 'tools'
 move_package 'typelib', 'tools'
 move_package 'orogen', 'tools'
 move_package 'ocl', 'tools'
+move_package 'utilmm', 'tools'
+move_package 'utilrb', 'tools'
 

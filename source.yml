@@ -8,12 +8,12 @@ imports:
 version_control:
     - base/.*:
         type: git
-        url: $GITORIOUS_ROOT/rock-toolchain/$PACKAGE_BASENAME.git
-        push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/$PACKAGE_BASENAME.git
+        url: $GITORIOUS_ROOT/rock-toolchain/base-$PACKAGE_BASENAME.git
+        push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/base-$PACKAGE_BASENAME.git
     - base/orogen/.*:
         type: git
-        url: $GITORIOUS_ROOT/rock-toolchain/orogen-$PACKAGE_BASENAME.git
-        push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/orogen-$PACKAGE_BASENAME.git
+        url: $GITORIOUS_ROOT/rock-toolchain/orogen-base-$PACKAGE_BASENAME.git
+        push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/orogen-base-$PACKAGE_BASENAME.git
     - tools/.*:
         type: git
         url: $GITORIOUS_ROOT/rock-toolchain/$PACKAGE_BASENAME.git
@@ -26,6 +26,11 @@ version_control:
         type: git
         url: $GITORIOUS_ROOT/rock-toolchain/orocos-rb.git
         push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/orocos-rb.git
+    - tools/logger:
+        type: git
+        url: $GITORIOUS_ROOT/rock-toolchain/orogen-$PACKAGE_BASENAME.git
+        push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/orogen-$PACKAGE_BASENAME.git
+        
 
 overrides:
     - (orogen|typelib|rtt):
