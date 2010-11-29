@@ -15,7 +15,9 @@ orogen_package 'base/orogen/types' do |pkg|
         pkg.define "SISL_PREFIX", package('external/sisl').prefix
     end
 end
-ruby_package 'tools/roby'
+ruby_package 'tools/roby' do |pkg|
+    pkg.doc_dir = File.join('doc', 'html')
+end
 
 move_package 'rtt', 'tools'
 move_package 'typelib', 'tools'
