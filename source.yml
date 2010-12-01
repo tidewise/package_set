@@ -33,7 +33,7 @@ version_control:
         
 
 overrides:
-    - (orogen|typelib|rtt):
+    - (orogen|typelib|rtt|utilrb):
         url: $GITORIOUS_ROOT/orocos-toolchain/rock-$PACKAGE_BASENAME.git
         push_to: $GITORIOUS_PUSH_ROOT/orocos-toolchain/rock-$PACKAGE_BASENAME.git
         branch: master
