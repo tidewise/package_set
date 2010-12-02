@@ -5,6 +5,10 @@ version_control:
         type: git
         url: $GITORIOUS_ROOT/rock-base/$PACKAGE_BASENAME.git
         push_to: $GITORIOUS_PUSH_ROOT/rock-base/$PACKAGE_BASENAME.git
+    - base/scripts:
+        type: git
+        url: $GITORIOUS_ROOT/rock/$PACKAGE_BASENAME.git
+        push_to: $GITORIOUS_PUSH_ROOT/rock/$PACKAGE_BASENAME.git
     - external/sisl:
         type: archive
         url: http://www.sintef.no/upload/IKT/9011/geometri/sisl/sisl_4.4_GPL.tgz
