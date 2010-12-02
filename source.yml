@@ -10,31 +10,36 @@ version_control:
         type: git
         url: $GITORIOUS_ROOT/rock-toolchain/base-$PACKAGE_BASENAME.git
         push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/base-$PACKAGE_BASENAME.git
+        branch: $ROCK_FLAVOR
     - base/orogen/.*:
         type: git
         url: $GITORIOUS_ROOT/rock-toolchain/orogen-base-$PACKAGE_BASENAME.git
         push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/orogen-base-$PACKAGE_BASENAME.git
+        branch: $ROCK_FLAVOR
     - tools/.*:
         type: git
         url: $GITORIOUS_ROOT/rock-toolchain/$PACKAGE_BASENAME.git
         push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/$PACKAGE_BASENAME.git
+        branch: $ROCK_FLAVOR
     - tools/orogen/.*:
         type: git
         url: $GITORIOUS_ROOT/rock-toolchain/orogen-$PACKAGE_BASENAME.git
         push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/orogen-$PACKAGE_BASENAME.git
+        branch: $ROCK_FLAVOR
     - tools/orocos.rb:
         type: git
         url: $GITORIOUS_ROOT/rock-toolchain/orocos-rb.git
         push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/orocos-rb.git
+        branch: $ROCK_FLAVOR
     - tools/logger:
         type: git
         url: $GITORIOUS_ROOT/rock-toolchain/orogen-$PACKAGE_BASENAME.git
         push_to: $GITORIOUS_PUSH_ROOT/rock-toolchain/orogen-$PACKAGE_BASENAME.git
-        
+        branch: $ROCK_FLAVOR
 
 overrides:
     - (orogen|typelib|rtt|utilrb):
         url: $GITORIOUS_ROOT/orocos-toolchain/rock-$PACKAGE_BASENAME.git
         push_to: $GITORIOUS_PUSH_ROOT/orocos-toolchain/rock-$PACKAGE_BASENAME.git
-        branch: master
+        branch: $ROCK_FLAVOR
 
