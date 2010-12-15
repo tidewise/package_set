@@ -6,6 +6,11 @@ ruby_package  'tools/orocos.rb' do |pkg|
     end
 end
 
+rtt = package('rtt')
+if rtt.respond_to?(:add_tag)
+    rtt.add_tag 'stable'
+end
+
 ruby_package 'tools/pocolog'
 ruby_package 'tools/reigen'
 orogen_package 'tools/logger'
