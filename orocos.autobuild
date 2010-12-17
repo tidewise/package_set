@@ -7,6 +7,7 @@ ruby_package  'tools/orocos.rb' do |pkg|
 end
 
 rtt = package('rtt')
+rtt.define "DEFAULT_PLUGIN_PATH", "/"
 if rtt.respond_to?(:add_tag)
     rtt.add_tag 'stable'
 end
