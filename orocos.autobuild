@@ -12,6 +12,27 @@ if rtt.respond_to?(:add_tag)
     rtt.add_tag 'stable'
 end
 
+configuration_option 'USE_OCL', 'boolean',
+    :values => ['yes', 'no'],
+    :default => 'no',
+    :doc => [
+        "Do you need compatibility with OCL ? (yes or no)",
+        "New Rock users that don't need backward compatibility with legacy Orocos components",
+        "probably want to say 'no'. Otherwise, say 'yes'.",
+        "Saying 'yes' will significantly impact compilation time and the size of the resulting binaries",
+        "Please answer 'yes' or 'no'"]
+
+rtt = package('rtt')
+if Autoproj.user_config('USE_OCL')
+    rtt.define "PLUGINS_ENABLE_SCRIPTING", "ON"
+    Autobuild::Orogen.default_type_export_policy = 'all'
+else
+    rtt.define "PLUGINS_ENABLE_SCRIPTING", "OFF"
+    Autoproj.manifest.add_exclusion 'ocl', "disabled because you answered 'no' to the OCL compatibility question"
+    Autobuild::Orogen.default_type_export_policy = 'used'
+end
+
+
 ruby_package 'tools/pocolog'
 ruby_package 'tools/reigen'
 orogen_package 'tools/logger'
