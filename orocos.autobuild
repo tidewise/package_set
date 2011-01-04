@@ -1,3 +1,4 @@
+require 'fileutils'
 ruby_package  'tools/orocos.rb' do |pkg|
     def pkg.prepare
         super
@@ -6,8 +7,16 @@ ruby_package  'tools/orocos.rb' do |pkg|
     end
 end
 
+###
+# Tune some things on the RTT
 rtt = package('rtt')
 rtt.define "DEFAULT_PLUGIN_PATH", "/"
+rtt.post_import do
+    # There was a bug in RTT CMake code that generated the pluginpath.cpp file
+    # in the source directory. Delete that file so that the DEFAULT_PLUGIN_PATH
+    # change above is effective
+    FileUtils.rm_f File.join(rtt.srcdir, "rtt", "plugin", "pluginpath.cpp")
+end
 if rtt.respond_to?(:add_tag)
     rtt.add_tag 'stable'
 end
