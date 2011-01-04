@@ -49,7 +49,10 @@ orogen_package 'base/orogen/types' do |pkg|
     if package_selected?('external/sisl')
         pkg.define "SISL_PREFIX", package('external/sisl').prefix
     end
+
+    pkg.remove_obsolete_installed_file "share", "typelib", "ruby", "base.rb"
 end
+
 ruby_package 'tools/roby' do |pkg|
     pkg.doc_dir = File.join('doc', 'html')
 end
