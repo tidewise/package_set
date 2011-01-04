@@ -43,7 +43,6 @@ end
 
 
 ruby_package 'tools/pocolog'
-ruby_package 'tools/reigen'
 orogen_package 'tools/logger'
 orogen_package 'base/orogen/types' do |pkg|
     pkg.orogen_file = "base.orogen"
