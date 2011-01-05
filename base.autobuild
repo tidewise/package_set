@@ -15,6 +15,10 @@ import_package 'external/sisl' do |pkg|
 end
 
 cmake_package 'base/types' do |pkg|
+    if Autobuild::CMake.respond_to?(:module_path)
+        Autobuild::CMake.module_path << File.join(pkg.srcdir, "cmake")
+    end
+
     if package_enabled?('external/sisl')
         pkg.define 'SISL_PREFIX', package('external/sisl').prefix
     end
