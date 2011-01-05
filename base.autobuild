@@ -25,3 +25,7 @@ cmake_package 'base/types' do |pkg|
 end
 
 ruby_package 'base/scripts'
+ruby_package 'base/types_ruby' do |pkg|
+    Autobuild.env_add_path 'TYPELIB_PLUGIN_PATH', File.join(pkg.srcdir, "lib", "base")
+end
+
