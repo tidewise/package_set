@@ -29,3 +29,9 @@ ruby_package 'base/types_ruby' do |pkg|
     Autobuild.env_add_path 'TYPELIB_RUBY_PLUGIN_PATH', File.join(pkg.srcdir, "lib", "base")
 end
 
+import_package 'base/templates/cmake_lib'
+import_package 'base/templates/vizkit'
+
+env_set "ROCK_TEMPLATE_PREFIX", File.join(Autoproj.root_dir, "base", "templates", "")
+env_set "ROCK_TEMPLATE_SUFFIX", ""
+
