@@ -46,3 +46,6 @@ overrides:
         push_to: $GITORIOUS_PUSH_ROOT/orocos-toolchain/rock-$PACKAGE_BASENAME.git
         branch: $ROCK_FLAVOR
 
+    - (ocl|log4cpp):
+        branch: toolchain-2.2
+
