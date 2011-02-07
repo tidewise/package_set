@@ -1,7 +1,9 @@
 require 'fileutils'
 setup_package('orogen') do |pkg|
-    pkg.rake_setup_task = "setup[-DCMAKE_INSTALL_PREFIX=#{pkg.prefix}]"
+    target = user_config('rtt_target')
+    pkg.rake_setup_task = "setup[-DCMAKE_INSTALL_PREFIX=#{pkg.prefix} -DOROCOS_TARGET=#{target}]"
 end
+
 
 ruby_package  'tools/orocos.rb' do |pkg|
     def pkg.prepare
