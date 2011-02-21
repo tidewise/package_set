@@ -10,6 +10,7 @@ ruby_package  'tools/orocos.rb' do |pkg|
         super
         Autobuild.update_environment srcdir
         Autoproj.env_add_path 'ROBY_PLUGIN_PATH', File.join(srcdir, "lib", "orocos", "roby")
+	Autoproj.env_set 'ORBInitRef',"NameService=corbaname::127.0.0.1"
     end
 end
 
@@ -69,4 +70,6 @@ move_package 'orogen', 'tools'
 move_package 'ocl', 'tools'
 move_package 'utilmm', 'tools'
 move_package 'utilrb', 'tools'
+        
+Autoproj.env_add_path 'AUTOPROJ_PROJECT_BASE', "#{Autoproj.root_dir}"
 
