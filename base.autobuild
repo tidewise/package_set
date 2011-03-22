@@ -30,6 +30,7 @@ ruby_package 'base/types_ruby' do |pkg|
 end
 
 import_package 'base/templates/cmake_lib'
+import_package 'base/templates/cmake_vizkit_widget'
 import_package 'base/templates/vizkit'
 
 env_set "ROCK_TEMPLATE_PREFIX", File.join(Autoproj.root_dir, "base", "templates", "")

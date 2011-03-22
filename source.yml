@@ -16,6 +16,10 @@ version_control:
         url: http://www.sintef.no/upload/IKT/9011/geometri/sisl/sisl_4.4_GPL.tgz
         patches: $AUTOPROJ_SOURCE_DIR/sisl-01-build_shlibs-02.patch
         update_cached_file: false
+    - base/templates/cmake_vizkit_widget:
+        type: git
+        url: $GITORIOUS_ROOT/rock-base/template_$PACKAGE_BASENAME.git
+        push_to: $GITORIOUS_PUSH_ROOT/rock-base/template_$PACKAGE_BASENAME.git
     - base/templates/cmake_lib:
         type: git
         url: $GITORIOUS_ROOT/rock-base/template_$PACKAGE_BASENAME.git
