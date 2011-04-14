@@ -14,7 +14,10 @@ import_package 'external/sisl' do |pkg|
     end
 end
 
-cmake_package 'base/types' do |pkg|
+cmake_paockage 'base/types' do |pkg|
+    if Autobuild::CMake.respond_to?(:module_path)
+        Autobuild::CMake.module_path << File.join(pkg.srcdir, "cmake")
+    end
     env_set 'ROCK_CMAKE_MACROS', File.join(pkg.srcdir, "cmake")
 
     if package_enabled?('external/sisl')
