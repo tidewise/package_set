@@ -4,9 +4,11 @@ imports:
     - type: git
       url: $GITORIOUS_ROOT/orocos-toolchain/autoproj.git
       push_to: $GITORIOUS_PUSH_ROOT/orocos-toolchain/autoproj.git
+      branch: $ROCK_FLAVOR
     - type: git
       url: $GITORIOUS_ROOT/rock-base/package_set.git
       push_to: $GITORIOUS_PUSH_ROOT/rock-base/package_set.git
+      branch: $ROCK_FLAVOR
 
 version_control:
     - base/.*:
