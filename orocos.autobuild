@@ -70,6 +70,7 @@ move_package 'orogen', 'tools'
 move_package 'ocl', 'tools'
 move_package 'utilmm', 'tools'
 move_package 'utilrb', 'tools'
+move_package 'log4cpp', 'tools'
         
 Autoproj.env_add_path 'AUTOPROJ_PROJECT_BASE', "#{Autoproj.root_dir}"
 
