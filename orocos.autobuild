@@ -16,18 +16,6 @@ end
 
 ###
 # Tune some things on the RTT
-rtt = package('rtt')
-rtt.define "DEFAULT_PLUGIN_PATH", "/"
-rtt.post_import do
-    # There was a bug in RTT CMake code that generated the pluginpath.cpp file
-    # in the source directory. Delete that file so that the DEFAULT_PLUGIN_PATH
-    # change above is effective
-    FileUtils.rm_f File.join(rtt.srcdir, "rtt", "plugin", "pluginpath.cpp")
-end
-if rtt.respond_to?(:add_tag)
-    rtt.add_tag 'stable'
-end
-
 configuration_option 'USE_OCL', 'boolean',
     :values => ['yes', 'no'],
     :default => 'no',
@@ -38,16 +26,26 @@ configuration_option 'USE_OCL', 'boolean',
         "Saying 'yes' will significantly impact compilation time and the size of the resulting binaries",
         "Please answer 'yes' or 'no'"]
 
-rtt = package('rtt')
-if Autoproj.user_config('USE_OCL')
-    rtt.define "PLUGINS_ENABLE_SCRIPTING", "ON"
-    Autobuild::Orogen.default_type_export_policy = 'all'
-else
-    rtt.define "PLUGINS_ENABLE_SCRIPTING", "OFF"
-    Autoproj.manifest.add_exclusion 'ocl', "disabled because you answered 'no' to the OCL compatibility question"
-    Autobuild::Orogen.default_type_export_policy = 'used'
+setup_package 'rtt' do |rtt|
+    rtt.define "DEFAULT_PLUGIN_PATH", "/"
+    rtt.post_import do
+        # There was a bug in RTT CMake code that generated the pluginpath.cpp file
+        # in the source directory. Delete that file so that the DEFAULT_PLUGIN_PATH
+        # change above is effective
+        FileUtils.rm_f File.join(rtt.srcdir, "rtt", "plugin", "pluginpath.cpp")
+    end
+    if rtt.respond_to?(:add_tag)
+        rtt.add_tag 'stable'
+    end
+    if Autoproj.user_config('USE_OCL')
+        rtt.define "PLUGINS_ENABLE_SCRIPTING", "ON"
+        Autobuild::Orogen.default_type_export_policy = 'all'
+    else
+        rtt.define "PLUGINS_ENABLE_SCRIPTING", "OFF"
+        Autoproj.manifest.add_exclusion 'ocl', "disabled because you answered 'no' to the OCL compatibility question"
+        Autobuild::Orogen.default_type_export_policy = 'used'
+    end
 end
-
 
 ruby_package 'tools/pocolog'
 orogen_package 'tools/logger'
