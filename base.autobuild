@@ -25,6 +25,14 @@ cmake_package 'base/types' do |pkg|
     end
 end
 
+cmake_package 'eigen3' do |pkg|
+    pkg.define "EIGEN_BUILD_PKGCONFIG", "ON"
+    env_set 'PKG_CONFIG_PATH', File.join(pkg.prefix, 'share', 'pkgconfig')
+end
+# eigen3 is without prefix, to make transition easier once its 
+# a system package. Should go into external dir, though.
+move_package 'eigen3', 'external'
+
 ruby_package 'base/scripts'
 ruby_package 'base/types_ruby' do |pkg|
     Autobuild.env_add_path 'TYPELIB_RUBY_PLUGIN_PATH', File.join(pkg.srcdir, "lib", "base")

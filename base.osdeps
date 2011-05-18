@@ -1,4 +1,0 @@
-eigen2:
-    debian,ubuntu: [libeigen2-dev]
-    gentoo: dev-cpp/eigen
-
