@@ -29,3 +29,15 @@ if ENV['ROCK_FORCE_FLAVOR']
     Autoproj.change_option('ROCK_FLAVOR', ENV['ROCK_FORCE_FLAVOR'])
 end
 
+# Setup handling to override the list of default packages in next and stable
+#
+# The actual lists are created in overrides.rb
+def in_next
+    flavor = Autoproj.user_config('ROCK_FLAVOR')
+    yield if flavor == 'next'
+end
+def in_stable(*package_names)
+    flavor = Autoproj.user_config('ROCK_FLAVOR')
+    yield if flavor == 'stable'
+end
+

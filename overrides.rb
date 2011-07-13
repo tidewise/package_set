@@ -1,24 +1,3 @@
-# We want to avoid accidents where stuff gets pushed to next or stable that was
-# not intended to be there
-#
-# We therefore set the push_to_branch to master. This makes sure that
-#
-#   git push
-#   git push autobuild
-#
-# pushes to master instead of the local branch
-Autoproj.manifest.each_package do |pkg|
-    if pkg.importer.kind_of?(Autobuild::Git)
-        if !pkg.importer.push_to_branch
-            if pkg.importer.branch == "next" || pkg.importer.branch == "stable"
-                pkg.importer.push_to_branch = "master"
-            else
-                pkg.importer.push_to_branch = pkg.importer.branch
-            end
-        end
-    end
-end
-
 if Autoproj.respond_to?(:post_import)
     # Override the CMAKE_BUILD_TYPE configuration parameter based on the
     # "stable" tag
@@ -35,5 +14,19 @@ if Autoproj.respond_to?(:post_import)
             end
         end
     end
+
+    Autoproj.post_import do |pkg|
+        next if !pkg.importer.kind_of?(Autobuild::Git)
+
+        hook_source_path = File.join(File.expand_path(File.dirname(__FILE__)), "git_do_not_commit_hook")
+        hook_dest_path   = File.join(pkg.srcdir, '.git', 'hooks', 'pre-commit')
+        if pkg.importer.branch == "next" || pkg.importer.branch == "stable"
+            # Install do-not-commit hook
+            FileUtils.cp hook_source_path, hook_dest_path
+        else
+            FileUtils.rm_f hook_dest_path
+        end
+    end
 end
+
 
