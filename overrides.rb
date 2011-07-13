@@ -24,6 +24,7 @@ if Autoproj.respond_to?(:post_import)
             # Install do-not-commit hook
             FileUtils.cp hook_source_path, hook_dest_path
         else
+            # Remove the do-not-commit hook
             FileUtils.rm_f hook_dest_path
         end
     end
