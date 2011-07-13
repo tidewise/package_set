@@ -33,15 +33,14 @@ end
 #
 # The actual lists are created in overrides.rb
 @default_packages = Hash.new
-@default_packages['next'] = Hash.new
-@default_packages['stable'] = Hash.new
+@default_packages['next'] = Hash.new { |h, k| h[k] = Set.new }
+@default_packages['stable'] = Hash.new { |h, k| h[k] = Set.new }
 def only_in_next
     flavor = Autoproj.user_config('ROCK_FLAVOR')
     yield if flavor == 'next'
 end
 def enable_in_next(*packages)
-    @default_packages['next'][current_package_set.name] ||= Set.new
-    @default_packages['next'][current_package_set.name] |= packages.to_set
+    @default_packages['next'][Autoproj.current_package_set.name] |= packages.to_set
 end
 
 def only_in_stable(*package_names)
@@ -49,7 +48,6 @@ def only_in_stable(*package_names)
     yield if flavor == 'stable'
 end
 def enable_in_stable(*packages)
-    @default_packages['stable'][current_package_set.name] ||= Set.new
-    @default_packages['stable'][current_package_set.name] |= packages.to_set
+    @default_packages['stable'][Autoproj.current_package_set.name] |= packages.to_set
 end
 

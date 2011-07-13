@@ -1,19 +1,24 @@
+require 'pp'
 flavor = Autoproj.user_config('ROCK_FLAVOR')
-if default_sets = @default_packages[flavor]
-    default_sets.each do |package_set, packages|
-        meta = package_set.metapackage
+if ['next', 'stable'].include?(flavor)
+    default_sets = @default_packages[flavor]
+    Autoproj.manifest.each_package_set do |pkg_set|
+        meta = pkg_set.metapackage
         meta.packages.clear
-        package_set.manifest.metapackage(package_set.name, *packages)
+        pkg_set.manifest.metapackage(pkg_set.name, *(default_sets[pkg_set.name].to_a))
     end
 end
 
 if ['next', 'stable'].include?(flavor)
-    Autoproj.manifest.each_package do |pkg|
+    Autoproj.manifest.each_package_definition do |pkg_def|
+        pkg = pkg_def.autobuild
+        pkg_set = pkg_def.package_set
+
         next if !pkg.importer.kind_of?(Autobuild::Git)
         next if !['next', 'stable'].include?(pkg.importer.branch)
 
-        if !@default_packages[flavor][pkg.package_set].include?(pkg.autobuild.name)
-            if flavor == "stable" && @default_packages['next'][pkg.package_set].include?(pkg.autobuild.name)
+        if !@default_packages[flavor][pkg_set].include?(pkg.name)
+            if flavor == "stable" && @default_packages['next'][pkg_set].include?(pkg.name)
                 target_branch = 'next'
             else
                 target_branch = 'master'
