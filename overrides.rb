@@ -1,3 +1,31 @@
+flavor = Autoproj.user_config('ROCK_FLAVOR')
+if default_sets = @default_packages[flavor]
+    default_sets.each do |package_set, packages|
+        meta = package_set.metapackage
+        meta.packages.clear
+        package_set.manifest.metapackage(package_set.name, *packages)
+    end
+end
+
+if ['next', 'stable'].include?(flavor)
+    Autoproj.manifest.each_package do |pkg|
+        next if !pkg.importer.kind_of?(Autobuild::Git)
+        next if !['next', 'stable'].include?(pkg.importer.branch)
+
+        if !@default_packages[flavor][pkg.package_set].include?(pkg.autobuild.name)
+            if flavor == "stable" && @default_packages['next'][pkg.package_set].include?(pkg.autobuild.name)
+                target_branch = 'next'
+            else
+                target_branch = 'master'
+            end
+
+            Autoproj.warn "package #{pkg.name} import configuration lists '#{pkg.importer.branch}' as import branch, but the package itself is not enabled in the #{flavor} flavor of Rock. I reset the branch to #{target_branch}"
+            pkg.importer.branch = target_branch
+        end
+    end
+end
+
+
 if Autoproj.respond_to?(:post_import)
     # Override the CMAKE_BUILD_TYPE configuration parameter based on the
     # "stable" tag
@@ -26,16 +54,6 @@ if Autoproj.respond_to?(:post_import)
         else
             # Remove the do-not-commit hook
             FileUtils.rm_f hook_dest_path
-        end
-    end
-
-    Autoproj.manifest.each_package do |pkg|
-        if ['next', 'stable'].include?(pkg.importer.branch)
-            packages = pkg.package_set.default_packages
-            if !packages.include?(pkg.autobuild)
-                Autoproj.warn "package #{pkg.name} import configuration lists '#{pkg.importer.branch}' as import branch, but the package itself is not enabled in the #{pkg.importer.branch} flavor of Rock. I reset the branch to master"
-                pkg.importer.branch = "master"
-            end
         end
     end
 end
