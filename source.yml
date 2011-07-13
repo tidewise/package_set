@@ -2,28 +2,18 @@ name: rock.base
 
 version_control:
     - base/.*:
-        type: git
-        url: $GITORIOUS_ROOT/rock-base/$PACKAGE_BASENAME.git
-        push_to: $GITORIOUS_PUSH_ROOT/rock-base/$PACKAGE_BASENAME.git
+        gitorious: rock-base/$PACKAGE_BASENAME
     - base/scripts:
-        type: git
-        url: $GITORIOUS_ROOT/rock/$PACKAGE_BASENAME.git
-        push_to: $GITORIOUS_PUSH_ROOT/rock/$PACKAGE_BASENAME.git
+        gitorious: rock/scripts
+    - base/templates/cmake_vizkit_widget:
+        gitorious: rock-base/template_cmake_vizkit_widget
+    - base/templates/cmake_lib:
+        gitorious: rock-base/template_cmake_lib
+    - base/templates/vizkit:
+        gitorious: rock/template_vizkit
     - external/sisl:
         type: archive
         url: http://www.sintef.no/upload/IKT/9011/geometri/sisl/sisl_4.4_GPL.tgz
         patches: $AUTOPROJ_SOURCE_DIR/sisl-01-build_shlibs-02.patch
         update_cached_file: false
-    - base/templates/cmake_vizkit_widget:
-        type: git
-        url: $GITORIOUS_ROOT/rock-base/template_$PACKAGE_BASENAME.git
-        push_to: $GITORIOUS_PUSH_ROOT/rock-base/template_$PACKAGE_BASENAME.git
-    - base/templates/cmake_lib:
-        type: git
-        url: $GITORIOUS_ROOT/rock-base/template_$PACKAGE_BASENAME.git
-        push_to: $GITORIOUS_PUSH_ROOT/rock-base/template_$PACKAGE_BASENAME.git
-    - base/templates/vizkit:
-        type: git
-        url: $GITORIOUS_ROOT/rock/template_$PACKAGE_BASENAME.git
-        push_to: $GITORIOUS_PUSH_ROOT/rock/template_$PACKAGE_BASENAME.git
 
