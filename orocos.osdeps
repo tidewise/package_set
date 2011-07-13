@@ -1,6 +1,0 @@
-facets: gem
-nokogiri:
-    gem: nokogiri
-    debian,ubuntu:
-        libxslt-dev
-
