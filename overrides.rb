@@ -28,6 +28,15 @@ if Autoproj.respond_to?(:post_import)
             FileUtils.rm_f hook_dest_path
         end
     end
-end
 
+    Autoproj.manifest.each_package do |pkg|
+        if ['next', 'stable'].include?(pkg.importer.branch)
+            packages = pkg.package_set.default_packages
+            if !packages.include?(pkg.autobuild)
+                Autoproj.warn "package #{pkg.name} import configuration lists '#{pkg.importer.branch}' as import branch, but the package itself is not enabled in the #{pkg.importer.branch} flavor of Rock. I reset the branch to master"
+                pkg.importer.branch = "master"
+            end
+        end
+    end
+end
 
