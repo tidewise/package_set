@@ -3,14 +3,19 @@ name: rock.base
 version_control:
     - base/.*:
         gitorious: rock-base/$PACKAGE_BASENAME
+        branch: $ROCK_FLAVOR
     - base/scripts:
         gitorious: rock/scripts
+        branch: $ROCK_FLAVOR
     - base/templates/cmake_vizkit_widget:
         gitorious: rock-base/template_cmake_vizkit_widget
+        branch: $ROCK_FLAVOR
     - base/templates/cmake_lib:
         gitorious: rock-base/template_cmake_lib
+        branch: $ROCK_FLAVOR
     - base/templates/vizkit:
         gitorious: rock/template_vizkit
+        branch: $ROCK_FLAVOR
     - external/sisl:
         type: archive
         url: http://www.sintef.no/upload/IKT/9011/geometri/sisl/sisl_4.4_GPL.tgz
