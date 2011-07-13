@@ -37,3 +37,5 @@ import_package 'base/templates/vizkit'
 env_set "ROCK_TEMPLATE_PREFIX", File.join(Autoproj.root_dir, "base", "templates", "")
 env_set "ROCK_TEMPLATE_SUFFIX", ""
 
+enable_in_next 'external/sisl', 'base/types', 'base/scripts', 'base/types_ruby'
+enable_in_next 'base/templates/cmake_lib', 'base/templates/cmake_vizkit_widget', 'base/templates/vizkit'

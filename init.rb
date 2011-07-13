@@ -29,6 +29,11 @@ if ENV['ROCK_FORCE_FLAVOR']
     Autoproj.change_option('ROCK_FLAVOR', ENV['ROCK_FORCE_FLAVOR'])
 end
 
+def enable_next_stable_scheme
+    @default_packages['next'][Autoproj.current_package_set.name]
+    @default_packages['stable'][Autoproj.current_package_set.name]
+end
+
 # Setup handling to override the list of default packages in next and stable
 #
 # The actual lists are created in overrides.rb
@@ -51,3 +56,4 @@ def enable_in_stable(*packages)
     @default_packages['stable'][Autoproj.current_package_set.name] |= packages.to_set
 end
 
+enable_next_stable_scheme

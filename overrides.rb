@@ -2,10 +2,10 @@ require 'pp'
 flavor = Autoproj.user_config('ROCK_FLAVOR')
 if ['next', 'stable'].include?(flavor)
     default_sets = @default_packages[flavor]
-    Autoproj.manifest.each_package_set do |pkg_set|
-        meta = pkg_set.metapackage
+    default_sets.each do |pkg_set, packages|
+        meta = Autoproj.manifest.metapackages[pkg_set]
         meta.packages.clear
-        pkg_set.manifest.metapackage(pkg_set.name, *(default_sets[pkg_set.name].to_a))
+        Autoproj.manifest.metapackage(pkg_set, *(packages.to_a))
     end
 end
 
@@ -17,15 +17,17 @@ if ['next', 'stable'].include?(flavor)
         next if !pkg.importer.kind_of?(Autobuild::Git)
         next if !['next', 'stable'].include?(pkg.importer.branch)
 
-        if !@default_packages[flavor][pkg_set].include?(pkg.name)
-            if flavor == "stable" && @default_packages['next'][pkg_set].include?(pkg.name)
-                target_branch = 'next'
-            else
-                target_branch = 'master'
-            end
+        if @default_packages[flavor].has_key?(pkg_set.name)
+            if !@default_packages[flavor][pkg_set.name].include?(pkg.name)
+                if flavor == "stable" && @default_packages['next'][pkg_set].include?(pkg.name)
+                    target_branch = 'next'
+                else
+                    target_branch = 'master'
+                end
 
-            Autoproj.warn "package #{pkg.name} import configuration lists '#{pkg.importer.branch}' as import branch, but the package itself is not enabled in the #{flavor} flavor of Rock. I reset the branch to #{target_branch}"
-            pkg.importer.branch = target_branch
+                Autoproj.warn "package #{pkg.name} import configuration lists '#{pkg.importer.branch}' as import branch, but the package itself is not enabled in the #{flavor} flavor of Rock. I reset the branch to #{target_branch}"
+                pkg.importer.branch = target_branch
+            end
         end
     end
 end
