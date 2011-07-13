@@ -72,3 +72,5 @@ move_package 'log4cpp', 'tools'
         
 Autoproj.env_add_path 'AUTOPROJ_PROJECT_BASE', "#{Autoproj.root_dir}"
 
+enable_in_next 'rtt', 'typelib', 'orogen', 'ocl', 'utilmm', 'utilrb', 'log4cpp', 'tools/pocolog', 'tools/logger', 'tools/orocos.rb', 'tools/roby'
+enable_in_next 'base/orogen/types'

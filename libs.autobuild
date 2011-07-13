@@ -1,1 +1,2 @@
 cmake_package 'tools/service_discovery'
+enable_in_next 'tools/service_discovery'
