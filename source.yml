@@ -13,7 +13,7 @@ version_control:
         branch: $ROCK_FLAVOR
     - eigen3: 
         type: archive
-        url: http://bitbucket.org/eigen/eigen/get/3.0.0.tar.gz 
+        url: http://bitbucket.org/eigen/eigen/get/3.0.1.tar.gz 
         update_cached_file: false
     - external/sisl:
         type: archive
