@@ -30,8 +30,6 @@ if ENV['ROCK_FORCE_FLAVOR']
 end
 
 def enable_next_stable_scheme
-    @default_packages['next'][Autoproj.current_package_set.name]
-    @default_packages['stable'][Autoproj.current_package_set.name]
 end
 
 # Setup handling to override the list of default packages in next and stable
@@ -40,20 +38,28 @@ end
 @default_packages = Hash.new
 @default_packages['next'] = Hash.new { |h, k| h[k] = Set.new }
 @default_packages['stable'] = Hash.new { |h, k| h[k] = Set.new }
-def only_in_next
+
+def in_flavor(*flavors)
     flavor = Autoproj.user_config('ROCK_FLAVOR')
-    yield if flavor == 'next'
-end
-def enable_in_next(*packages)
-    @default_packages['next'][Autoproj.current_package_set.name] |= packages.to_set
+    current_packages = Autoproj.manifest.packages.keys
+    yield if flavors.include?(flavor)
+    new_packages = Autoproj.manifest.packages.keys - current_packages
+    flavors.each do |flav|
+        @default_packages[flav][Autoproj.current_package_set.name] |= new_packages.to_set
+    end
 end
 
-def only_in_stable(*package_names)
-    flavor = Autoproj.user_config('ROCK_FLAVOR')
-    yield if flavor == 'stable'
-end
-def enable_in_stable(*packages)
-    @default_packages['stable'][Autoproj.current_package_set.name] |= packages.to_set
+def define_flavors(*names)
+    names.each do |flavor_name|
+        @default_packages[flavor_name] = Hash.new { |h, k| h[k] = Set.new }
+    end
+    enable_flavor_system
 end
 
-enable_next_stable_scheme
+def enable_flavor_system
+    @default_packages.each_value do |metapackages|
+        metapackages[Autoproj.current_package_set.name]
+    end
+end
+
+define_flavors 'next', 'stable'
