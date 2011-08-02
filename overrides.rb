@@ -1,37 +1,13 @@
-require 'pp'
 flavor = Autoproj.user_config('ROCK_FLAVOR')
-if ['next', 'stable'].include?(flavor)
-    default_sets = @default_packages[flavor]
+
+if @flavors[flavor] && !@flavors[flavor].implicit?
+    default_sets = @flavors[flavor].default_packages
     default_sets.each do |pkg_set, packages|
         meta = Autoproj.manifest.metapackages[pkg_set]
         meta.packages.clear
         Autoproj.manifest.metapackage(pkg_set, *(packages.to_a))
     end
 end
-
-if ['next', 'stable'].include?(flavor)
-    Autoproj.manifest.each_package_definition do |pkg_def|
-        pkg = pkg_def.autobuild
-        pkg_set = pkg_def.package_set
-
-        next if !pkg.importer.kind_of?(Autobuild::Git)
-        next if !['next', 'stable'].include?(pkg.importer.branch)
-
-        if @default_packages[flavor].has_key?(pkg_set.name)
-            if !@default_packages[flavor][pkg_set.name].include?(pkg.name)
-                if flavor == "stable" && @default_packages['next'][pkg_set].include?(pkg.name)
-                    target_branch = 'next'
-                else
-                    target_branch = 'master'
-                end
-
-                Autoproj.warn "package #{pkg.name} import configuration lists '#{pkg.importer.branch}' as import branch, but the package itself is not enabled in the #{flavor} flavor of Rock. I reset the branch to #{target_branch}"
-                pkg.importer.branch = target_branch
-            end
-        end
-    end
-end
-
 
 if Autoproj.respond_to?(:post_import)
     # Override the CMAKE_BUILD_TYPE configuration parameter based on the

@@ -40,26 +40,67 @@ end
 @default_packages['stable'] = Hash.new { |h, k| h[k] = Set.new }
 
 def in_flavor(*flavors)
-    flavor = Autoproj.user_config('ROCK_FLAVOR')
+    flavor = @flavors[Autoproj.user_config('ROCK_FLAVOR')]
     current_packages = Autoproj.manifest.packages.keys
-    yield if flavors.include?(flavor)
+    if flavor && flavor.enabled_in?(*flavors)
+        yield 
+    end
     new_packages = Autoproj.manifest.packages.keys - current_packages
-    flavors.each do |flav|
-        @default_packages[flav][Autoproj.current_package_set.name] |= new_packages.to_set
+
+    add_packages_to_flavors flavors => new_packages
+end
+
+@flavors = Hash.new
+
+def add_packages_to_flavors(mappings)
+    mappings.each do |flavors, packages|
+        if !flavors.respond_to?(:to_ary)
+            flavors = [flavors]
+        end
+        if !packages.respond_to?(:to_ary)
+            packages = [packages]
+        end
+        flavors.each do |flavor_name|
+            @flavors[flavor_name].default_packages[Autoproj.current_package_set.name] |= packages.to_set
+        end
     end
 end
 
-def define_flavors(*names)
+class FlavorDefinition
+    attr_reader :name
+    attr_accessor :includes
+    attr_predicate :implicit?, true
+    attr_accessor :default_packages
+
+    def initialize(name)
+        @name = name
+        @includes = Set.new
+        @implicit = false
+        @default_packages = Hash.new { |h, k| h[k] = Set.new }
+    end
+
+    def enabled_in?(*flavors)
+        (flavors.to_set - includes).size != flavors.size ||
+            flavors.include?(name)
+    end
+end
+
+def define_flavor(*names)
+    if names.last.kind_of?(Hash)
+        options = names.pop
+    end
+    options = Kernel.validate_options(options || Hash.new, :includes => [], :implicit => nil)
+
     names.each do |flavor_name|
-        @default_packages[flavor_name] = Hash.new { |h, k| h[k] = Set.new }
-    end
-    enable_flavor_system
-end
-
-def enable_flavor_system
-    @default_packages.each_value do |metapackages|
-        metapackages[Autoproj.current_package_set.name]
+        flavor = (@flavors[flavor_name] ||= FlavorDefinition.new(flavor_name))
+        if !options[:implicit].nil?
+            flavor.implicit = options[:implicit]
+        end
+        flavor.includes |= options[:includes]
     end
 end
 
-define_flavors 'next', 'stable'
+define_flavor 'stable'
+define_flavor 'next',  :includes => ['stable']
+define_flavor 'master', :includes => ['stable', 'next'], :implicit => true
+
