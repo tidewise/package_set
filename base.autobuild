@@ -38,7 +38,7 @@ in_flavor 'next', 'stable' do
 
     cmake_package 'eigen3' do |pkg|
         pkg.define "EIGEN_BUILD_PKGCONFIG", "ON"
-        env_set 'PKG_CONFIG_PATH', File.join(pkg.prefix, 'share', 'pkgconfig')
+        env_add 'PKG_CONFIG_PATH', File.join(pkg.prefix, 'share', 'pkgconfig')
     end
     # eigen3 is without prefix, to make transition easier once its 
     # a system package. Should go into external dir, though.
