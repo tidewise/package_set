@@ -1,0 +1,4 @@
+eigen3:
+    debian:
+        sid:
+            libeigen3-dev
