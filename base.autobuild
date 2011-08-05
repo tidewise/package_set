@@ -36,15 +36,14 @@ in_flavor 'next', 'stable' do
         env_set "ROCK_TEMPLATE_SUFFIX", ""
     end
 
-    cmake_package 'eigen3' do |pkg|
-        pkg.define "EIGEN_BUILD_PKGCONFIG", "ON"
-        env_add 'PKG_CONFIG_PATH', File.join(pkg.prefix, 'share', 'pkgconfig')
-    end
-    # eigen3 is without prefix, to make transition easier once its 
-    # a system package. Should go into external dir, though.
-    move_package 'eigen3', 'external'
-
     import_package 'base/templates/cmake_vizkit_widget'
     import_package 'base/templates/vizkit'
 end
 
+cmake_package 'eigen3' do |pkg|
+    pkg.define "EIGEN_BUILD_PKGCONFIG", "ON"
+    env_add 'PKG_CONFIG_PATH', File.join(pkg.prefix, 'share', 'pkgconfig')
+end
+# eigen3 is without prefix, to make transition easier once its 
+# a system package. Should go into external dir, though.
+move_package 'eigen3', 'external'
