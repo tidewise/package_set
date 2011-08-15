@@ -93,14 +93,14 @@ def in_flavor(*flavors)
     add_packages_to_flavors flavors => new_packages
 end
 
-def only_in_flavor(*flavors)
+def only_in_flavor(*flavors, &block)
     if flavors.last.kind_of?(Hash)
         options = flavors.pop
         options, other_options = Kernel.filter_options :strict => true
         options = options.merge(other_options)
         flavors << options
     end
-    in_flavor(*flavors)
+    in_flavor(*flavors, &block)
 end
 
 def package_in_flavor?(pkg, flavor_name)
