@@ -49,6 +49,8 @@ if Autoproj.respond_to?(:post_import)
         end
     end
 
+    # If a package is on next or stable, make sure that one cannot add new
+    # commits without knowing what he is doing
     Autoproj.post_import do |pkg|
         next if !pkg.importer.kind_of?(Autobuild::Git)
 
