@@ -12,9 +12,24 @@ ignore(/manifest\.xml$/)
 ignore(/\.sw?$/)
 # Ignore the numerous backup files
 ignore(/~$/)
+
+def define_flavor(flavor_name, options = Hash.new)
+    options = Kernel.validate_options(options, :includes => [], :implicit => nil)
+
+    flavor = (@flavors[flavor_name] ||= FlavorDefinition.new(flavor_name))
+    if !options[:implicit].nil?
+        flavor.implicit = options[:implicit]
+    end
+    flavor.includes |= options[:includes]
+end
+
+define_flavor 'stable'
+define_flavor 'next',  :includes => ['stable']
+define_flavor 'master', :includes => ['stable', 'next'], :implicit => true
+
 configuration_option 'ROCK_FLAVOR', 'string',
     :default => 'stable',
-    :values => ['stable', 'next', 'master'],
+    :values => @flavors.keys,
     :doc => [
         "Which flavor of Rock do you want to use ?",
         "The 'stable' flavor is not updated often, but will contain well-tested code",
@@ -84,23 +99,4 @@ class FlavorDefinition
             flavors.include?(name)
     end
 end
-
-def define_flavor(*names)
-    if names.last.kind_of?(Hash)
-        options = names.pop
-    end
-    options = Kernel.validate_options(options || Hash.new, :includes => [], :implicit => nil)
-
-    names.each do |flavor_name|
-        flavor = (@flavors[flavor_name] ||= FlavorDefinition.new(flavor_name))
-        if !options[:implicit].nil?
-            flavor.implicit = options[:implicit]
-        end
-        flavor.includes |= options[:includes]
-    end
-end
-
-define_flavor 'stable'
-define_flavor 'next',  :includes => ['stable']
-define_flavor 'master', :includes => ['stable', 'next'], :implicit => true
 
