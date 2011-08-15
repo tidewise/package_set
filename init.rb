@@ -44,16 +44,6 @@ if ENV['ROCK_FORCE_FLAVOR']
     Autoproj.change_option('ROCK_FLAVOR', ENV['ROCK_FORCE_FLAVOR'])
 end
 
-def enable_next_stable_scheme
-end
-
-# Setup handling to override the list of default packages in next and stable
-#
-# The actual lists are created in overrides.rb
-@default_packages = Hash.new
-@default_packages['next'] = Hash.new { |h, k| h[k] = Set.new }
-@default_packages['stable'] = Hash.new { |h, k| h[k] = Set.new }
-
 def in_flavor(*flavors)
     if flavors.last.kind_of?(Hash)
         options = flavors.pop
