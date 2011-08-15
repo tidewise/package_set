@@ -75,7 +75,7 @@ end
 def in_flavor(*flavors)
     if flavors.last.kind_of?(Hash)
         options = flavors.pop
-        options = Kernel.validate_options :strict => false
+        options = Kernel.validate_options options, :strict => false
     else
         options = Hash.new
     end
@@ -96,10 +96,12 @@ end
 def only_in_flavor(*flavors, &block)
     if flavors.last.kind_of?(Hash)
         options = flavors.pop
-        options, other_options = Kernel.filter_options :strict => true
+        options, other_options = Kernel.filter_options options, :strict => true
         options = options.merge(other_options)
-        flavors << options
+    else
+        options = { :strict => true }
     end
+    flavors << options
     in_flavor(*flavors, &block)
 end
 
