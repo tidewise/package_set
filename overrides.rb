@@ -12,23 +12,38 @@ end
 # If a package is using the 'next' or 'stable' branches, but the package is
 # not enabled in the next or stable flavors, switch it back to master
 switched_packages = []
+wrong_branch = []
 Autoproj.manifest.each_package do |pkg|
     next if !pkg.importer.kind_of?(Autobuild::Git)
     if pkg.importer.branch == "next" || pkg.importer.branch == "stable"
         if !package_in_flavor?(pkg, pkg.importer.branch)
             switched_packages << pkg
             pkg.importer.branch = "master"
-
         end
+    end
+
+    if package_in_flavor?(pkg, flavor) && pkg.importer.branch != flavor
+        wrong_branch << pkg
     end
 end
 
 if !switched_packages.empty?
     pkgs = switched_packages.map(&:name).sort.join(", ")
 
+    Autoproj.warn ""
     Autoproj.warn "the following packages are using a branch which is incompatible with the flavors"
     Autoproj.warn "they are included in (as e.g. using the 'next' branch while being included only on 'master')."
     Autoproj.warn "they got switched back to master"
+    Autoproj.warn "  #{pkgs}"
+end
+
+wrong_branch -= switched_packages
+if !wrong_branch.empty?
+    pkgs = wrong_branch.map { |pkg| "#{pkg.name}(#{pkg.importer.branch})" }.join(", ")
+
+    Autoproj.warn ""
+    Autoproj.warn "the following packages are using a different branch than the current flavor"
+    Autoproj.warn "it is assumed that it is intentional"
     Autoproj.warn "  #{pkgs}"
 end
 
