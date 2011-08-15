@@ -37,7 +37,7 @@ in_flavor 'next', 'stable' do
     end
 
     import_package 'base/templates/cmake_lib' do |pkg|
-        env_set "ROCK_TEMPLATE_PREFIX", File.expand_path('..', pkg.srcdir)
+        env_set "ROCK_TEMPLATE_PREFIX", File.join(File.expand_path('..', pkg.srcdir), '')
         env_set "ROCK_TEMPLATE_SUFFIX", ""
     end
 
