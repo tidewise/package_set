@@ -1,3 +1,7 @@
+eigen2:
+    debian,ubuntu:
+        libeigen2-dev
+
 eigen3:
     debian:
         sid:
