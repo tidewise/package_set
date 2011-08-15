@@ -2,5 +2,5 @@ if test "x$ROCK_UPDATE_NEXT" != "x1"; then
     echo "You are currently on the next or stable branch of this package. Committing is forbidden"
     echo "You should switch to either master or a custom branch first"
     echo "If you mean to update next and/or stable, set the ROCK_UPDATE_NEXT environment variable to 1"
+    exit 1
 fi
-exit 1
