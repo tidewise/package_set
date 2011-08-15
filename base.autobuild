@@ -10,7 +10,12 @@ in_flavor 'next', 'stable' do
             FileUtils.rm_rf include_dir
             FileUtils.mkdir_p File.dirname(include_dir)
             FileUtils.mkdir_p lib_dir
-            FileUtils.cp   File.join('sisl', 'lib', 'libsisl_opt.so'), File.join(lib_dir, 'libsisl.so')
+
+            flavors = %w{opt nopt}
+            flavor = flavors.find do |flavor_name|
+                File.file?(File.join('sisl', 'lib', "libsisl_#{flavor_name}.so"))
+            end
+            FileUtils.cp File.join('sisl', 'lib', "libsisl_#{flavor}.so"), File.join(lib_dir, 'libsisl.so')
             FileUtils.cp_r File.join('sisl', 'include'), include_dir
         end
     end
