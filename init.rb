@@ -13,6 +13,34 @@ ignore(/\.sw?$/)
 # Ignore the numerous backup files
 ignore(/~$/)
 
+@flavors = Hash.new
+
+class FlavorDefinition
+    attr_reader :name
+    attr_accessor :includes
+    attr_predicate :implicit?, true
+    attr_accessor :default_packages
+
+    def initialize(name)
+        @name = name
+        @includes = Set.new
+        @implicit = false
+        @default_packages = Hash.new { |h, k| h[k] = Set.new }
+    end
+
+    def include?(package_name)
+        @default_packages.any? do |pkg_set, packages|
+            packages.include?(package_name)
+        end
+    end
+
+    def enabled_in?(*flavors)
+        (flavors.to_set - includes).size != flavors.size ||
+            flavors.include?(name)
+    end
+end
+
+
 def define_flavor(flavor_name, options = Hash.new)
     options = Kernel.validate_options(options, :includes => [], :implicit => nil)
 
@@ -48,6 +76,8 @@ def in_flavor(*flavors)
     if flavors.last.kind_of?(Hash)
         options = flavors.pop
         options = Kernel.validate_options :strict => false
+    else
+        options = Hash.new
     end
 
     flavor = @flavors[Autoproj.user_config('ROCK_FLAVOR')]
@@ -91,8 +121,6 @@ def package_in_flavor?(pkg, flavor_name)
         
 end
 
-@flavors = Hash.new
-
 def add_packages_to_flavors(mappings)
     mappings.each do |flavors, packages|
         if !flavors.respond_to?(:to_ary)
@@ -104,31 +132,6 @@ def add_packages_to_flavors(mappings)
         flavors.each do |flavor_name|
             @flavors[flavor_name].default_packages[Autoproj.current_package_set.name] |= packages.to_set
         end
-    end
-end
-
-class FlavorDefinition
-    attr_reader :name
-    attr_accessor :includes
-    attr_predicate :implicit?, true
-    attr_accessor :default_packages
-
-    def initialize(name)
-        @name = name
-        @includes = Set.new
-        @implicit = false
-        @default_packages = Hash.new { |h, k| h[k] = Set.new }
-    end
-
-    def include?(package_name)
-        @default_packages.any? do |pkg_set, packages|
-            packages.include?(package_name)
-        end
-    end
-
-    def enabled_in?(*flavors)
-        (flavors.to_set - includes).size != flavors.size ||
-            flavors.include?(name)
     end
 end
 
