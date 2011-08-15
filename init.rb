@@ -82,6 +82,25 @@ def only_in_flavor(*flavors)
     end
     in_flavor(*flavors)
 end
+
+def package_in_flavor?(pkg, flavor_name)
+    flavor_def = @flavors[flavor_name]
+    if !flavor_def
+        raise ArgumentError, "#{flavor_name} is not a known flavor name"
+    end
+
+    if flavor_def.implicit?
+        return true
+    end
+
+    if pkg.respond_to?(:name)
+        flavor_def.include?(pkg.name)
+    else
+        flavor_def.include?(pkg)
+    end
+        
+end
+
 @flavors = Hash.new
 
 def add_packages_to_flavors(mappings)
@@ -109,6 +128,12 @@ class FlavorDefinition
         @includes = Set.new
         @implicit = false
         @default_packages = Hash.new { |h, k| h[k] = Set.new }
+    end
+
+    def include?(package_name)
+        @default_packages.any? do |pkg_set, packages|
+            packages.include?(package_name)
+        end
     end
 
     def enabled_in?(*flavors)
