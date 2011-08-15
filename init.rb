@@ -55,16 +55,33 @@ end
 @default_packages['stable'] = Hash.new { |h, k| h[k] = Set.new }
 
 def in_flavor(*flavors)
+    if flavors.last.kind_of?(Hash)
+        options = flavors.pop
+        options = Kernel.validate_options :strict => false
+    end
+
     flavor = @flavors[Autoproj.user_config('ROCK_FLAVOR')]
+    if !flavor
+        raise ArgumentError, "flavor #{flavor} is not defined"
+    end
+
     current_packages = Autoproj.manifest.packages.keys
-    if flavor && flavor.enabled_in?(*flavors)
+    if !options[:strict] || flavor.enabled_in?(*flavors)
         yield 
     end
     new_packages = Autoproj.manifest.packages.keys - current_packages
-
     add_packages_to_flavors flavors => new_packages
 end
 
+def only_in_flavor(*flavors)
+    if flavors.last.kind_of?(Hash)
+        options = flavors.pop
+        options, other_options = Kernel.filter_options :strict => true
+        options = options.merge(other_options)
+        flavors << options
+    end
+    in_flavor(*flavors)
+end
 @flavors = Hash.new
 
 def add_packages_to_flavors(mappings)
