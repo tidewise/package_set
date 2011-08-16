@@ -1,4 +1,4 @@
-in_flavor 'next', 'stable' do
+in_flavor 'next' do
     import_package 'external/sisl' do |pkg|
         pkg.post_install do
             pkg.progress "building %s"
