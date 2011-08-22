@@ -14,24 +14,32 @@ ignore(/\.sw?$/)
 ignore(/~$/)
 
 @flavors = Hash.new
+@flavored_package_sets = Set.new
 
 class FlavorDefinition
     attr_reader :name
     attr_accessor :includes
     attr_predicate :implicit?, true
     attr_accessor :default_packages
+    attr_accessor :removed_packages
 
     def initialize(name)
         @name = name
         @includes = Set.new
         @implicit = false
         @default_packages = Hash.new { |h, k| h[k] = Set.new }
+        @removed_packages = Set.new
     end
 
     def include?(package_name)
+	return false if removed?(package_name)
         @default_packages.any? do |pkg_set, packages|
             packages.include?(package_name)
         end
+    end
+
+    def removed?(package_name)
+	removed_packages.include?(package_name)
     end
 
     def enabled_in?(*flavors)
@@ -72,6 +80,10 @@ if ENV['ROCK_FORCE_FLAVOR']
     Autoproj.change_option('ROCK_FLAVOR', ENV['ROCK_FORCE_FLAVOR'])
 end
 
+def enabled_flavor_system
+    @flavored_package_sets << Autoproj.current_package_set.name
+end
+
 def in_flavor(*flavors)
     if flavors.last.kind_of?(Hash)
         options = flavors.pop
@@ -110,20 +122,25 @@ def package_in_flavor?(pkg, flavor_name)
     if !flavor_def
         raise ArgumentError, "#{flavor_name} is not a known flavor name"
     end
+    
+    if pkg.respond_to?(:name)
+	pkg = pkg.name
+    end
 
     if flavor_def.implicit?
-        return true
-    end
-
-    if pkg.respond_to?(:name)
-        flavor_def.include?(pkg.name)
+	pkg_set = Autoproj.manifest.definition_source(pkg)
+	if @flavored_package_sets.include?(pkg_set.name)
+	    !flavor_def.removed?(pkg)
+	else
+	    flavor_def.include?(pkg)
+	end
     else
-        flavor_def.include?(pkg)
+        return flavor_def.include?(pkg)
     end
-        
 end
 
 def add_packages_to_flavors(mappings)
+    enabled_flavor_system
     mappings.each do |flavors, packages|
         if !flavors.respond_to?(:to_ary)
             flavors = [flavors]
@@ -135,7 +152,26 @@ def add_packages_to_flavors(mappings)
             if !@flavors[flavor_name]
                 raise ArgumentError, "#{flavor_name} is not a known flavor"
             end
+            @flavors[flavor_name].removed_packages -= packages.to_set
             @flavors[flavor_name].default_packages[Autoproj.current_package_set.name] |= packages.to_set
+        end
+    end
+end
+
+def remove_packages_from_flavors(mappings)
+    enabled_flavor_system
+    mappings.each do |flavors, packages|
+        if !flavors.respond_to?(:to_ary)
+            flavors = [flavors]
+        end
+        if !packages.respond_to?(:to_ary)
+            packages = [packages]
+        end
+        flavors.each do |flavor_name|
+            if !@flavors[flavor_name]
+                raise ArgumentError, "#{flavor_name} is not a known flavor"
+            end
+	    @flavors[flavor_name].removed_packages |= packages.to_set
         end
     end
 end

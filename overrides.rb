@@ -1,11 +1,17 @@
 flavor = Autoproj.user_config('ROCK_FLAVOR')
 
-if @flavors[flavor] && !@flavors[flavor].implicit?
-    default_sets = @flavors[flavor].default_packages
-    default_sets.each do |pkg_set, packages|
+if flv = @flavors[flavor]
+    @flavored_package_sets.each do |pkg_set|
         meta = Autoproj.manifest.metapackages[pkg_set]
+	if flv.implicit?
+	    default_packages = meta.packages.map(&:name).to_set |
+		flv.default_packages[pkg_set]
+	else
+	    default_packages = flv.default_packages[pkg_set]
+	end
+	default_packages -= flv.removed_packages
         meta.packages.clear
-        Autoproj.manifest.metapackage(pkg_set, *(packages.to_a))
+        Autoproj.manifest.metapackage(pkg_set, *(default_packages.to_a))
     end
 end
 
