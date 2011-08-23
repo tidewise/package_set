@@ -1,0 +1,11 @@
+<package>
+  <description brief="A linear algebra library in C++">
+  Eigen is a highly versatile, performant linear algrebra library. It only
+  depends on the C++ standard library.
+
+  In Rock, this is used only if your distribution does not provide a precompiled
+  package.
+  </description>
+  <license>LGPLv3 or later</license>
+  <url>http://eigen.tuxfamily.org/index.php?title=Main_Page</url>
+</package>
