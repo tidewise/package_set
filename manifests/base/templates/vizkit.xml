@@ -1,0 +1,9 @@
+<package>
+  <description brief="template for Vizkit3D plugins">
+  This repository / package contains the templates for Vizkit3D plugins. it is
+  not meant to be used directly.
+  </description>
+  <author>Sylvain Joyeux/sylvain.joyeux@dfki.de</author>
+  <license>BSD</license>
+  <url>http://rock-robotics.org/documentation/tutorials/220_3d_data_visualization.html</url>
+</package>

@@ -1,0 +1,13 @@
+<package>
+  <description brief="N-dimensional Bspline and NURBS curve and surface implementation">
+  This library implements algorithms to manage B-splines and NURBS curves and
+  surfaces. It is not meant to be used directly, but serves as the underlying
+  implementation of the base::geometry::Spline&lt;DIM&gt; template in
+  base/types.
+  </description>
+  <author>SINTEF/tor.dokken@sintef.no</author>
+  <license>The curve part has been relicensed as LGPL v2 for Rock by SINTEF. The
+  surface part is GPLv2</license>
+  <url>http://www.sintef.no/sisl</url>
+</package>
+
