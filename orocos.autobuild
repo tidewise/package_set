@@ -46,6 +46,7 @@ move_package 'utilmm', 'tools'
 move_package 'utilrb', 'tools'
 move_package 'log4cpp', 'tools'
 
+add_packages_to_flavors 'master' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib']
 add_packages_to_flavors 'next' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib']
 
 in_flavor 'next' do
