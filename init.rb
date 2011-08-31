@@ -63,8 +63,8 @@ end
 define_flavor 'next',  :includes => ['stable']
 define_flavor 'master', :includes => ['stable', 'next'], :implicit => true
 
-configuration_option 'ROCK_FLAVOR', 'string',
-    :default => 'next',
+configuration_option('ROCK_FLAVOR', 'string',
+    :default => 'master',
     :values => @flavors.keys,
     :doc => [
         "Which flavor of Rock do you want to use ?",
@@ -74,7 +74,20 @@ configuration_option 'ROCK_FLAVOR', 'string',
         "Finally, 'master' is where the development takes place. It should generally be in",
         "a good state, but will break every once in a while",
         "",
-        "See http://rock-robotics.org/startup/releases.html for more information"]
+        "See http://rock-robotics.org/startup/releases.html for more information"]) do |value|
+
+    if value.to_s != "master"
+        Autoproj.warn "It is not advised to use anything else than 'master' for now"
+        Autoproj.warn "Press ENTER to stay on #{value}, or Ctrl+C to reset to master and continue"
+        begin
+            STDIN.readline
+        rescue Interrupt
+            value = "master"
+        end
+    end
+    value
+end
+
 
 if ENV['ROCK_FORCE_FLAVOR']
     Autoproj.change_option('ROCK_FLAVOR', ENV['ROCK_FORCE_FLAVOR'])
