@@ -59,7 +59,7 @@ def define_flavor(flavor_name, options = Hash.new)
     flavor.includes |= options[:includes]
 end
 
-# define_flavor 'stable'
+define_flavor 'stable'
 define_flavor 'next',  :includes => ['stable']
 define_flavor 'master', :includes => ['stable', 'next'], :implicit => true
 
