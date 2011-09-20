@@ -50,6 +50,10 @@ add_packages_to_flavors 'master' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typel
 add_packages_to_flavors 'next' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib']
 add_packages_to_flavors 'stable' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib']
 
+in_flavor 'master' do 
+    ruby_package  'tools/log_tools' 
+end
+
 in_flavor 'next', 'stable' do
     ruby_package  'tools/orocos.rb' do |pkg|
         def pkg.prepare
@@ -67,6 +71,7 @@ in_flavor 'next', 'stable' do
         if package_selected?('external/sisl')
             pkg.define "SISL_PREFIX", package('external/sisl').prefix
         end
+        Autoproj.env_set 'ROCK_PREFIX', File.join(pkg.prefix,'share','rock')
 
         pkg.remove_obsolete_installed_file "share", "typelib", "ruby", "base.rb"
     end
