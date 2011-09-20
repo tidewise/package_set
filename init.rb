@@ -64,7 +64,7 @@ define_flavor 'next',  :includes => ['stable']
 define_flavor 'master', :includes => ['stable', 'next'], :implicit => true
 
 configuration_option('ROCK_FLAVOR', 'string',
-    :default => 'master',
+    :default => 'next',
     :values => @flavors.keys,
     :doc => [
         "Which flavor of Rock do you want to use ?",
@@ -76,13 +76,13 @@ configuration_option('ROCK_FLAVOR', 'string',
         "",
         "See http://rock-robotics.org/startup/releases.html for more information"]) do |value|
 
-    if value.to_s != "master"
-        Autoproj.warn "It is not advised to use anything else than 'master' for now"
-        Autoproj.warn "Press ENTER to stay on #{value}, or Ctrl+C to reset to master and continue"
+    if value.to_s != "master" && value.to_s != "next"
+        Autoproj.warn "It is not advised to use the 'stable' flavor for now"
+        Autoproj.warn "Press ENTER to stay on #{value}, or Ctrl+C to reset to next and continue"
         begin
             STDIN.readline
         rescue Interrupt
-            value = "master"
+            value = "next"
         end
     end
     value
