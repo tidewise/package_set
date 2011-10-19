@@ -1,4 +1,4 @@
-in_flavor 'next', 'stable' do
+in_flavor 'master', 'next', 'stable' do
     import_package 'external/sisl' do |pkg|
         pkg.post_install do
             pkg.progress "building %s"
@@ -43,9 +43,7 @@ in_flavor 'next', 'stable' do
 
     import_package 'base/templates/cmake_vizkit_widget'
     import_package 'base/templates/vizkit'
-end
 
-in_flavor 'next' do
     cmake_package 'eigen3' do |pkg|
         pkg.define "EIGEN_BUILD_PKGCONFIG", "ON"
         env_add 'PKG_CONFIG_PATH', File.join(pkg.prefix, 'share', 'pkgconfig')
@@ -53,5 +51,8 @@ in_flavor 'next' do
     # eigen3 is without prefix, to make transition easier once its 
     # a system package. Should go into external dir, though.
     move_package 'eigen3', 'external'
+end
+
+in_flavor 'master', 'next' do
 end
 
