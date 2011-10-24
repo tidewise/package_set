@@ -1,4 +1,4 @@
-in_flavor 'next' do
+in_flavor 'master', 'next', 'stable' do
     cmake_package 'tools/service_discovery'
 end
 
