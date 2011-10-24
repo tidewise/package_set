@@ -64,7 +64,7 @@ define_flavor 'next',  :includes => ['stable']
 define_flavor 'master', :includes => ['stable', 'next'], :implicit => true
 
 configuration_option('ROCK_FLAVOR', 'string',
-    :default => 'next',
+    :default => 'stable',
     :values => @flavors.keys,
     :doc => [
         "Which flavor of Rock do you want to use ?",
