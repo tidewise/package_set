@@ -76,15 +76,6 @@ configuration_option('ROCK_FLAVOR', 'string',
         "",
         "See http://rock-robotics.org/startup/releases.html for more information"]) do |value|
 
-    if value.to_s != "master" && value.to_s != "next"
-        Autoproj.warn "It is not advised to use the 'stable' flavor for now"
-        Autoproj.warn "Press ENTER to stay on #{value}, or Ctrl+C to reset to next and continue"
-        begin
-            STDIN.readline
-        rescue Interrupt
-            value = "next"
-        end
-    end
     value
 end
 
