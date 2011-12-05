@@ -77,12 +77,14 @@ if Autoproj.respond_to?(:post_import)
 
         hook_source_path = File.join(File.expand_path(File.dirname(__FILE__)), "git_do_not_commit_hook")
         hook_dest_path   = File.join(pkg.srcdir, '.git', 'hooks', 'pre-commit')
-        if pkg.importer.branch == "next" || pkg.importer.branch == "stable"
-            # Install do-not-commit hook
-            FileUtils.cp hook_source_path, hook_dest_path
-        else
-            # Remove the do-not-commit hook
-            FileUtils.rm_f hook_dest_path
+        if File.directory?(hook_dest_path)
+            if pkg.importer.branch == "next" || pkg.importer.branch == "stable"
+                # Install do-not-commit hook
+                FileUtils.cp hook_source_path, hook_dest_path
+            else
+                # Remove the do-not-commit hook
+                FileUtils.rm_f hook_dest_path
+            end
         end
     end
 end
