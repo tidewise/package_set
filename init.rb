@@ -180,3 +180,13 @@ def remove_packages_from_flavors(mappings)
     end
 end
 
+# Defines a bundle package in the installation
+#
+# So far, bundles are mostly Ruby packages
+def bundle_package(*args, &block)
+    ruby_package(*args) do |pkg|
+        Autoproj.env_add_path 'ROCK_BUNDLE_PATH', pkg.srcdir
+        pkg.instance_eval(&block)
+    end
+end
+
