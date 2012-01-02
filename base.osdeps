@@ -6,3 +6,6 @@ eigen3:
     debian:
         sid:
             libeigen3-dev
+    ubuntu:
+        oneiric:
+            libeigen3-dev
