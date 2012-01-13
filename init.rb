@@ -190,3 +190,7 @@ def bundle_package(*args, &block)
     end
 end
 
+def bundle_package(name, &block)
+    ruby_package(name, &block)
+end
+
