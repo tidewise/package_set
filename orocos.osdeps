@@ -1,10 +1,6 @@
 PriorityQueue: gem
 facets: gem
 state_machine: gem
-nokogiri:
-    gem: nokogiri
-    debian,ubuntu:
-        libxslt-dev
 
 avahi:
     debian,ubuntu: [avahi-daemon, libavahi-client3, libavahi-client-dev, libavahi-core-dev]
