@@ -89,6 +89,6 @@ if Autoproj.respond_to?(:post_import)
     end
 end
 
-Autoproj.env_add_path 'ROCK_BUNDLE_PATH', File.join(Autoproj.prefix, 'share', 'rock')
+Autoproj.env_add_path 'ROCK_BUNDLE_PATH', File.join(Autobuild.prefix, 'share', 'rock')
 Autoproj.env_add_path 'ROCK_BUNDLE_PATH', File.join(Autoproj.root_dir, 'bundles')
 
