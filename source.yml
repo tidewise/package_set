@@ -17,7 +17,7 @@ version_control:
         gitorious: rock/template_vizkit
         branch: $ROCK_FLAVOR
     - base/templates/bundle:
-        gitorious: rock/template_bundle
+        gitorious: rock-base/template_bundle
         branch: $ROCK_FLAVOR
     - eigen3: 
         type: archive
