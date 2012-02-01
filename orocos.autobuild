@@ -52,6 +52,7 @@ add_packages_to_flavors 'stable' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typel
 
 in_flavor 'master' do 
     ruby_package  'tools/log_tools' 
+    orogen_package 'tools/port_proxy'
 end
 
 in_flavor 'master', 'next', 'stable' do

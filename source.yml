@@ -20,6 +20,9 @@ version_control:
     - tools/logger:
       gitorious: rock-toolchain/orogen-$PACKAGE_BASENAME
       branch: $ROCK_FLAVOR
+    - tools/port_proxy:
+      gitorious: rock-toolchain/orogen-$PACKAGE_BASENAME
+      branch: $ROCK_FLAVOR
 
 overrides:
     - ^(orogen|typelib|rtt|utilrb|utilmm)$:
