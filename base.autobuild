@@ -1,6 +1,7 @@
 # IMPORTANT: new packages must be added at the top of this file
 
 import_package 'base/templates/bundle'
+import_package 'base/templates/doc'
 
 #################################################################################"
 #################################################################################"

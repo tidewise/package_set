@@ -19,6 +19,9 @@ version_control:
     - base/templates/bundle:
         gitorious: rock-base/template_bundle
         branch: $ROCK_FLAVOR
+    - base/templates/doc:
+        gitorious: rock/doc_preview
+        branch: master
     - eigen3: 
         type: archive
         url: http://bitbucket.org/eigen/eigen/get/3.0.1.tar.gz 
