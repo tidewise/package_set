@@ -51,6 +51,9 @@ add_packages_to_flavors 'next' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib
 add_packages_to_flavors 'stable' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib']
 
 in_flavor 'master' do 
+end
+
+in_flavor 'master', 'next' do
     ruby_package  'tools/log_tools' 
     orogen_package 'tools/port_proxy'
 end
