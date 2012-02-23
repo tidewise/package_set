@@ -19,11 +19,15 @@ end
 # not enabled in the next or stable flavors, switch it back to master
 switched_packages = []
 wrong_branch = []
-Autoproj.manifest.each_package do |pkg|
+Autoproj.manifest.each_package_definition do |pkg_def|
+    pkg = pkg_def.autobuild
     next if !pkg.importer.kind_of?(Autobuild::Git)
     if pkg.importer.branch == "next" || pkg.importer.branch == "stable"
         if !package_in_flavor?(pkg, pkg.importer.branch)
-            switched_packages << pkg
+            vcs_raw = pkg_def.vcs.raw.reverse.find { |pkg_set_name, options| options['branch'] }
+            if !vcs_raw || vcs_raw[1]['branch'] !~ /ROCK_FLAVOR/
+                switched_packages << pkg
+            end
             pkg.importer.branch = "master"
         end
     end
