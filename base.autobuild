@@ -1,8 +1,5 @@
 # IMPORTANT: new packages must be added at the top of this file
 
-import_package 'base/templates/bundle'
-import_package 'base/templates/doc'
-
 #################################################################################"
 #################################################################################"
 ## 
@@ -68,11 +65,13 @@ in_flavor 'master', 'next', 'stable' do
 end
 
 in_flavor 'master', 'next' do
+    import_package 'base/templates/bundle'
+    import_package 'base/templates/doc'
 end
 
 # This should only be done in master, since it relies on files being present in
 # the relevant packages
-only_in_flavor 'master' do
+only_in_flavor 'master', 'next' do
     # Setup bundle support only if base/scripts is enabled 
     if package_enabled?('base/scripts')
         setup_package 'base/scripts' do |pkg|
