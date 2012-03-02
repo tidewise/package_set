@@ -102,7 +102,7 @@ def in_flavor(*flavors)
     end
 
     current_packages = Autoproj.manifest.packages.keys
-    if !options[:strict] || flavor.enabled_in?(*flavors)
+    if !options[:strict] || flavors.include?(flavor.name)
         yield 
     end
     new_packages = Autoproj.manifest.packages.keys - current_packages
