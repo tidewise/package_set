@@ -1,6 +1,7 @@
 PriorityQueue: gem
 facets: gem
-state_machine: gem
+state_machine:
+    gem: state_machine<=1.0.3
 
 avahi:
     debian,ubuntu: [avahi-daemon, libavahi-client3, libavahi-client-dev, libavahi-core-dev]
