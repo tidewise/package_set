@@ -4,7 +4,8 @@ if flv = @flavors[flavor]
     @flavored_package_sets.each do |pkg_set|
         meta = Autoproj.manifest.metapackages[pkg_set]
 	if flv.implicit?
-	    default_packages = meta.packages.map(&:name).to_set |
+            in_a_flavor = @flavors.inject(Set.new) { |pkgs, (_, other_flavor)| pkgs | other_flavor.default_packages[pkg_set] }
+	    default_packages = (meta.packages.map(&:name).to_set - in_a_flavor) |
 		flv.default_packages[pkg_set]
 	else
 	    default_packages = flv.default_packages[pkg_set]
