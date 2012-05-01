@@ -70,6 +70,8 @@ in_flavor 'master', 'next', 'stable' do
 
     import_package 'base/templates/cmake_vizkit_widget'
     import_package 'base/templates/vizkit'
+    import_package 'base/templates/bundle'
+    import_package 'base/templates/doc'
 
     cmake_package 'eigen3' do |pkg|
         pkg.define "EIGEN_BUILD_PKGCONFIG", "ON"
@@ -78,16 +80,7 @@ in_flavor 'master', 'next', 'stable' do
     # eigen3 is without prefix, to make transition easier once its 
     # a system package. Should go into external dir, though.
     move_package 'eigen3', 'external'
-end
 
-in_flavor 'master', 'next' do
-    import_package 'base/templates/bundle'
-    import_package 'base/templates/doc'
-end
-
-# This should only be done in master, since it relies on files being present in
-# the relevant packages
-only_in_flavor 'master', 'next' do
     # Setup bundle support only if base/scripts is enabled 
     if package_enabled?('base/scripts')
         setup_package 'base/scripts' do |pkg|
