@@ -1,3 +1,39 @@
+in_flavor 'master' do 
+end
+
+in_flavor 'master', 'next' do
+end
+
+in_flavor 'master', 'next', 'stable' do
+    ruby_package  'tools/orocos.rb' do |pkg|
+        def pkg.prepare
+            super
+            Autobuild.update_environment srcdir
+            Autoproj.env_add_path 'ROBY_PLUGIN_PATH', File.join(srcdir, "lib", "orocos", "roby")
+            Autoproj.env_set 'ORBInitRef',"NameService=corbaname::127.0.0.1"
+        end
+    end
+
+    ruby_package 'tools/pocolog'
+    orogen_package 'tools/logger'
+    orogen_package 'base/orogen/types' do |pkg|
+        pkg.orogen_file = "base.orogen"
+        if package_selected?('external/sisl')
+            pkg.define "SISL_PREFIX", package('external/sisl').prefix
+        end
+        Autoproj.env_set 'ROCK_PREFIX', File.join(pkg.prefix,'share','rock')
+
+        pkg.remove_obsolete_installed_file "share", "typelib", "ruby", "base.rb"
+    end
+
+    ruby_package 'tools/roby' do |pkg|
+        pkg.doc_dir = File.join('doc', 'html')
+    end
+
+    ruby_package  'tools/log_tools' 
+    orogen_package 'tools/port_proxy'
+end
+
 require 'fileutils'
 
 setup_package('orogen') do |pkg|
@@ -49,41 +85,6 @@ move_package 'log4cpp', 'tools'
 add_packages_to_flavors 'master' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib']
 add_packages_to_flavors 'next' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib']
 add_packages_to_flavors 'stable' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib']
-
-in_flavor 'master' do 
-end
-
-in_flavor 'master', 'next' do
-    ruby_package  'tools/log_tools' 
-    orogen_package 'tools/port_proxy'
-end
-
-in_flavor 'master', 'next', 'stable' do
-    ruby_package  'tools/orocos.rb' do |pkg|
-        def pkg.prepare
-            super
-            Autobuild.update_environment srcdir
-            Autoproj.env_add_path 'ROBY_PLUGIN_PATH', File.join(srcdir, "lib", "orocos", "roby")
-            Autoproj.env_set 'ORBInitRef',"NameService=corbaname::127.0.0.1"
-        end
-    end
-
-    ruby_package 'tools/pocolog'
-    orogen_package 'tools/logger'
-    orogen_package 'base/orogen/types' do |pkg|
-        pkg.orogen_file = "base.orogen"
-        if package_selected?('external/sisl')
-            pkg.define "SISL_PREFIX", package('external/sisl').prefix
-        end
-        Autoproj.env_set 'ROCK_PREFIX', File.join(pkg.prefix,'share','rock')
-
-        pkg.remove_obsolete_installed_file "share", "typelib", "ruby", "base.rb"
-    end
-
-    ruby_package 'tools/roby' do |pkg|
-        pkg.doc_dir = File.join('doc', 'html')
-    end
-end
         
 Autoproj.env_add_path 'AUTOPROJ_PROJECT_BASE', "#{Autoproj.root_dir}"
 
