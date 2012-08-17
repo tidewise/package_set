@@ -9,3 +9,5 @@ eigen3:
     ubuntu:
         oneiric:
             libeigen3-dev
+        precise:
+            libeigen3-dev
