@@ -1,4 +1,5 @@
 in_flavor 'master' do 
+    orogen_package 'base/orogen/interfaces'
 end
 
 in_flavor 'master', 'next' do
