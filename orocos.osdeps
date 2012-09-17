@@ -10,4 +10,14 @@ avahi:
 sigc:
      debian,ubuntu: [libsigc++-2.0-0c2a, libsigc++-2.0-dev]
      gentoo: dev-libs/libsigc++
+qtruby:
+    debian: libqt4-ruby1.8
+    ubuntu:
+       '11.10':
+               - libqt4-ruby1.8
+               - ruby-qt4-uitools
+       default:
+               - libqt4-ruby1.8
+    gentoo:
+        kde-base/kdebindings-ruby
 
