@@ -1,0 +1,12 @@
+PriorityQueue: gem
+state_machine:
+    gem: state_machine<=1.0.3
+
+avahi:
+    debian,ubuntu: [avahi-daemon, libavahi-client3, libavahi-client-dev, libavahi-core-dev]
+    gentoo: net-dns/avahi
+
+sigc:
+     debian,ubuntu: [libsigc++-2.0-0c2a, libsigc++-2.0-dev]
+     gentoo: dev-libs/libsigc++
+
