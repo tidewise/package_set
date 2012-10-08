@@ -11,8 +11,10 @@ if flv = @flavors[flavor]
 	    default_packages = flv.default_packages[pkg_set]
 	end
 	default_packages -= flv.removed_packages
-        meta.packages.clear
-        Autoproj.manifest.metapackage(pkg_set, *(default_packages.to_a))
+        default_packages = default_packages.to_set
+        meta.packages.delete_if do |pkg|
+            !default_packages.include?(pkg.name)
+        end
     end
 end
 
