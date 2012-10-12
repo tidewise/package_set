@@ -5,8 +5,10 @@ state_machine:
 avahi:
     debian,ubuntu: [avahi-daemon, libavahi-client3, libavahi-client-dev, libavahi-core-dev]
     gentoo: net-dns/avahi
+    fedora: avahi-devel
 
 sigc:
-     debian,ubuntu: [libsigc++-2.0-0c2a, libsigc++-2.0-dev]
-     gentoo: dev-libs/libsigc++
+    debian,ubuntu: [libsigc++-2.0-0c2a, libsigc++-2.0-dev]
+    gentoo: dev-libs/libsigc++
+    fedora: libsigc++-devel
 
