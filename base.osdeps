@@ -1,13 +1,10 @@
 eigen2:
-    debian,ubuntu:
-        libeigen2-dev
+    debian,ubuntu: libeigen2-dev
+    fedora: eigen2-devel
 
 eigen3:
-    debian:
-        sid:
-            libeigen3-dev
+    debian: libeigen3-dev
     ubuntu:
-        oneiric:
-            libeigen3-dev
-        precise:
-            libeigen3-dev
+        "10.04,10.10,11.04": nonexistent
+        default: libeigen3-dev
+    fedora: eigen3-devel
