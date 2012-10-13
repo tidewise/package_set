@@ -82,6 +82,7 @@ in_flavor 'master', 'next', 'stable' do
     # eigen3 is without prefix, to make transition easier once its 
     # a system package. Should go into external dir, though.
     move_package 'eigen3', 'external'
+    remove_from_default 'eigen3'
 
     # Setup bundle support only if base/scripts is enabled 
     if package_enabled?('base/scripts')
