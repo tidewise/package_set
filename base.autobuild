@@ -1,7 +1,5 @@
 # IMPORTANT: new packages must be added at the top of this file
 
-cmake_package 'base/numeric'
-
 #################################################################################"
 #################################################################################"
 ## 
@@ -10,6 +8,10 @@ cmake_package 'base/numeric'
 ##
 #################################################################################"
 #################################################################################"
+
+in_flavor 'master', 'next' do
+    cmake_package 'base/numeric'
+end
 
 in_flavor 'master', 'next', 'stable' do
     import_package 'external/sisl' do |pkg|
