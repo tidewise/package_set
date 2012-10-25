@@ -45,7 +45,6 @@ end
 ###
 # Tune some things on the RTT
 configuration_option 'USE_OCL', 'boolean',
-    :values => ['yes', 'no'],
     :default => 'no',
     :doc => [
             "Do you need compatibility with OCL ? (yes or no)",
