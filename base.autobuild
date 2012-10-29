@@ -52,6 +52,7 @@ in_flavor 'master', 'next', 'stable' do
     end
 
     cmake_package 'base/types' do |pkg|
+        Autoproj.env_add_path 'CMAKE_PREFIX_PATH', pkg.prefix
         if Autobuild::CMake.respond_to?(:module_path)
             Autobuild::CMake.module_path << File.join(pkg.srcdir, "cmake")
         end
@@ -115,4 +116,6 @@ in_flavor 'master', 'next', 'stable' do
         end
     end
 end
+
+Autoproj.env_inherit 'CMAKE_PREFIX_PATH'
 
