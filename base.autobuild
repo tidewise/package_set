@@ -1,5 +1,8 @@
 # IMPORTANT: new packages must be added at the top of this file
 
+ruby_package 'base/admin_scripts'
+remove_from_default 'base/admin_scripts'
+
 #################################################################################"
 #################################################################################"
 ## 
