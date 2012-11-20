@@ -7,6 +7,6 @@ eigen3:
         sid:
             libeigen3-dev
     ubuntu:
-	'10.04,10.10,11.04,11.10': nonexistent
+        "10.04,10.10,11.04,11.10": nonexistent
         default:
             libeigen3-dev
