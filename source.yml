@@ -7,6 +7,9 @@ version_control:
     - base/scripts:
         gitorious: rock/scripts
         branch: $ROCK_FLAVOR
+    - base/admin_scripts:
+        gitorious: rock/admin_scripts
+        branch: $ROCK_FLAVOR
     - base/templates/cmake_vizkit_widget:
         gitorious: rock-base/template_cmake_vizkit_widget
         branch: $ROCK_FLAVOR

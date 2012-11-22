@@ -65,7 +65,7 @@ define_flavor 'master', :includes => ['stable', 'next'], :implicit => true
 
 configuration_option('ROCK_FLAVOR', 'string',
     :default => 'stable',
-    :values => @flavors.keys,
+    :possible_values => @flavors.keys,
     :doc => [
         "Which flavor of Rock do you want to use ?",
         "The 'stable' flavor is not updated often, but will contain well-tested code",
@@ -74,10 +74,7 @@ configuration_option('ROCK_FLAVOR', 'string',
         "Finally, 'master' is where the development takes place. It should generally be in",
         "a good state, but will break every once in a while",
         "",
-        "See http://rock-robotics.org/startup/releases.html for more information"]) do |value|
-
-    value
-end
+        "See http://rock-robotics.org/startup/releases.html for more information"])
 
 
 if ENV['ROCK_FORCE_FLAVOR']

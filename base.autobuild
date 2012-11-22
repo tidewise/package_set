@@ -1,6 +1,7 @@
 # IMPORTANT: new packages must be added at the top of this file
 
-cmake_package 'base/numeric'
+ruby_package 'base/admin_scripts'
+remove_from_default 'base/admin_scripts'
 
 #################################################################################"
 #################################################################################"
@@ -10,6 +11,10 @@ cmake_package 'base/numeric'
 ##
 #################################################################################"
 #################################################################################"
+
+in_flavor 'master', 'next' do
+    cmake_package 'base/numeric'
+end
 
 in_flavor 'master', 'next', 'stable' do
     import_package 'external/sisl' do |pkg|
@@ -50,6 +55,7 @@ in_flavor 'master', 'next', 'stable' do
     end
 
     cmake_package 'base/types' do |pkg|
+        Autoproj.env_add_path 'CMAKE_PREFIX_PATH', pkg.prefix
         if Autobuild::CMake.respond_to?(:module_path)
             Autobuild::CMake.module_path << File.join(pkg.srcdir, "cmake")
         end
@@ -114,4 +120,6 @@ in_flavor 'master', 'next', 'stable' do
         end
     end
 end
+
+Autoproj.env_inherit 'CMAKE_PREFIX_PATH'
 
