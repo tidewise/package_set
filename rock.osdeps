@@ -1,4 +1,5 @@
 PriorityQueue: gem
+facets: gem
 state_machine:
     gem: state_machine<=1.0.3
 

@@ -25,7 +25,7 @@ version_control:
       branch: $ROCK_FLAVOR
 
 overrides:
-    - ^(orogen|typelib|rtt|utilrb|utilmm)$:
+    - ^(orogen|typelib|rtt|utilrb|utilmm|rtt_typelib)$:
         gitorious: orocos-toolchain/rock-$PACKAGE_BASENAME
         branch: $ROCK_FLAVOR
 
