@@ -30,5 +30,5 @@ overrides:
         branch: $ROCK_FLAVOR
 
     - (ocl|log4cpp):
-        branch: toolchain-2.3
+        branch: toolchain-2.5
 
