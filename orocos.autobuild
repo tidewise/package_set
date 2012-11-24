@@ -69,7 +69,6 @@ setup_package 'rtt' do |rtt|
         Autobuild::Orogen.default_type_export_policy = 'all'
     else
         rtt.define "PLUGINS_ENABLE_SCRIPTING", "OFF"
-        Autoproj.manifest.add_exclusion 'ocl', "disabled because you answered 'no' to the OCL compatibility question"
         Autobuild::Orogen.default_type_export_policy = 'used'
     end
 end
@@ -86,6 +85,19 @@ move_package 'rtt_typelib', 'tools'
 add_packages_to_flavors 'master' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib']
 add_packages_to_flavors 'next' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib']
 add_packages_to_flavors 'stable' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib']
-        
+if !Autoproj.user_config('USE_OCL')
+    remove_from_default 'ocl'
+    remove_from_default 'log4cpp'
+end
+
+only_in_flavor 'master' do
+    setup_package 'ocl' do |pkg|
+        pkg.importer.branch = "master"
+    end
+    setup_package 'log4cpp' do |pkg|
+        pkg.importer.branch = "master"
+    end
+end
+
 Autoproj.env_add_path 'AUTOPROJ_PROJECT_BASE', "#{Autoproj.root_dir}"
 
