@@ -17,42 +17,6 @@ in_flavor 'master', 'next' do
 end
 
 in_flavor 'master', 'next', 'stable' do
-    import_package 'external/sisl' do |pkg|
-        def pkg.do_build
-            run('build', Autobuild.tool(:make), "-j#{parallel_build_level}", '-C', File.join(srcdir, 'sisl'))
-        end
-        def pkg.do_install
-            include_dir = File.join(prefix, 'include', 'sisl')
-            lib_dir     = File.join(prefix, 'lib')
-            FileUtils.rm_rf include_dir
-            FileUtils.mkdir_p File.dirname(include_dir)
-            FileUtils.mkdir_p lib_dir
-
-            flavors = %w{opt nopt}
-            flavor = flavors.find do |flavor_name|
-                File.file?(File.join(srcdir, 'sisl', 'lib', "libsisl_#{flavor_name}.so"))
-            end
-            FileUtils.cp File.join(srcdir, 'sisl', 'lib', "libsisl_#{flavor}.so"), File.join(lib_dir, 'libsisl.so')
-            FileUtils.cp_r File.join(srcdir, 'sisl', 'include'), include_dir
-        end
-        if pkg.respond_to?(:progress_start) # newer versions of autoproj
-            pkg.post_install do
-                pkg.progress_start "building %s", :done_message => 'built %s' do
-                    pkg.do_build
-                end
-                pkg.progress_start "installing %s", :done_message => 'installed %s' do
-                    pkg.do_install
-                end
-            end
-        else
-            pkg.post_install do
-                pkg.progress "building %s"
-                pkg.do_build
-                pkg.progress "installing %s"
-                pkg.do_install
-            end
-        end
-    end
 
     cmake_package 'base/types' do |pkg|
         Autoproj.env_add_path 'CMAKE_PREFIX_PATH', pkg.prefix
@@ -122,4 +86,78 @@ in_flavor 'master', 'next', 'stable' do
 end
 
 Autoproj.env_inherit 'CMAKE_PREFIX_PATH'
+
+
+def update_archive(pkg, new_url, new_version)
+    update_message = ["should we delete #{pkg.srcdir} to update #{pkg.name} to #{new_version} ?",
+            "a new tarball for #{pkg.name} is now selected, and I therefore need to delete the",
+            "current directory to update. If you say no, the build will continue but I will ask",
+            "you again next time."]
+    do_update = false
+
+    if File.directory?(pkg.srcdir) && yield
+        opt = BuildOption.new("", "boolean", {:default => false, :doc => update_message}, nil)
+        auto_update = Autoproj.has_config_key?("AUTOBUILD_ARCHIVE_AUTOUPDATE") && Autoproj.user_config("AUTOBUILD_ARCHIVE_AUTOUPDATE")
+        if auto_update || opt.ask('no')
+            do_update = true
+            pkg.progress_start "deleting #{new_url}", :done_message => "deleted #{new_url}" do
+                FileUtils.rm_rf pkg.srcdir
+            end
+        end
+    else
+        do_update = true
+    end
+
+    if do_update
+        pkg.importer = Autobuild::ArchiveImporter.new(new_url, :update_cached_file => false)
+    end
+end
+
+only_in_flavor 'next','stable' do
+    import_package 'external/sisl' do |pkg|
+        def pkg.do_build
+            run('build', Autobuild.tool(:make), "-j#{parallel_build_level}", '-C', File.join(srcdir, 'sisl'))
+        end
+        def pkg.do_install
+            include_dir = File.join(prefix, 'include', 'sisl')
+            lib_dir     = File.join(prefix, 'lib')
+            FileUtils.rm_rf include_dir
+            FileUtils.mkdir_p File.dirname(include_dir)
+            FileUtils.mkdir_p lib_dir
+
+            flavors = %w{opt nopt}
+            flavor = flavors.find do |flavor_name|
+                File.file?(File.join(srcdir, 'sisl', 'lib', "libsisl_#{flavor_name}.so"))
+            end
+            FileUtils.cp File.join(srcdir, 'sisl', 'lib', "libsisl_#{flavor}.so"), File.join(lib_dir, 'libsisl.so')
+            FileUtils.cp_r File.join(srcdir, 'sisl', 'include'), include_dir
+        end
+        if pkg.respond_to?(:progress_start) # newer versions of autoproj
+            pkg.post_install do
+                pkg.progress_start "building %s" do
+                    pkg.do_build
+                end
+                pkg.progress_start "installing %s" do
+                    pkg.do_install
+                end
+            end
+        else
+            pkg.post_install do
+                pkg.progress "building %s"
+                pkg.do_build
+                pkg.progress "installing %s"
+                pkg.do_install
+            end
+        end
+    end
+end
+
+only_in_flavor 'master' do
+    cmake_package 'external/sisl' do |pkg|
+        pkg.define "BUILD_SHARED_LIBS","ON"
+        update_archive(pkg, "http://www.sintef.no/upload/IKT/9011/geometri/sisl/sisl-4.5.0.tar.gz", "4.5.0") do
+                !File.exists?(File.join(pkg.srcdir,"CMakeLists.txt"))
+        end
+    end
+end
 
