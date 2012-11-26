@@ -15,7 +15,7 @@ end
 
 in_flavor 'master', 'next', 'stable' do
     ruby_package  'tools/orocos.rb' do |pkg|
-        def pkg.prepare
+        def pkg.update_environment
             super
             Autobuild.update_environment srcdir
             Autoproj.env_add_path 'ROBY_PLUGIN_PATH', File.join(srcdir, "lib", "orocos", "roby")
