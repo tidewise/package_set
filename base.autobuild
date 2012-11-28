@@ -100,7 +100,7 @@ def update_archive(pkg, new_url, new_version)
         auto_update = Autoproj.has_config_key?("AUTOBUILD_ARCHIVE_AUTOUPDATE") && Autoproj.user_config("AUTOBUILD_ARCHIVE_AUTOUPDATE")
         if auto_update || opt.ask('no')
             do_update = true
-            pkg.progress_start "deleting #{new_url}", :done_message => "deleted #{new_url}" do
+            pkg.progress_start "deleting #{pkg.srcdir}: a new archive version is available", :done_message => "deleted #{pkg.srcdir}: a new archive version is available" do
                 FileUtils.rm_rf pkg.srcdir
             end
         end
