@@ -89,6 +89,7 @@ Autoproj.env_inherit 'CMAKE_PREFIX_PATH'
 
 
 def update_archive(pkg, new_url, new_version)
+    return if !Autobuild.do_update
     update_message = ["should we delete #{pkg.srcdir} to update #{pkg.name} to #{new_version} ?",
             "a new tarball for #{pkg.name} is now selected, and I therefore need to delete the",
             "current directory to update. If you say no, the build will continue but I will ask",
