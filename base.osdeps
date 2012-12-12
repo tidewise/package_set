@@ -3,7 +3,11 @@ eigen2:
     fedora: eigen2-devel
 
 eigen3:
-    debian: libeigen3-dev
+    debian: 
+        default:
+            libeigen3-dev
+        '6.0.4,squeeze':
+            nonexistent
     ubuntu:
         "10.04,10.10,11.04,11.10": nonexistent
         default:
