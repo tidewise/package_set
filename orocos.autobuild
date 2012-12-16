@@ -1,7 +1,7 @@
 ruby_package 'tools/syskit' do |pkg|
     def pkg.update_environment
         super
-        Autoproj.env_add_path 'ROBY_PLUGIN_PATH', File.join(srcdir, "lib", "syskit")
+        Autoproj.env_add_path 'ROBY_PLUGIN_PATH', File.join(srcdir, "lib", "syskit", "roby_app/register_plugin.rb")
     end
 end
 remove_from_default 'tools/syskit'
