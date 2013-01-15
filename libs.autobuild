@@ -1,3 +1,7 @@
+in_flavor 'master' do
+    cmake_package 'tools/pocolog_cpp'
+end
+
 in_flavor 'master', 'next', 'stable' do
     cmake_package 'tools/service_discovery' do |pkg|
         pkg.define "RUBY_EXECUTABLE", Autoproj.find_in_path(RbConfig::CONFIG['RUBY_INSTALL_NAME'])
