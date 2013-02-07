@@ -89,7 +89,6 @@ Autoproj.env_inherit 'CMAKE_PREFIX_PATH'
 
 
 def update_archive(pkg, new_url, new_version)
-    return if !Autobuild.do_update
     update_message = ["should we delete #{pkg.srcdir} to update #{pkg.name} to #{new_version} ?",
             "a new tarball for #{pkg.name} is now selected, and I therefore need to delete the",
             "current directory to update. If you say no, the build will continue but I will ask",
@@ -114,7 +113,7 @@ def update_archive(pkg, new_url, new_version)
     end
 end
 
-only_in_flavor 'next','stable' do
+only_in_flavor 'stable' do
     import_package 'external/sisl' do |pkg|
         def pkg.do_build
             run('build', Autobuild.tool(:make), "-j#{parallel_build_level}", '-C', File.join(srcdir, 'sisl'))
@@ -153,7 +152,7 @@ only_in_flavor 'next','stable' do
     end
 end
 
-only_in_flavor 'master' do
+only_in_flavor 'master', 'next' do
     cmake_package 'external/sisl' do |pkg|
         pkg.define "BUILD_SHARED_LIBS","ON"
         update_archive(pkg, "http://www.sintef.no/upload/IKT/9011/geometri/sisl/sisl-4.5.0.tar.gz", "4.5.0") do
