@@ -4,7 +4,6 @@ ruby_package 'tools/syskit' do |pkg|
         Autoproj.env_add_path 'ROBY_PLUGIN_PATH', File.join(srcdir, "lib", "syskit", "roby_app/register_plugin.rb")
     end
 end
-remove_from_default 'tools/syskit'
 
 in_flavor 'master' do 
     orogen_package 'base/orogen/interfaces'
