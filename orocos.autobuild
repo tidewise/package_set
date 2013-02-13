@@ -1,3 +1,4 @@
+ruby_package 'tools/metaruby'
 ruby_package 'tools/syskit' do |pkg|
     def pkg.update_environment
         super
