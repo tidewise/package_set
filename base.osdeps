@@ -13,3 +13,8 @@ eigen3:
         default:
             libeigen3-dev
     fedora: eigen3-devel
+
+pkg-config:
+    debian,ubuntu:
+        default: pkg-config
+    fedora: pkg-config
