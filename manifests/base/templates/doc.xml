@@ -1,0 +1,5 @@
+<package>
+<description brief="template for the rock-doc-preview tool">
+    This package installs the templates needed by the rock-doc-preview tool
+</description>
+</package>
