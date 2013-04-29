@@ -12,3 +12,5 @@ sigc:
     gentoo: dev-libs/libsigc++
     fedora: libsigc++-devel
 
+rice: gem
+
