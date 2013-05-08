@@ -13,4 +13,5 @@ sigc:
     fedora: libsigc++-devel
 
 rice: gem
+rbtree: gem
 
