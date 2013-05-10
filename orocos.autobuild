@@ -8,6 +8,7 @@ end
 
 in_flavor 'master' do 
     orogen_package 'base/orogen/interfaces'
+    orogen_package 'base/orogen/std'
 end
 
 in_flavor 'master', 'next' do
