@@ -6,6 +6,7 @@ Autoproj.manifest.each_autobuild_package do |pkg|
     only_in_flavor 'master' do
         if pkg.name != 'base/orogen/std'
             pkg.optional_dependency 'base/orogen/std'
+            pkg.orogen_options << '--import=std'
         end
     end
 
