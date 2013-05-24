@@ -15,3 +15,5 @@ sigc:
 rice: gem
 rbtree: gem
 
+msgpack-ruby: 
+    gem : msgpack
