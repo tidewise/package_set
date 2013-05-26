@@ -1,0 +1,5 @@
+<package>
+<description brief="template bundle for the rock-create-bundle tool">
+    This package installs the templates needed by the rock-create-bundle tool
+</description>
+</package>
