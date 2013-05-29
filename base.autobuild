@@ -73,11 +73,15 @@ in_flavor 'master', 'next', 'stable' do
                 if shell_kind =~ /^\w+$/
                     shell_file = File.join(pkg.srcdir, "shell", shell_kind)
 
-                    # Must call after the import, otherwise the file might not
-                    # be there !
-                    pkg.post_import do
-                        if File.exists?(shell_file)
-                            Autoproj.env_source_file shell_file
+                    if File.file?(shell_file)
+                        Autoproj.env_source_file shell_file
+                    else
+                        # Wait for having imported the package before we add the
+                        # file
+                        pkg.post_import do
+                            if File.exists?(shell_file)
+                                Autoproj.env_source_file shell_file
+                            end
                         end
                     end
                 end
