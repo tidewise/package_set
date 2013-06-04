@@ -18,3 +18,7 @@ pkg-config:
     debian,ubuntu:
         default: pkg-config
     fedora: pkg-config
+
+webgen: gem
+coderay: gem
+

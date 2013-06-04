@@ -17,6 +17,9 @@ in_flavor 'master', 'next' do
 end
 
 in_flavor 'master', 'next', 'stable' do
+    import_package 'base/doc'
+    remove_from_default 'base/doc'
+
     cmake_package 'base/numeric'
 
     cmake_package 'base/types' do |pkg|
