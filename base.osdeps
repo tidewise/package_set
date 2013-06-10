@@ -21,4 +21,4 @@ pkg-config:
 
 webgen: gem
 coderay: gem
-
+kramdown: gem
