@@ -1,3 +1,17 @@
+# Migration from old-style .h base/types package to Rock-standard Bla.hpp
+# package
+base_types = package('base/types')
+base_types.post_import do
+    if File.file?(File.join(base_types.srcdir, 'base', 'Time.hpp'))
+        includedir = File.join(base_types.prefix, 'include', 'base')
+        if File.file?(File.join(includedir, 'time.h'))
+            Autoproj.warn "deleting #{includedir} because of change in include structure"
+            FileUtils.rm_rf includedir
+            FileUtils.rm_rf base_types.installstamp
+        end
+    end
+end
+
 flavor = Autoproj.user_config('ROCK_FLAVOR')
 
 if flv = @flavors[flavor]
