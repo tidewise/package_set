@@ -94,10 +94,13 @@ setup_package 'rtt' do |rtt|
     end
     if Autoproj.user_config('USE_OCL')
         rtt.define "PLUGINS_ENABLE_SCRIPTING", "ON"
+        rtt.define 'ORO_DISABLE_PORT_DATA_SCRIPTING', 'OFF'
         Autobuild::Orogen.default_type_export_policy = 'all'
     else
         rtt.define "PLUGINS_ENABLE_SCRIPTING", "OFF"
+        rtt.define 'ORO_DISABLE_PORT_DATA_SCRIPTING', 'ON'
         Autobuild::Orogen.default_type_export_policy = 'used'
+        Autobuild::Orogen.orogen_options << "--no-rtt-scripting"
     end
 end
 
