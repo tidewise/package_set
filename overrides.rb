@@ -26,6 +26,7 @@ if flv = @flavors[flavor]
 	end
 	default_packages -= flv.removed_packages
         default_packages = default_packages.to_set
+        flv.default_packages[pkg_set] = default_packages
         meta.packages.delete_if do |pkg|
             !default_packages.include?(pkg.name)
         end
