@@ -114,3 +114,17 @@ end
 Autoproj.env_add_path 'ROCK_BUNDLE_PATH', File.join(Autobuild.prefix, 'share', 'rock')
 Autoproj.env_add_path 'ROCK_BUNDLE_PATH', File.join(Autoproj.root_dir, 'bundles')
 
+# Finally, verify that when pkg A from flavor X depends on pkg B, then B needs
+# to be available in flavor X as well
+Autoproj.post_import do |pkg|
+    next if !pkg.importer.kind_of?(Autobuild::Git)
+
+    if (flv = @flavors[pkg.importer.branch]) && flv.include?(pkg.name)
+        pkg.dependencies.each do |dep_name|
+            if !flv.include?(dep_name)
+                raise ConfigError, "#{pkg.name}, in flavor #{flv.name}, depends on #{dep_name} which is not included in this flavor"
+            end
+        end
+    end
+end
+
