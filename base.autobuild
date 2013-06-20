@@ -104,7 +104,7 @@ def update_archive(pkg, new_url, new_version)
     do_update = false
 
     if File.directory?(pkg.srcdir) && yield
-        opt = BuildOption.new("", "boolean", {:default => false, :doc => update_message}, nil)
+        opt = Autoproj::BuildOption.new("", "boolean", {:default => false, :doc => update_message}, nil)
         auto_update = Autoproj.has_config_key?("AUTOBUILD_ARCHIVE_AUTOUPDATE") && Autoproj.user_config("AUTOBUILD_ARCHIVE_AUTOUPDATE")
         if auto_update || opt.ask('no')
             do_update = true
