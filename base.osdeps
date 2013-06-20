@@ -23,5 +23,5 @@ webgen: gem
 coderay: gem
 hoe: gem
 hoe-yard: gem
-rake-comiler: gem
+rake-compiler: gem
 
