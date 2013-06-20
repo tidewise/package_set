@@ -112,7 +112,7 @@ move_package 'rtt_typelib', 'tools'
 
 add_packages_to_flavors 'master' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib', 'rtt_typelib']
 add_packages_to_flavors 'next'   => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib', 'rtt_typelib']
-add_packages_to_flavors 'stable' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib']
+add_packages_to_flavors 'stable' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib', 'rtt_typelib']
 if !Autoproj.user_config('USE_OCL')
     remove_from_default 'ocl'
     remove_from_default 'log4cpp'
