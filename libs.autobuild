@@ -1,4 +1,7 @@
 in_flavor 'master' do
+end
+
+in_flavor 'master', 'next' do
     cmake_package 'tools/pocolog_cpp'
 end
 
