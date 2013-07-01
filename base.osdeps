@@ -22,3 +22,7 @@ pkg-config:
 webgen: gem
 coderay: gem
 kramdown: gem
+hoe: gem
+hoe-yard: gem
+rake-compiler: gem
+
