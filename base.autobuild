@@ -2,7 +2,6 @@
 
 ruby_package 'base/admin_scripts'
 remove_from_default 'base/admin_scripts'
-import_package 'base/templates/ruby_lib'
 
 #################################################################################"
 #################################################################################"
@@ -14,6 +13,7 @@ import_package 'base/templates/ruby_lib'
 #################################################################################"
 
 in_flavor 'master', 'next' do
+    import_package 'base/templates/ruby_lib'
 end
 
 in_flavor 'master', 'next', 'stable' do
