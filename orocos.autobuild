@@ -102,6 +102,7 @@ setup_package 'rtt' do |rtt|
         Autobuild::Orogen.default_type_export_policy = 'used'
         Autobuild::Orogen.orogen_options << "--no-rtt-scripting"
     end
+    rtt.disable_doc
 end
 
 move_package 'rtt', 'tools'
