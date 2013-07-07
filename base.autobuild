@@ -1,8 +1,5 @@
 # IMPORTANT: new packages must be added at the top of this file
 
-ruby_package 'base/admin_scripts'
-remove_from_default 'base/admin_scripts'
-
 #################################################################################"
 #################################################################################"
 ## 
@@ -17,6 +14,9 @@ in_flavor 'master', 'next' do
 end
 
 in_flavor 'master', 'next', 'stable' do
+    ruby_package 'base/admin_scripts'
+    remove_from_default 'base/admin_scripts'
+
     import_package 'base/doc'
     remove_from_default 'base/doc'
 
