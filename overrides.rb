@@ -125,7 +125,8 @@ Autoproj.post_import do |pkg|
         next if flv.name == 'master' 
 
         pkg.dependencies.each do |dep_name|
-            if !flv.include?(dep_name)
+            #Check only for packages that are Git's too if they are in the same flavor availible
+            if !flv.include?(dep_name) && Autoproj.manifest.package(dep_name).autobuild.importer.kind_of?(Autobuild::Git)
                 raise ConfigError, "#{pkg.name}, in flavor #{flv.name}, depends on #{dep_name} which is not included in this flavor"
             end
         end
