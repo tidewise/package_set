@@ -23,10 +23,6 @@ version_control:
     - tools/port_proxy:
       gitorious: rock-toolchain/orogen-$PACKAGE_BASENAME
       branch: $ROCK_FLAVOR
-    - tools/rbind:
-      type: git
-      url: git://github.com/D-Alex/rbind.git
-      push_to: git@github.com:D-Alex/rbind.git
 
 overrides:
     - ^(orogen|typelib|rtt|utilrb|utilmm|rtt_typelib)$:
