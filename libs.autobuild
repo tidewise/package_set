@@ -1,3 +1,5 @@
+ruby_package 'tools/rbind'
+
 in_flavor 'master' do
 end
 
