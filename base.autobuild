@@ -128,7 +128,7 @@ def update_archive(pkg, new_url, new_version)
     end
 end
 
-only_in_flavor 'master' do
+only_in_flavor 'master', 'next' do
     setup_package 'base/scripts' do |pkg|
         Autobuild.env_add_path 'ROBY_PLUGIN_PATH', File.join(pkg.srcdir, 'lib', 'rock', 'roby_plugin.rb')
     end
