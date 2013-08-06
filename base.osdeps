@@ -24,5 +24,6 @@ coderay: gem
 kramdown: gem
 hoe: gem
 hoe-yard: gem
-rake-compiler: gem
+rake-compiler: 
+    gem: rake-compiler<=0.8.2
 
