@@ -36,6 +36,10 @@ in_flavor 'next','stable' do
             pkg.define 'SISL_PREFIX', package('external/sisl').prefix
         end
     end
+
+    ruby_package 'base/types_ruby' do |pkg|
+        Autobuild.env_add_path 'TYPELIB_RUBY_PLUGIN_PATH', File.join(pkg.srcdir, "lib", "base")
+    end
 end
 
 in_flavor 'master', 'next' do
@@ -52,9 +56,6 @@ in_flavor 'master', 'next', 'stable' do
     cmake_package 'base/numeric'
 
     ruby_package 'base/scripts'
-    ruby_package 'base/types_ruby' do |pkg|
-        Autobuild.env_add_path 'TYPELIB_RUBY_PLUGIN_PATH', File.join(pkg.srcdir, "lib", "base")
-    end
 
     import_package 'base/templates/cmake_lib' do |pkg|
         env_set "ROCK_TEMPLATE_PREFIX", File.join(File.expand_path('..', pkg.srcdir), '')
