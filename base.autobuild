@@ -8,7 +8,7 @@
 ##
 #################################################################################"
 #################################################################################"
-in_flavor 'master' do
+only_in_flavor 'master' do
     cmake_package 'base/cmake' do |pkg|
         Autoproj.env_add_path 'CMAKE_PREFIX_PATH', pkg.prefix
         if Autobuild::CMake.respond_to?(:module_path)
@@ -24,7 +24,7 @@ in_flavor 'master' do
     end
 end
 
-in_flavor 'next','stable' do
+only_in_flavor 'next','stable' do
     cmake_package 'base/types' do |pkg|
         Autoproj.env_add_path 'CMAKE_PREFIX_PATH', pkg.prefix
         if Autobuild::CMake.respond_to?(:module_path)
