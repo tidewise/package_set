@@ -17,6 +17,7 @@ only_in_flavor 'master' do
         if package_enabled?('external/sisl')
             pkg.define 'SISL_PREFIX', package('external/sisl').prefix
         end
+        Autobuild.env_add_path 'TYPELIB_RUBY_PLUGIN_PATH', File.join(pkg.prefix, "share", "typelib", "ruby")
     end
 end
 
