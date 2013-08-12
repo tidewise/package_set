@@ -29,4 +29,5 @@ rake-compiler:
         gem: rake-compiler<0.9.0
     default:
         gem: rake-compiler
+rice: gem
 
