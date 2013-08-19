@@ -13,6 +13,14 @@ ignore(/\.sw?$/)
 # Ignore the numerous backup files
 ignore(/~$/)
 
+require 'autoproj/gitorious'
+if !Autoproj.has_source_handler? 'gitorious'
+    Autoproj.gitorious_server_configuration('GITORIOUS', 'gitorious.org')
+end
+if !Autoproj.has_source_handler? 'github'
+    Autoproj.gitorious_server_configuration('GITHUB', 'github.com')
+end
+
 @flavors = Hash.new
 @flavored_package_sets = Set.new
 
