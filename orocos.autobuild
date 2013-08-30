@@ -24,7 +24,6 @@ end
 in_flavor 'master', 'next' do
     orogen_package 'base/orogen/std'
 
-    ruby_package 'tools/metaruby'
     ruby_package 'tools/syskit' do |pkg|
         def pkg.update_environment
             super
@@ -117,9 +116,10 @@ move_package 'utilmm', 'tools'
 move_package 'utilrb', 'tools'
 move_package 'log4cpp', 'tools'
 move_package 'rtt_typelib', 'tools'
+Autoproj.manifest.moved_packages.delete('tools/metaruby')
 
-add_packages_to_flavors 'master' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib', 'rtt_typelib']
-add_packages_to_flavors 'next'   => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib', 'rtt_typelib']
+add_packages_to_flavors 'master' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib', 'rtt_typelib', 'tools/metaruby']
+add_packages_to_flavors 'next'   => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib', 'rtt_typelib', 'tools/metaruby']
 add_packages_to_flavors 'stable' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib', 'rtt_typelib']
 if !Autoproj.user_config('USE_OCL')
     remove_from_default 'ocl'
