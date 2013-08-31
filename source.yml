@@ -25,8 +25,7 @@ version_control:
         update_cached_file: false
     - external/sisl:
         type: archive
-        url: http://www.sintef.no/upload/IKT/9011/geometri/sisl/sisl_4.4_GPL.tgz
-        patches: $AUTOPROJ_SOURCE_DIR/sisl-01-build_shlibs-02.patch
+        url: http://www.sintef.no/upload/IKT/9011/geometri/sisl/sisl-4.5.0.tar.gz
         update_cached_file: false
     - base/doc:
         gitorious: rock/doc
