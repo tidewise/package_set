@@ -113,6 +113,10 @@ in_flavor 'master', 'next', 'stable' do
 
     cmake_package 'external/sisl' do |pkg|
         pkg.define "BUILD_SHARED_LIBS","ON"
+        pkg.doc_task do
+            pkg.message "copying HTML documentation from %s"
+        end # Nothing to do, SISL ships with the generated documentation
+        pkg.doc_dir = File.join(pkg.srcdir, 'doc', 'html')
     end
 end
 
