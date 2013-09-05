@@ -19,7 +19,8 @@ pkg-config:
         default: pkg-config
     fedora: pkg-config
 
-webgen: gem
+webgen:
+    gem: webgen<1.0
 coderay: gem
 kramdown: gem
 hoe: gem
