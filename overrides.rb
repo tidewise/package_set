@@ -116,18 +116,20 @@ Autoproj.env_add_path 'ROCK_BUNDLE_PATH', File.join(Autoproj.root_dir, 'bundles'
 
 # Finally, verify that when pkg A from flavor X depends on pkg B, then B needs
 # to be available in flavor X as well
-Autoproj.post_import do |pkg|
-    next if !pkg.importer.kind_of?(Autobuild::Git)
+if ENV['ROCK_DISABLE_CROSS_FLAVOR_CHECKS'] != '1'
+    Autoproj.post_import do |pkg|
+        next if !pkg.importer.kind_of?(Autobuild::Git)
 
-    if (flv = @flavors[pkg.importer.branch]) && flv.include?(pkg.name)
-        #Skip packages that are only on master, because packages for 'master' 
-        #are not automaticly added to the master flavor. So the check would fail
-        next if flv.name == 'master' 
+        if (flv = @flavors[pkg.importer.branch]) && flv.include?(pkg.name)
+            #Skip packages that are only on master, because packages for 'master' 
+            #are not automaticly added to the master flavor. So the check would fail
+            next if flv.name == 'master' 
 
-        pkg.dependencies.each do |dep_name|
-            #Check only for packages that are Git's too if they are in the same flavor availible
-            if !flv.include?(dep_name) && Autoproj.manifest.package(dep_name).autobuild.importer.kind_of?(Autobuild::Git)
-                raise ConfigError, "#{pkg.name}, in flavor #{flv.name}, depends on #{dep_name} which is not included in this flavor"
+            pkg.dependencies.each do |dep_name|
+                #Check only for packages that are Git's too if they are in the same flavor availible
+                if !flv.include?(dep_name) && Autoproj.manifest.package(dep_name).autobuild.importer.kind_of?(Autobuild::Git)
+                    raise ConfigError, "#{pkg.name}, in flavor #{flv.name}, depends on #{dep_name} which is not included in this flavor"
+                end
             end
         end
     end
