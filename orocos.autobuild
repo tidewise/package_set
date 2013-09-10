@@ -60,11 +60,10 @@ in_flavor 'master', 'next', 'stable' do
     end
 
     ruby_package  'tools/log_tools' 
-    orogen_package 'tools/port_proxy'
 end
 
-only_in_flavor 'master', 'next' do
-    remove_from_default 'tools/port_proxy'
+in_flavor 'stable' do
+    orogen_package 'tools/port_proxy'
 end
 
 require 'fileutils'
