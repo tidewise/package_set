@@ -8,7 +8,7 @@
 ##
 #################################################################################"
 #################################################################################"
-only_in_flavor 'master' do
+only_in_flavor 'master', 'next' do
     cmake_package 'base/types' do |pkg|
         if package_enabled?('external/sisl')
             pkg.define 'SISL_PREFIX', package('external/sisl').prefix
@@ -20,15 +20,15 @@ end
 cmake_package 'base/console_bridge'
 
 in_flavor 'master' do
+end
+
+in_flavor 'master', 'next' do
     cmake_package 'base/cmake' do |pkg|
         Autobuild.env_add_path 'CMAKE_PREFIX_PATH', pkg.prefix
     end
 end
 
-in_flavor 'master', 'next' do
-end
-
-only_in_flavor 'next','stable' do
+only_in_flavor 'stable' do
     cmake_package 'base/types' do |pkg|
         Autoproj.env_add_path 'CMAKE_PREFIX_PATH', pkg.prefix
         if Autobuild::CMake.respond_to?(:module_path)
