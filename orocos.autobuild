@@ -38,7 +38,6 @@ in_flavor 'master', 'next', 'stable' do
         def pkg.update_environment
             super
             Autobuild.update_environment srcdir
-            Autoproj.env_add_path 'ROBY_PLUGIN_PATH', File.join(srcdir, "lib", "orocos", "roby")
             Autoproj.env_set 'ORBInitRef',"NameService=corbaname::127.0.0.1"
         end
     end
@@ -64,6 +63,12 @@ end
 
 in_flavor 'stable' do
     orogen_package 'tools/port_proxy'
+end
+
+only_in_flavor 'stable' do
+    setup_package 'tools/orocos.rb' do |pkg|
+        Autoproj.env_add_path 'ROBY_PLUGIN_PATH', File.join(pkg.srcdir, "lib", "orocos", "roby")
+    end
 end
 
 require 'fileutils'
