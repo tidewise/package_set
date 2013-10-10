@@ -14,11 +14,11 @@ end
 
 flavor = Autoproj.user_config('ROCK_FLAVOR')
 
-if flv = @flavors[flavor]
-    @flavored_package_sets.each do |pkg_set|
+if flv = FLAVORS[flavor]
+    FLAVORED_PACKAGE_SETS.each do |pkg_set|
         meta = Autoproj.manifest.metapackages[pkg_set]
 	if flv.implicit?
-            in_a_flavor = @flavors.inject(Set.new) { |pkgs, (_, other_flavor)| pkgs | other_flavor.default_packages[pkg_set] }
+            in_a_flavor = FLAVORS.inject(Set.new) { |pkgs, (_, other_flavor)| pkgs | other_flavor.default_packages[pkg_set] }
 	    default_packages = (meta.packages.map(&:name).to_set - in_a_flavor) |
 		flv.default_packages[pkg_set]
 	else
@@ -120,7 +120,7 @@ if ENV['ROCK_DISABLE_CROSS_FLAVOR_CHECKS'] != '1'
     Autoproj.post_import do |pkg|
         next if !pkg.importer.kind_of?(Autobuild::Git)
 
-        if (flv = @flavors[pkg.importer.branch]) && flv.include?(pkg.name)
+        if (flv = FLAVORS[pkg.importer.branch]) && flv.include?(pkg.name)
             #Skip packages that are only on master, because packages for 'master' 
             #are not automaticly added to the master flavor. So the check would fail
             next if flv.name == 'master' 
