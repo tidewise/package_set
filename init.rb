@@ -93,7 +93,48 @@ def enabled_flavor_system
     FLAVORED_PACKAGE_SETS << Autoproj.current_package_set.name
 end
 
-def in_flavor(*flavors)
+class InFlavorContext < BasicObject
+    attr_reader :current_flavor_name, :flavors, :strict
+    def initialize(current_flavor_name, flavors, strict)
+        @current_flavor_name, @flavors, @strict =
+            current_flavor_name, flavors, strict
+    end
+
+    def method_missing(m, *args, &block)
+        # We only pass the *_package method calls
+        if m.to_s =~ /^\w+_package$/
+            package_name = args.first
+
+            package_set = ::Autoproj.manifest.
+                definition_source(package_name) || ::Autoproj.current_package_set
+            vcs = ::Autoproj.manifest.importer_definition_for(package_name, package_set)
+
+            if !vcs
+                ::Kernel.puts [m, args.inspect]
+            end
+            branch_is_flavor = ::TOPLEVEL_BINDING.instance_eval do
+                vcs.options[:branch] && flavor_defined?(vcs.options[:branch])
+            end
+
+            if branch_is_flavor
+                flavor_name = vcs.options[:branch]
+            else flavor_name = current_flavor_name
+            end
+
+            if !strict || flavors.include?(flavor_name)
+                ::TOPLEVEL_BINDING.instance_eval do
+                    send(m, *args, &block)
+                end
+            end
+        else
+            ::TOPLEVEL_BINDING.instance_eval do
+                send(m, *args, &block)
+            end
+        end
+    end
+end
+
+def in_flavor(*flavors, &block)
     if flavors.last.kind_of?(Hash)
         options = flavors.pop
         options = Kernel.validate_options options, :strict => false
@@ -107,9 +148,7 @@ def in_flavor(*flavors)
     end
 
     current_packages = Autoproj.manifest.packages.keys
-    if !options[:strict] || flavors.include?(flavor.name)
-        yield 
-    end
+    InFlavorContext.new(flavor.name, flavors, options[:strict]).instance_eval(&block)
     new_packages = Autoproj.manifest.packages.keys - current_packages
     add_packages_to_flavors flavors => new_packages
 end
@@ -124,6 +163,10 @@ def only_in_flavor(*flavors, &block)
     end
     flavors << options
     in_flavor(*flavors, &block)
+end
+
+def flavor_defined?(flavor_name)
+    FLAVORS.has_key?(flavor_name.to_s)
 end
 
 def package_in_flavor?(pkg, flavor_name)
