@@ -3,7 +3,7 @@ Autoproj.manifest.each_autobuild_package do |pkg|
     if pkg.name != "tools/logger" && pkg.name != "base/orogen/types" && pkg.name != 'base/orogen/std'
         pkg.optional_dependency 'tools/logger'
     end
-    only_in_flavor 'master','next' do
+    only_in_flavor 'master','next', 'stable' do
         if pkg.name != 'base/orogen/std'
             pkg.optional_dependency 'base/orogen/std'
             pkg.orogen_options << '--import=std'
