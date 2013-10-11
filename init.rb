@@ -93,6 +93,10 @@ def enabled_flavor_system
     FLAVORED_PACKAGE_SETS << Autoproj.current_package_set.name
 end
 
+if !defined? BasicObject
+    BasicObject = Object
+end
+
 class InFlavorContext < BasicObject
     attr_reader :current_flavor_name, :flavors, :strict
     def initialize(current_flavor_name, flavors, strict)
