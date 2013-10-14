@@ -149,7 +149,14 @@ def in_flavor(*flavors, &block)
     end
 
     current_packages = Autoproj.manifest.packages.keys
-    InFlavorContext.new(flavor.name, flavors, options[:strict]).instance_eval(&block)
+    if BasicObject == Object # ruby 1.8
+        if !options[:strict] || flavors.include?(flavor.name)
+            yield
+        end
+    else
+        InFlavorContext.new(flavor.name, flavors, options[:strict]).instance_eval(&block)
+    end
+
     new_packages = Autoproj.manifest.packages.keys - current_packages
     add_packages_to_flavors flavors => new_packages
 end
