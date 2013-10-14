@@ -113,9 +113,6 @@ class InFlavorContext < BasicObject
                 definition_source(package_name) || ::Autoproj.current_package_set
             vcs = ::Autoproj.manifest.importer_definition_for(package_name, package_set)
 
-            if !vcs
-                ::Kernel.puts [m, args.inspect]
-            end
             branch_is_flavor = ::TOPLEVEL_BINDING.instance_eval do
                 vcs.options[:branch] && flavor_defined?(vcs.options[:branch])
             end
