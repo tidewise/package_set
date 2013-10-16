@@ -17,3 +17,6 @@ rbtree: gem
 
 msgpack-ruby: 
     gem : msgpack
+
+websocket-gem:
+    gem: websocket
