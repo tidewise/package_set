@@ -1,6 +1,7 @@
 eigen2:
     debian,ubuntu: libeigen2-dev
     fedora: eigen2-devel
+    arch,manjarolinux: eigen2
 
 eigen3:
     debian: 
@@ -13,11 +14,13 @@ eigen3:
         default:
             libeigen3-dev
     fedora: eigen3-devel
+    arch,manjarolinux: eigen3
 
 pkg-config:
     debian,ubuntu:
         default: pkg-config
     fedora: pkg-config
+    arch,manjarolinux: pkg-config
 
 webgen:
     gem: webgen<1.0
