@@ -8,4 +8,4 @@ qtruby:
         default:
             gem:
                 qtbindings
-    archlinux,manjarolinux: kdebindings-qtruby
+    arch,manjarolinux: kdebindings-qtruby
