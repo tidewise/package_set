@@ -24,7 +24,7 @@ version_control:
       gitorious: rock-toolchain/orogen-$PACKAGE_BASENAME
       branch: $ROCK_FLAVOR
     - tools/telemetry:
-      gitorious: rock-toolchain/orogen-$PACKAGE_BASENAME
+      gitorious: rock-toolchain/$PACKAGE_BASENAME
       branch: $ROCK_FLAVOR
 
 overrides:
