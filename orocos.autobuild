@@ -1,3 +1,5 @@
+ruby_package  'tools/telemetry'
+
 in_flavor 'master' do 
     ruby_package 'tools/oropy_bridge' do |pkg|
         def pkg.update_environment

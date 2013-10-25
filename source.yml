@@ -23,6 +23,9 @@ version_control:
     - tools/port_proxy:
       gitorious: rock-toolchain/orogen-$PACKAGE_BASENAME
       branch: $ROCK_FLAVOR
+    - tools/telemetry:
+      gitorious: rock-toolchain/orogen-$PACKAGE_BASENAME
+      branch: $ROCK_FLAVOR
 
 overrides:
     - ^(orogen|typelib|rtt|utilrb|utilmm|rtt_typelib|tools/metaruby)$:
