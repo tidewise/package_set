@@ -14,6 +14,7 @@ only_in_flavor 'master', 'next' do
             pkg.define 'SISL_PREFIX', package('external/sisl').prefix
         end
         Autobuild.env_add_path 'TYPELIB_RUBY_PLUGIN_PATH', File.join(pkg.prefix, "share", "typelib", "ruby")
+	pkg.define "RUBY_EXECUTABLE", Autoproj.find_in_path(RbConfig::CONFIG['RUBY_INSTALL_NAME'])
     end
 end
 
