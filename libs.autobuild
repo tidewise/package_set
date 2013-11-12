@@ -1,4 +1,7 @@
 in_flavor 'master' do
+    cmake_package 'tools/orogen_metadata' do |pkg|
+        Autoproj.env_add_path 'RUBYLIB', File.join(pkg.srcdir, "ruby","lib")
+    end
 end
 
 in_flavor 'master', 'next' do
