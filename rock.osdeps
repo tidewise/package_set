@@ -22,3 +22,6 @@ msgpack-ruby:
 
 websocket-gem:
     gem: websocket
+
+binding_of_caller:
+    gem: binding_of_caller
