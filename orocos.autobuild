@@ -20,9 +20,11 @@ in_flavor 'master' do
     end
     remove_from_default 'tools/oropy_bridge'
     
+    # This package should not even exist. Let's see after the ML discussion
     orogen_package 'tools/csv_logger' do |pkg|
         Autoproj.env_add_path 'RUBYLIB', File.join(pkg.srcdir, "ruby")
     end
+    remove_from_default 'tools/csv_logger'
 
     #This package is depricated ahd should be removed soon! Nov. '13
     orogen_package 'base/orogen/interfaces'
