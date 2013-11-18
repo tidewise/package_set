@@ -1,6 +1,6 @@
 in_flavor 'master' do
     cmake_package 'tools/orogen_metadata' do |pkg|
-        Autoproj.env_add_path 'RUBYLIB', File.join(pkg.srcdir, "ruby","lib")
+        Autoproj.env_add_path 'RUBYLIB', File.join(pkg.srcdir, "bindings", "ruby", "lib")
         pkg.remove_obsolete_installed_file('share', 'orogen', 'plugins', 'metadata_plugin.rb')
         pkg.remove_obsolete_installed_file('share', 'typelib', 'ruby', 'metadata_typelib.rb')
     end
