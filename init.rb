@@ -123,10 +123,22 @@ class InFlavorContext < BasicObject
             end
 
             if !strict || flavors.include?(flavor_name)
-                ::TOPLEVEL_BINDING.instance_eval do
-                    send(m, *args, &block)
+                if block
+                    ::TOPLEVEL_BINDING.instance_eval do
+                        send(m, *args) do |pkg|
+                            # We need to rebind the block into the toplevel binding so
+                            # that toplevel methods used there get defined (again)
+                            ::TOPLEVEL_BINDING.instance_exec(pkg, &block)
+                        end
+                    end
+                else
+                    ::TOPLEVEL_BINDING.instance_eval do
+                        send(m, *args)
+                    end
                 end
             end
+        elsif strict
+            ::Kernel.raise ::ArgumentError, "only calls to the package definition methods are allows in only_in_flavor"
         else
             ::TOPLEVEL_BINDING.instance_eval do
                 send(m, *args, &block)
