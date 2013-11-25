@@ -125,29 +125,3 @@ end
 
 Autoproj.env_inherit 'CMAKE_PREFIX_PATH'
 
-
-def update_archive(pkg, new_url, new_version)
-    update_message = ["should we delete #{pkg.srcdir} to update #{pkg.name} to #{new_version} ?",
-            "a new tarball for #{pkg.name} is now selected, and I therefore need to delete the",
-            "current directory to update. If you say no, the build will continue but I will ask",
-            "you again next time."]
-    do_update = false
-
-    if File.directory?(pkg.srcdir) && yield
-        opt = Autoproj::BuildOption.new("", "boolean", {:default => false, :doc => update_message}, nil)
-        auto_update = Autoproj.has_config_key?("AUTOBUILD_ARCHIVE_AUTOUPDATE") && Autoproj.user_config("AUTOBUILD_ARCHIVE_AUTOUPDATE")
-        if auto_update || opt.ask('no')
-            do_update = true
-            pkg.progress_start "deleting #{pkg.srcdir}: a new archive version is available", :done_message => "deleted #{pkg.srcdir}: a new archive version is available" do
-                FileUtils.rm_rf pkg.srcdir
-            end
-        end
-    else
-        do_update = true
-    end
-
-    if do_update
-        pkg.importer = Autobuild::ArchiveImporter.new(new_url, :update_cached_file => false)
-    end
-end
-
