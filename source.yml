@@ -29,6 +29,8 @@ version_control:
     - tools/orogen_ros:
       gitorious: rock-ros/orogen_ros
       branch: $ROCK_FLAVOR
+    - tools/rubigen:
+      github: doudou/rubigen
 
 overrides:
     - ^(orogen|typelib|rtt|utilrb|utilmm|rtt_typelib|tools/metaruby)$:

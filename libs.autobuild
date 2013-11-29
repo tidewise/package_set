@@ -1,3 +1,7 @@
+ruby_package 'tools/rubigen' do |pkg|
+    pkg.depends_on 'activesupport'
+end
+
 in_flavor 'master' do
     cmake_package 'tools/orogen_metadata' do |pkg|
         Autoproj.env_add_path 'RUBYLIB', File.join(pkg.srcdir, "bindings", "ruby", "lib")
