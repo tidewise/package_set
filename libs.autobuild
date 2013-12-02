@@ -1,5 +1,6 @@
 ruby_package 'tools/rubigen' do |pkg|
     pkg.depends_on 'activesupport'
+    pkg.rake_setup_task = nil
 end
 
 in_flavor 'master' do
