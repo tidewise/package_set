@@ -5,7 +5,6 @@ Autoproj.manifest.each_autobuild_package do |pkg|
     end
 
     if Autoproj.user_config('ROCK_FLAVOR') == 'master'
-    #BUGGY: only_in_flavor 'master' do 
         pkg.orogen_options << '--extensions=metadata_support'
     end
     only_in_flavor 'master','next', 'stable' do
