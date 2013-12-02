@@ -35,3 +35,9 @@ rake-compiler:
         gem: rake-compiler
 rice: gem
 
+cmake:
+    debian,ubuntu:
+        default: cmake
+    fedora: cmake
+    arch,manjarolinux: cmake
+
