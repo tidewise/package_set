@@ -1,8 +1,11 @@
 qtruby:
     debian:
+       default:
         - ruby-qt4
         - ruby-qt4-uitools
-        
+       '6.0.4,squeeze':
+        - libqt4-ruby
+
     ubuntu:
        default:
                - ruby-qt4
@@ -15,6 +18,4 @@ qtruby:
     fedora:
         "16": ruby-qt
         default:
-            gem:
-                qtbindings
-
+            gem: "qtbindings = 4.8.3.0"
