@@ -1,0 +1,10 @@
+<package>
+  <description brief="Ruby generator framework">
+      A framework to allow Ruby applications to generate file/folder stubs (like
+      the rails command does for Ruby on Rails, and the ‘script/generate’
+      command within a Rails application during development).
+  </description>
+  <author>Dr Nic Williams/drnicwilliams@gmail.com</author>
+  <license>MIT</license>
+  <url>http://github.com/drnic/rubigen</url>
+</package>
