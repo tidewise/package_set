@@ -12,48 +12,11 @@ base_types.post_import do
     end
 end
 
-flavor = Autoproj.user_config('ROCK_FLAVOR')
+current_flavor = Rock.flavors.current_flavor
 
-if flv = FLAVORS[flavor]
-    FLAVORED_PACKAGE_SETS.each do |pkg_set|
-        meta = Autoproj.manifest.metapackages[pkg_set]
-	if flv.implicit?
-            in_a_flavor = FLAVORS.inject(Set.new) { |pkgs, (_, other_flavor)| pkgs | other_flavor.default_packages[pkg_set] }
-	    default_packages = (meta.packages.map(&:name).to_set - in_a_flavor) |
-		flv.default_packages[pkg_set]
-	else
-	    default_packages = flv.default_packages[pkg_set]
-	end
-	default_packages -= flv.removed_packages
-        default_packages = default_packages.to_set
-        flv.default_packages[pkg_set] = default_packages
-        meta.packages.delete_if do |pkg|
-            !default_packages.include?(pkg.name)
-        end
-    end
-end
-
-# If a package is using the 'next' or 'stable' branches, but the package is
-# not enabled in the next or stable flavors, switch it back to master
-switched_packages = []
-wrong_branch = []
-Autoproj.manifest.each_package_definition do |pkg_def|
-    pkg = pkg_def.autobuild
-    next if !pkg.importer.kind_of?(Autobuild::Git)
-    if pkg.importer.branch == "next" || pkg.importer.branch == "stable"
-        if !package_in_flavor?(pkg, pkg.importer.branch)
-            vcs_raw = pkg_def.vcs.raw.reverse.find { |pkg_set_name, options| options['branch'] }
-            if !vcs_raw || vcs_raw[1]['branch'] !~ /ROCK_FLAVOR/
-                switched_packages << pkg
-            end
-            pkg.importer.branch = "master"
-        end
-    end
-
-    if package_in_flavor?(pkg, flavor) && pkg.importer.branch != flavor
-        wrong_branch << pkg
-    end
-end
+Rock.flavors.finalize
+switched_packages = Rock.flavors.reset_invalid_branches_to('master')
+wrong_branch = Rock.flavors.find_all_overriden_flavored_branches
 
 if !switched_packages.empty?
     pkgs = switched_packages.map(&:name).sort.join(", ")
@@ -75,38 +38,17 @@ if !wrong_branch.empty?
     Autoproj.warn "  #{pkgs}"
 end
 
-if Autoproj.respond_to?(:post_import)
-    # Override the CMAKE_BUILD_TYPE configuration parameter based on the
-    # "stable" tag
-    Autoproj.post_import do |pkg|
-        next if !pkg.kind_of?(Autobuild::CMake)
-
-        if !pkg.defines.has_key?('CMAKE_BUILD_TYPE')
-            if pkg.has_tag?('stable')
-                pkg.define "CMAKE_BUILD_TYPE", "Release"
-            elsif pkg.has_tag?('needs_opt')
-                pkg.define "CMAKE_BUILD_TYPE", "RelWithDebInfo"
-            else
-                pkg.define "CMAKE_BUILD_TYPE", "Debug"
-            end
-        end
+require File.join(File.dirname(__FILE__), 'rock/git_hook')
+require File.join(File.dirname(__FILE__), 'rock/cmake_build_type')
+Autoproj.post_import do |pkg|
+    if pkg.kind_of?(Autobuild::CMake)
+        Rock.update_cmake_build_type_from_tags(pkg)
     end
-
-    # If a package is on next or stable, make sure that one cannot add new
-    # commits without knowing what he is doing
-    Autoproj.post_import do |pkg|
-        next if !pkg.importer.kind_of?(Autobuild::Git)
-
-        hook_source_path = File.join(File.expand_path(File.dirname(__FILE__)), "git_do_not_commit_hook")
-        hook_dest_path   = File.join(pkg.srcdir, '.git', 'hooks', 'pre-commit')
-        if File.directory?(File.dirname(hook_dest_path))
-            if pkg.importer.branch == "next" || pkg.importer.branch == "stable"
-                # Install do-not-commit hook
-                FileUtils.cp hook_source_path, hook_dest_path
-            else
-                # Remove the do-not-commit hook
-                FileUtils.rm_f hook_dest_path
-            end
+    if pkg.importer.kind_of?(Autobuild::Git)
+        if pkg.importer.branch == "next" || pkg.importer.branch == "stable"
+            Rock.install_git_hook pkg, 'git_do_not_commit_hook', 'pre-commit'
+        else
+            Rock.remove_git_hook pkg, 'pre-commit'
         end
     end
 end
@@ -119,19 +61,7 @@ Autoproj.env_add_path 'ROCK_BUNDLE_PATH', File.join(Autoproj.root_dir, 'bundles'
 if ENV['ROCK_DISABLE_CROSS_FLAVOR_CHECKS'] != '1'
     Autoproj.post_import do |pkg|
         next if !pkg.importer.kind_of?(Autobuild::Git)
-
-        if (flv = FLAVORS[pkg.importer.branch]) && flv.include?(pkg.name)
-            #Skip packages that are only on master, because packages for 'master' 
-            #are not automaticly added to the master flavor. So the check would fail
-            next if flv.name == 'master' 
-
-            pkg.dependencies.each do |dep_name|
-                #Check only for packages that are Git's too if they are in the same flavor availible
-                if !flv.include?(dep_name) && Autoproj.manifest.package(dep_name).autobuild.importer.kind_of?(Autobuild::Git)
-                    raise ConfigError, "#{pkg.name}, in flavor #{flv.name}, depends on #{dep_name} which is not included in this flavor"
-                end
-            end
-        end
+        Rock.flavors.verify_cross_flavor_dependencies(pkg)
     end
 end
 
