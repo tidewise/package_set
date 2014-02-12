@@ -13,6 +13,15 @@ ignore(/\.sw?$/)
 # Ignore the numerous backup files
 ignore(/~$/)
 
+# Verify that Ruby is NOT 1.8. 1.8 is unsupported
+if defined?(RUBY_VERSION) && (RUBY_VERSION =~ /^1\.8\./)
+    Autoproj.error "Ruby 1.8 is not supported by Rock anymore"
+    Autoproj.error ""
+    Autoproj.error "Use Rock's bootstrap.sh script to install Rock"
+    Autoproj.error "See http://rock-robotics.org/documentation/installation.html for more information"
+    exit 1
+end
+
 require 'autoproj/gitorious'
 if !Autoproj.has_source_handler? 'gitorious'
     Autoproj.gitorious_server_configuration('GITORIOUS', 'gitorious.org')
