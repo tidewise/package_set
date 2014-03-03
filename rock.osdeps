@@ -7,12 +7,14 @@ avahi:
     gentoo: net-dns/avahi
     fedora: avahi-devel
     arch,manjarolinux: avahi
+    opensuse project: libavahi-devel
 
 sigc:
     debian,ubuntu: [libsigc++-2.0-0c2a, libsigc++-2.0-dev]
     gentoo: dev-libs/libsigc++
     fedora: libsigc++-devel
     arch,manjarolinux: libsigc++
+    opensuse project: libsigc++2-devel libsigc++12-devel
 
 rice: gem
 rbtree: gem
