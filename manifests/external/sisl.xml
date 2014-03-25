@@ -9,5 +9,6 @@
   <license>The curve part has been relicensed as LGPL v2 for Rock by SINTEF. The
   surface part is GPLv2</license>
   <url>http://www.sintef.no/sisl</url>
+  <tags>stable</tags>
 </package>
 
