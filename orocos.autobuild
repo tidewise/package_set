@@ -136,6 +136,9 @@ only_in_flavor 'master' do
     setup_package 'log4cpp' do |pkg|
         pkg.importer.branch = "master"
     end
+    setup_package 'rtt' do |pkg|
+        pkg.importer.branch = "next"
+    end
 end
 
 Autoproj.env_add_path 'AUTOPROJ_PROJECT_BASE', "#{Autoproj.root_dir}"
