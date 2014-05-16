@@ -17,3 +17,12 @@ Autoproj.manifest.each_autobuild_package do |pkg|
         pkg.optional_dependencies.delete 'ocl'
     end
 end
+
+# 2014-03-12:
+# temporary fix for boost bug: https://svn.boost.org/trac/boost/ticket/7979
+# on debian testing
+only_on 'debian' do
+  setup_package 'typelib' do |pkg|
+      pkg.define "GLIBC_HAVE_LONG_LONG"
+  end  
+end
