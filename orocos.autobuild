@@ -137,7 +137,7 @@ only_in_flavor 'master' do
         pkg.importer.branch = "master"
     end
     setup_package 'rtt' do |pkg|
-        pkg.importer.branch = "next"
+        pkg.importer.branch = "master"
     end
 end
 
