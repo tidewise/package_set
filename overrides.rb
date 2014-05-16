@@ -23,6 +23,6 @@ end
 # on debian testing
 only_on 'debian' do
   setup_package 'typelib' do |pkg|
-      pkg.define "GLIBC_HAVE_LONG_LONG"
+      pkg.define "GLIBC_HAVE_LONG_LONG", 1
   end  
 end
