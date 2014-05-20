@@ -31,3 +31,9 @@ version_control:
         gitorious: rock/doc
         branch: $ROCK_FLAVOR
 
+    - tools/autoproj:
+        gitorious: autoproj/autoproj
+        branch: master
+    - tools/autobuild:
+        gitorious: autoproj/autobuild
+        branch: master

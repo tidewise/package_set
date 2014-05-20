@@ -17,6 +17,11 @@ in_flavor 'master', 'next' do
 end
 
 in_flavor 'master', 'next', 'stable' do
+    ruby_package 'tools/autoproj'
+    remove_from_default 'tools/autoproj'
+    ruby_package 'tools/autobuild'
+    remove_from_default 'tools/autobuild'
+
     cmake_package 'base/types' do |pkg|
         if package_enabled?('external/sisl')
             pkg.define 'SISL_PREFIX', package('external/sisl').prefix
