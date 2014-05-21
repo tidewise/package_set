@@ -2,6 +2,8 @@ in_flavor 'master', 'next' do
     cmake_package 'base/console_bridge'
     ruby_package 'tools/rubigen' do |pkg|
         pkg.depends_on 'activesupport'
+        pkg.depends_on 'bundler'
+        pkg.depends_on 'cucumber'
         pkg.rake_setup_task = nil
     end
 end

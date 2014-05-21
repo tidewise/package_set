@@ -142,4 +142,5 @@ jpeg:
     debian,ubuntu: libjpeg-dev
     fedora: libjpeg-turbo-devel
 
-    
+bundler: gem
+cucumber: gem
