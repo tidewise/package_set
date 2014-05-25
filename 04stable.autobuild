@@ -1,22 +1,11 @@
-# IMPORTANT: new packages must be added at the top of this file
-
-#################################################################################"
-#################################################################################"
-## 
-## Do not add anything below this line unless you know what you are doing
-## New packages MUST be added at the top of the file
-##
-#################################################################################"
-#################################################################################"
-
-in_flavor 'master' do
-end
-
-in_flavor 'master', 'next' do
-    cmake_package 'base/console_bridge'
-end
+add_packages_to_flavors 'stable' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib', 'rtt_typelib', 'tools/metaruby', 'ocl', 'log4cpp']
 
 in_flavor 'master', 'next', 'stable' do
+    cmake_package 'tools/pocolog_cpp'
+    cmake_package 'tools/service_discovery' do |pkg|
+        pkg.define "RUBY_EXECUTABLE", Autoproj.find_in_path(RbConfig::CONFIG['RUBY_INSTALL_NAME'])
+    end
+
     ruby_package 'tools/autoproj'
     remove_from_default 'tools/autoproj'
     ruby_package 'tools/autobuild'
@@ -105,7 +94,41 @@ in_flavor 'master', 'next', 'stable' do
         end # Nothing to do, SISL ships with the generated documentation
         pkg.doc_dir = File.join(pkg.srcdir, 'doc', 'html')
     end
+
+    orogen_package 'base/orogen/std'
+
+    ruby_package 'tools/syskit' do |pkg|
+        def pkg.update_environment
+            super
+            Autoproj.env_add_path 'ROBY_PLUGIN_PATH', File.join(srcdir, "lib", "syskit", "roby_app/register_plugin.rb")
+        end
+    end
+
+    ruby_package  'tools/orocos.rb' do |pkg|
+        def pkg.update_environment
+            super
+            Autobuild.update_environment srcdir
+            Autoproj.env_set 'ORBInitRef',"NameService=corbaname::127.0.0.1"
+        end
+    end
+
+    ruby_package 'tools/pocolog'
+    orogen_package 'tools/logger'
+    orogen_package 'base/orogen/types' do |pkg|
+        pkg.orogen_file = "base.orogen"
+        if package_selected?('external/sisl')
+            pkg.define "SISL_PREFIX", package('external/sisl').prefix
+        end
+        Autoproj.env_set 'ROCK_PREFIX', File.join(pkg.prefix,'share','rock')
+
+        pkg.remove_obsolete_installed_file "share", "typelib", "ruby", "base.rb"
+    end
+
+    ruby_package 'tools/roby' do |pkg|
+        pkg.doc_dir = File.join('doc', 'html')
+    end
+
+    ruby_package  'tools/log_tools' 
 end
 
-Autoproj.env_inherit 'CMAKE_PREFIX_PATH'
 

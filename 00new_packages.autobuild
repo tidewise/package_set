@@ -1,0 +1,5 @@
+# IMPORTANT: new packages must be added at the top of this file
+# They must NEVER be added to other files
+
+ruby_package  'tools/telemetry'
+
