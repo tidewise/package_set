@@ -30,59 +30,17 @@ if !Autoproj.has_source_handler? 'github'
     Autoproj.gitorious_server_configuration('GITHUB', 'github.com', :http_url => 'https://github.com')
 end
 
-FLAVORS = Hash.new
-FLAVORED_PACKAGE_SETS = Set.new
+require File.join(File.dirname(__FILE__), 'rock/flavor_definition')
+require File.join(File.dirname(__FILE__), 'rock/flavor_manager')
+require File.join(File.dirname(__FILE__), 'rock/in_flavor_context')
 
-class FlavorDefinition
-    attr_reader :name
-    attr_accessor :includes
-    attr_predicate :implicit?, true
-    attr_accessor :default_packages
-    attr_accessor :removed_packages
-
-    def initialize(name)
-        @name = name
-        @includes = Set.new
-        @implicit = false
-        @default_packages = Hash.new { |h, k| h[k] = Set.new }
-        @removed_packages = Set.new
-    end
-
-    def include?(package_name)
-	return false if removed?(package_name)
-        @default_packages.any? do |pkg_set, packages|
-            packages.include?(package_name)
-        end
-    end
-
-    def removed?(package_name)
-	removed_packages.include?(package_name)
-    end
-
-    def enabled_in?(*flavors)
-        (flavors.to_set - includes).size != flavors.size ||
-            flavors.include?(name)
-    end
-end
-
-
-def define_flavor(flavor_name, options = Hash.new)
-    options = Kernel.validate_options(options, :includes => [], :implicit => nil)
-
-    flavor = (FLAVORS[flavor_name] ||= FlavorDefinition.new(flavor_name))
-    if !options[:implicit].nil?
-        flavor.implicit = options[:implicit]
-    end
-    flavor.includes |= options[:includes]
-end
-
-define_flavor 'stable'
-define_flavor 'next',  :includes => ['stable']
-define_flavor 'master', :includes => ['stable', 'next'], :implicit => true
+Rock.flavors.define 'stable'
+Rock.flavors.define 'next',  :includes => ['stable']
+Rock.flavors.define 'master', :includes => ['stable', 'next'], :implicit => true
 
 configuration_option('ROCK_FLAVOR', 'string',
     :default => 'stable',
-    :possible_values => FLAVORS.keys,
+    :possible_values => Rock.flavors.flavors.keys,
     :doc => [
         "Which flavor of Rock do you want to use ?",
         "The 'stable' flavor is not updated often, but will contain well-tested code",
@@ -94,167 +52,36 @@ configuration_option('ROCK_FLAVOR', 'string',
         "See http://rock-robotics.org/startup/releases.html for more information"])
 
 
-if ENV['ROCK_FORCE_FLAVOR']
-    Autoproj.change_option('ROCK_FLAVOR', ENV['ROCK_FORCE_FLAVOR'])
-end
+Rock.flavors.select_current_flavor_by_name(
+    ENV['ROCK_FORCE_FLAVOR'] || Autoproj.user_config('ROCK_FLAVOR'))
+Autoproj.override_option('ROCK_FLAVOR', Rock.flavors.current_flavor.name)
 
 def enabled_flavor_system
-    FLAVORED_PACKAGE_SETS << Autoproj.current_package_set.name
-end
-
-if !defined? BasicObject
-    BasicObject = Object
-end
-
-class InFlavorContext < BasicObject
-    attr_reader :current_flavor_name, :flavors, :strict
-    def initialize(current_flavor_name, flavors, strict)
-        @current_flavor_name, @flavors, @strict =
-            current_flavor_name, flavors, strict
-    end
-
-    def method_missing(m, *args, &block)
-        # We only pass the *_package method calls
-        if m.to_s =~ /^\w+_package$/
-            package_name = args.first
-
-            package_set = ::Autoproj.manifest.
-                definition_source(package_name) || ::Autoproj.current_package_set
-            vcs = ::Autoproj.manifest.importer_definition_for(package_name, package_set)
-
-            branch_is_flavor = ::TOPLEVEL_BINDING.instance_eval do
-                vcs.options[:branch] && flavor_defined?(vcs.options[:branch])
-            end
-
-            if branch_is_flavor
-                flavor_name = vcs.options[:branch]
-            else flavor_name = current_flavor_name
-            end
-
-            if !strict || flavors.include?(flavor_name)
-                if block
-                    ::TOPLEVEL_BINDING.instance_eval do
-                        send(m, *args) do |pkg|
-                            # We need to rebind the block into the toplevel binding so
-                            # that toplevel methods used there get defined (again)
-                            ::TOPLEVEL_BINDING.instance_exec(pkg, &block)
-                        end
-                    end
-                else
-                    ::TOPLEVEL_BINDING.instance_eval do
-                        send(m, *args)
-                    end
-                end
-            end
-        elsif strict
-            ::Kernel.raise ::ArgumentError, "only calls to the package definition methods are allows in only_in_flavor"
-        else
-            ::TOPLEVEL_BINDING.instance_eval do
-                send(m, *args, &block)
-            end
-        end
-    end
+    Rock.flavors.register_flavored_package_set(Autoproj.current_package_set)
 end
 
 def in_flavor(*flavors, &block)
-    if flavors.last.kind_of?(Hash)
-        options = flavors.pop
-        options = Kernel.validate_options options, :strict => false
-    else
-        options = Hash.new
-    end
-
-    flavor = FLAVORS[Autoproj.user_config('ROCK_FLAVOR')]
-    if !flavor
-        raise ArgumentError, "flavor #{flavor} is not defined"
-    end
-
-    current_packages = Autoproj.manifest.packages.keys
-    if BasicObject == Object # ruby 1.8
-        if !options[:strict] || flavors.include?(flavor.name)
-            yield
-        end
-    else
-        InFlavorContext.new(flavor.name, flavors, options[:strict]).instance_eval(&block)
-    end
-
-    new_packages = Autoproj.manifest.packages.keys - current_packages
-    add_packages_to_flavors flavors => new_packages
+    Rock.flavors.in_flavor(*flavors, &block)
 end
 
 def only_in_flavor(*flavors, &block)
-    if flavors.last.kind_of?(Hash)
-        options = flavors.pop
-        options, other_options = Kernel.filter_options options, :strict => true
-        options = options.merge(other_options)
-    else
-        options = { :strict => true }
-    end
-    flavors << options
-    in_flavor(*flavors, &block)
+    Rock.flavors.only_in_flavor(*flavors, &block)
 end
 
 def flavor_defined?(flavor_name)
-    FLAVORS.has_key?(flavor_name.to_s)
+    Rock.flavors.has_flavor?(flavor_name)
 end
 
 def package_in_flavor?(pkg, flavor_name)
-    flavor_def = FLAVORS[flavor_name]
-    if !flavor_def
-        raise ArgumentError, "#{flavor_name} is not a known flavor name"
-    end
-    
-    if pkg.respond_to?(:name)
-	pkg = pkg.name
-    end
-
-    if flavor_def.implicit?
-	pkg_set = Autoproj.manifest.definition_source(pkg)
-	if FLAVORED_PACKAGE_SETS.include?(pkg_set.name)
-	    !flavor_def.removed?(pkg)
-	else
-	    flavor_def.include?(pkg)
-	end
-    else
-        return flavor_def.include?(pkg)
-    end
+    Rock.flavors.package_in_flavor?(pkg, flavor_name)
 end
 
 def add_packages_to_flavors(mappings)
-    enabled_flavor_system
-    mappings.each do |flavors, packages|
-        if !flavors.respond_to?(:to_ary)
-            flavors = [flavors]
-        end
-        if !packages.respond_to?(:to_ary)
-            packages = [packages]
-        end
-        flavors.each do |flavor_name|
-            if !FLAVORS[flavor_name]
-                raise ArgumentError, "#{flavor_name} is not a known flavor"
-            end
-            FLAVORS[flavor_name].removed_packages -= packages.to_set
-            FLAVORS[flavor_name].default_packages[Autoproj.current_package_set.name] |= packages.to_set
-        end
-    end
+    Rock.flavors.add_packages_to_flavors(Autoproj.current_package_set, mappings)
 end
 
 def remove_packages_from_flavors(mappings)
-    enabled_flavor_system
-    mappings.each do |flavors, packages|
-        if !flavors.respond_to?(:to_ary)
-            flavors = [flavors]
-        end
-        if !packages.respond_to?(:to_ary)
-            packages = [packages]
-        end
-        flavors.each do |flavor_name|
-            if !FLAVORS[flavor_name]
-                raise ArgumentError, "#{flavor_name} is not a known flavor"
-            end
-	    FLAVORS[flavor_name].removed_packages |= packages.to_set
-        end
-    end
+    Rock.flavors.remove_packages_from_flavors(Autoproj.current_package_set, mappings)
 end
 
 # Defines a bundle package in the installation
