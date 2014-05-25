@@ -1,4 +1,7 @@
-name: rock.base
+name: rock.core
+
+imports:
+    - github: orocos-toolchain/autoproj
 
 version_control:
     - base/.*:
@@ -37,3 +40,37 @@ version_control:
     - tools/autobuild:
         gitorious: autoproj/autobuild
         branch: master
+
+    - base/orogen/.*:
+      gitorious: rock-toolchain/orogen-base-$PACKAGE_BASENAME
+      branch: $ROCK_FLAVOR
+    - tools/[^/]*:
+      gitorious: rock-toolchain/$PACKAGE_BASENAME
+      branch: $ROCK_FLAVOR
+    - tools/orogen/.*:
+      gitorious: rock-toolchain/orogen-$PACKAGE_BASENAME
+      branch: $ROCK_FLAVOR
+    - tools/orocos.rb:
+      gitorious: rock-toolchain/orocos-rb
+      branch: $ROCK_FLAVOR
+    - tools/logger:
+      gitorious: rock-toolchain/orogen-$PACKAGE_BASENAME
+      branch: $ROCK_FLAVOR
+    - tools/port_proxy:
+      gitorious: rock-toolchain/orogen-$PACKAGE_BASENAME
+      branch: $ROCK_FLAVOR
+    - tools/telemetry:
+      gitorious: rock-toolchain/$PACKAGE_BASENAME
+      branch: $ROCK_FLAVOR
+    - tools/orogen_ros:
+      gitorious: rock-ros/orogen_ros
+      branch: $ROCK_FLAVOR
+    - tools/rubigen:
+      github: doudou/rubigen
+
+overrides:
+    - ^(orogen|typelib|rtt|utilrb|utilmm|rtt_typelib|tools/metaruby)$:
+        branch: $ROCK_FLAVOR
+    - (ocl|log4cpp):
+        branch: toolchain-2.6
+
