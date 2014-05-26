@@ -54,7 +54,7 @@ configuration_option('ROCK_FLAVOR', 'string',
 
 Rock.flavors.select_current_flavor_by_name(
     ENV['ROCK_FORCE_FLAVOR'] || Autoproj.user_config('ROCK_FLAVOR'))
-Autoproj.override_option('ROCK_FLAVOR', Rock.flavors.current_flavor.name)
+Autoproj.change_option('ROCK_FLAVOR', Rock.flavors.current_flavor.name, true)
 
 def enabled_flavor_system
     Rock.flavors.register_flavored_package_set(Autoproj.current_package_set)
