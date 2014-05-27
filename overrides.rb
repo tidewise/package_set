@@ -73,6 +73,7 @@ Autoproj.manifest.each_autobuild_package do |pkg|
 
     if Autoproj.user_config('ROCK_FLAVOR') == 'master'
         pkg.orogen_options << '--extensions=metadata_support'
+        pkg.depends_on 'tools/orogen_metadata'
     end
     if pkg.name != 'base/orogen/std'
         pkg.optional_dependency 'base/orogen/std'
