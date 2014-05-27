@@ -30,3 +30,67 @@ binding_of_caller:
 
 activesupport:
     gem: activesupport
+
+eigen2:
+    debian,ubuntu: libeigen2-dev
+    fedora: eigen2-devel
+    arch,manjarolinux: eigen2
+
+eigen3:
+    debian: 
+        default:
+            libeigen3-dev
+        '6.0.4,squeeze':
+            nonexistent
+    ubuntu:
+        "10.04,10.10,11.04,11.10": nonexistent
+        default:
+            libeigen3-dev
+    fedora: eigen3-devel
+    arch,manjarolinux: eigen3
+
+pkg-config:
+    debian,ubuntu:
+        default: pkg-config
+    fedora: pkg-config
+    arch,manjarolinux: pkg-config
+
+webgen:
+    gem: webgen<1.0
+coderay: gem
+kramdown: gem
+hoe: gem
+hoe-yard: gem
+rake-compiler: 
+    debian,ubuntu:
+        gem: rake-compiler<0.9.0
+    default:
+        gem: rake-compiler
+rice: gem
+
+qt4:
+    # QMake is needed for the CMake macro for Qt4
+    debian,ubuntu:
+        - libqt4-dev
+        - qt4-qmake
+    gentoo:
+        - dev-qt/qtcore 
+        - dev-qt/qtgui
+    fedora: qt-devel
+    darwin: qt4-mac
+    arch: qt4
+
+qt4-opengl:
+    debian,ubuntu: libqt4-opengl-dev
+    gentoo: qt-opengl 
+    fedora: qt-devel
+
+qt-designer:
+    debian,ubuntu: qt4-designer
+    gentoo: x11-libs/qt-gui
+    fedora: qt-devel
+
+qwt5:
+    debian,ubuntu: libqwt5-qt4-dev
+    fedora: qwt-devel
+    
