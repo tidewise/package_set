@@ -24,6 +24,9 @@ module Rock
                 package_set = ::Autoproj.manifest.
                     definition_source(package_name) || ::Autoproj.current_package_set
                 vcs = ::Autoproj.manifest.importer_definition_for(package_name, package_set)
+                if (!vcs)
+                    ::Kernel.raise ::ArgumentError, "#{package_name} has no version control definition in #{::File.join(package_set.local_dir, 'source.yml')}"
+                end
 
                 branch_is_flavor = ::TOPLEVEL_BINDING.instance_eval do
                     vcs.options[:branch] && flavor_defined?(vcs.options[:branch])
@@ -50,7 +53,7 @@ module Rock
                     end
                 end
             elsif strict
-                ::Kernel.raise ::ArgumentError, "only calls to the package definition methods are allows in only_in_flavor"
+                ::Kernel.raise ::ArgumentError, "only calls to the package definition methods are allows in only_in_flavor (found #{m})"
             else
                 ::TOPLEVEL_BINDING.instance_eval do
                     send(m, *args, &block)
