@@ -93,4 +93,58 @@ qt-designer:
 qwt5:
     debian,ubuntu: libqwt5-qt4-dev
     fedora: qwt-devel
+
+vtk-qt4:
+    debian,ubuntu: libvtk5-qt4-dev
+    fedora: vtk-devel
+
+freeglut3:
+    debian,ubuntu: freeglut3-dev
+    fedora: freeglut-devel
+
+osg:
+    debian,ubuntu: libopenscenegraph-dev
+    gentoo: dev-games/openscenegraph
+    fedora: OpenSceneGraph-devel
+    darwin: OpenSceneGraph-devel
+    arch,manjarolinux: openscenegraph
+
+qt4:
+    # QMake is needed for the CMake macro for Qt4
+    debian,ubuntu: [libqt4-dev, qt4-qmake]
+    gentoo:
+        - dev-qt/qtcore 
+        - dev-qt/qtgui
+    fedora: qt-devel
+    darwin: qt4-mac
+    arch,manjarolinux: qt4
+
+qt4-opengl:
+    debian,ubuntu: libqt4-opengl-dev
+    gentoo: qt-opengl 
+    fedora: qt-devel
+
+qt-designer:
+    debian,ubuntu: qt4-designer
+    gentoo: x11-libs/qt-gui
+    fedora: qt-devel
+
+opencv:
+    debian:
+        'wheezy,sid':
+                - libopencv-dev
+    ubuntu:
+        '10.04,10.10,11.04,11.10': nonexistent
+        default:
+                - libopencv-dev
+                - libcv-dev
+                - libhighgui-dev
+    gentoo: media-libs/opencv
+    fedora: opencv-devel
+    arch,manjarolinux: opencv
+
+jpeg:
+    debian,ubuntu: libjpeg-dev
+    fedora: libjpeg-turbo-devel
+
     

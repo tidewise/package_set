@@ -33,6 +33,20 @@ version_control:
       github: rock-core/tools-orocosrb
       branch: $ROCK_FLAVOR
 
+    - drivers/.*:
+      github: rock-core/drivers-$PACKAGE_BASENAME
+      branch: $ROCK_FLAVOR
+    - gui/.*:
+      github: rock-core/gui-$PACKAGE_BASENAME
+      branch: $ROCK_FLAVOR
+    - drivers/orogen/.*:
+      github: rock-core/drivers-orogen-$PACKAGE_BASENAME
+      branch: $ROCK_FLAVOR
+
+    - image_processing/.*:
+      github: rock-core/image_processing-$PACKAGE_BASENAME
+      branch: $ROCK_FLAVOR
+
     - tools/rubigen:
       github: doudou/rubigen
 
@@ -60,6 +74,11 @@ version_control:
       type: archive
       url: http://www.sintef.no/upload/IKT/9011/geometri/sisl/sisl-4.5.0.tar.gz
       update_cached_file: false
+
+    - external/opencv:
+        type: archive
+        url: http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.3/OpenCV-2.3.0.tar.bz2
+        update_cached_file: false
 
 
 
