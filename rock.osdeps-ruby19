@@ -7,3 +7,9 @@ qtruby:
     default:
         gem: qtbindings
         osdep: [qt4, qt4-opengl, qt-designer]
+
+rake-compiler: 
+    debian,ubuntu:
+        gem: rake-compiler<0.9.0
+    default:
+        gem: rake-compiler

@@ -5,3 +5,5 @@ qtruby:
     default:
         gem: qtbindings
         osdep: qt4
+
+rake-compiler: gem

@@ -61,11 +61,6 @@ coderay: gem
 kramdown: gem
 hoe: gem
 hoe-yard: gem
-rake-compiler: 
-    debian,ubuntu:
-        gem: rake-compiler<0.9.0
-    default:
-        gem: rake-compiler
 rice: gem
 
 qt4:
