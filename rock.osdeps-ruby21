@@ -4,7 +4,7 @@ qtruby:
     arch: kdebindings-qtruby
     debian:
         sid: ruby-qt4
-    default:
+    default,ubuntu:
         gem: qtbindings
         osdep: qt4
 
