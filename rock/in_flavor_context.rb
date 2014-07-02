@@ -21,9 +21,14 @@ module Rock
             if m.to_s =~ /^\w+_package$/
                 package_name = args.first
 
-                package_set = ::Autoproj.manifest.
-                    definition_source(package_name) || ::Autoproj.current_package_set
-                vcs = ::Autoproj.manifest.importer_definition_for(package_name, package_set)
+                manifest = ::Autoproj.manifest
+                package_set =
+                    if manifest.package(package_name)
+                        manifest.definition_package_set(package_name)
+                    else 
+                        ::Autoproj.current_package_set
+                    end
+                vcs = manifest.importer_definition_for(package_name, package_set)
                 if (!vcs)
                     ::Kernel.raise ::ArgumentError, "#{package_name} has no version control definition in #{::File.join(package_set.local_dir, 'source.yml')}"
                 end
