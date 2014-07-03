@@ -80,7 +80,9 @@ version_control:
         url: http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.3/OpenCV-2.3.0.tar.bz2
         update_cached_file: false
 
-
+    - bundles/.*:
+        github: rock-rock/bundles-$PACKAGE_BASENAME.git
+        branch: $ROCK_FLAVOR
 
 overrides:
     - ^(orogen|typelib|rtt|utilrb|utilmm|rtt_typelib|tools/metaruby)$:
