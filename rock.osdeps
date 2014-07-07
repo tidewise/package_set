@@ -80,6 +80,10 @@ qt4-opengl:
     gentoo: qt-opengl 
     fedora: qt-devel
 
+qt4-webkit:
+    debian,ubuntu: libqtwebkit-dev
+    fedora: qt-devel
+
 qt-designer:
     debian,ubuntu: qt4-designer
     gentoo: x11-libs/qt-gui
