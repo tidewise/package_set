@@ -170,12 +170,12 @@ module Rock
 
                 if current_flavor.implicit?
                     in_a_flavor = flavors.values.inject(Set.new) do |pkgs, other_flavor| 
-                        pkgs | other_flavor.default_packages[pkg_set]
+                        pkgs | other_flavor.default_packages[pkg_set.name]
                     end
                     default_packages = (meta.packages.map(&:name).to_set - in_a_flavor) |
-                        current_flavor.default_packages[pkg_set]
+                        current_flavor.default_packages[pkg_set.name]
                 else
-                    default_packages = current_flavor.default_packages[pkg_set]
+                    default_packages = current_flavor.default_packages[pkg_set.name]
                 end
                 default_packages -= current_flavor.removed_packages
                 default_packages = default_packages.to_set
