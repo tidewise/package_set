@@ -2,6 +2,7 @@ name: rock.core
 
 imports:
     - github: orocos-toolchain/autoproj
+      branch: rock1408_rc1
 
 version_control:
     - base/.*:
