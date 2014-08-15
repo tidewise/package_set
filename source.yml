@@ -49,6 +49,8 @@ version_control:
 
     - tools/rubigen:
       github: doudou/rubigen
+      commit: 7b3ccf69d2463a2741b18ef9fca90abef2116496
+      branch: master
 
     - tools/autoproj:
       github: doudou/autoproj
