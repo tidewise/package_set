@@ -1,4 +1,4 @@
-in_flavor 'master', 'next' do
+in_flavor 'rock1408_rc1' do
     cmake_package 'base/console_bridge'
     ruby_package 'tools/rubigen' do |pkg|
         pkg.depends_on 'activesupport'
@@ -8,6 +8,6 @@ in_flavor 'master', 'next' do
     end
 end
 
-add_packages_to_flavors 'next'   => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib', 'rtt_typelib', 'tools/metaruby', 'ocl', 'log4cpp']
+#add_packages_to_flavors 'next'   => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib', 'rtt_typelib', 'tools/metaruby', 'ocl', 'log4cpp']
 
 

@@ -54,16 +54,5 @@ move_package 'log4cpp', 'tools'
 move_package 'rtt_typelib', 'tools'
 Autoproj.manifest.moved_packages.delete('tools/metaruby')
 
-only_in_flavor 'master' do
-    setup_package 'ocl' do |pkg|
-        pkg.importer.branch = "master"
-    end
-    setup_package 'log4cpp' do |pkg|
-        pkg.importer.branch = "master"
-    end
-    setup_package 'rtt' do |pkg|
-        pkg.importer.branch = "master"
-    end
-end
 
 

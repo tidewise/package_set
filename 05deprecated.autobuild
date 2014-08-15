@@ -1,17 +1,17 @@
-in_flavor 'master' do
+in_flavor 'rock1408_rc1' do
     #This package is depricated ahd should be removed soon! Nov. '13
     orogen_package 'base/orogen/interfaces'
     remove_from_default 'base/orogen/interfaces'
 
     # We're getting rid of this
     ruby_package 'tools/orogen_ros' do |pkg|
-        Autoproj.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.srcdir, "lib", "orogen_ros", "plugin.rb" )
+    Autoproj.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.srcdir, "lib", "orogen_ros", "plugin.rb" )
     end
     remove_from_default 'tools/orogen_ros'
 end
 
-in_flavor 'stable' do
-    orogen_package 'tools/port_proxy'
-    remove_from_default 'tools/port_proxy'
-end
+# in_flavor 'stable' do
+#     orogen_package 'tools/port_proxy'
+#     remove_from_default 'tools/port_proxy'
+# end
 

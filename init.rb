@@ -34,26 +34,12 @@ require File.join(File.dirname(__FILE__), 'rock/flavor_definition')
 require File.join(File.dirname(__FILE__), 'rock/flavor_manager')
 require File.join(File.dirname(__FILE__), 'rock/in_flavor_context')
 
-Rock.flavors.define 'stable'
-Rock.flavors.define 'next',  :includes => ['stable']
-Rock.flavors.define 'master', :includes => ['stable', 'next'], :implicit => true
+Rock.flavors.define 'rock1408_rc1'
 
-configuration_option('ROCK_FLAVOR', 'string',
-    :default => 'stable',
-    :possible_values => Rock.flavors.flavors.keys,
-    :doc => [
-        "Which flavor of Rock do you want to use ?",
-        "The 'stable' flavor is not updated often, but will contain well-tested code",
-        "The 'next' flavor is updated more often, and might contain less tested code",
-        "it is updated from 'master' to test new features before they get pushed in 'stable'",
-        "Finally, 'master' is where the development takes place. It should generally be in",
-        "a good state, but will break every once in a while",
-        "",
-        "See http://rock-robotics.org/startup/releases.html for more information"])
-
+ROCK_FLAVOR='rock1408_rc1'
 
 Rock.flavors.select_current_flavor_by_name(
-    ENV['ROCK_FORCE_FLAVOR'] || Autoproj.user_config('ROCK_FLAVOR'))
+    ENV['ROCK_FORCE_FLAVOR'] || ROCK_FLAVOR)
 Autoproj.change_option('ROCK_FLAVOR', Rock.flavors.current_flavor.name, true)
 
 def enabled_flavor_system
