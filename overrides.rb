@@ -95,3 +95,12 @@ only_on 'debian' do
   end  
 end
 
+# enabling the compile_commands feature for cmake based projects. allows for
+# example usage of semantic c/c++ completion tools.
+#
+# see https://rock.opendfki.de/ticket/384
+Autoproj.post_import do |pkg|
+   if pkg.kind_of?(Autobuild::CMake)
+      pkg.define "CMAKE_EXPORT_COMPILE_COMMANDS", "ON"
+   end
+end
