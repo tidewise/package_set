@@ -1,0 +1,6 @@
+##### Graphical User Interface related packages 
+in_flavor 'rock1408_rc1' do
+    cmake_package 'gui/rock_widget_collection' do |pkg|
+        Autoproj.env_add_path 'QT_PLUGIN_PATH', File.join(pkg.prefix, "lib", "qt")
+    end
+end

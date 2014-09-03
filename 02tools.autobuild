@@ -1,0 +1,86 @@
+in_flavor 'rock1408_rc1' do
+    ruby_package  'tools/telemetry'
+
+    cmake_package 'tools/orogen_metadata' do |pkg|
+        Autoproj.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.prefix, 'share', 'orogen', 'plugins')
+        pkg.remove_obsolete_installed_file('share', 'orogen', 'plugins', 'metadata_plugin.rb')
+        pkg.remove_obsolete_installed_file('share', 'typelib', 'ruby', 'metadata_typelib.rb')
+    end
+
+    ruby_package 'tools/oropy_bridge' do |pkg|
+        def pkg.update_environment
+            super
+            Autoproj.env_add_path 'PYTHONPATH', File.join(srcdir, 'python')
+            Autoproj.env_add_path 'RUBYLIB', File.join(srcdir, 'ruby', 'lib')
+            Autoproj.env_add_path 'PATH', File.join(srcdir, 'bin')
+        end
+
+        pkg.post_import do
+            if !system('python -c "import msgpack" 2> /dev/null')
+                puts "\x1b[31mmsgpack-python is needed for the oropy_bridge - install manually\x1b[0m"
+                puts "   [apt-get install python-pip]"
+                puts "    pip install --user msgpack-python"
+            end
+        end
+
+    end
+    remove_from_default 'tools/oropy_bridge'
+
+    ruby_package 'tools/rubigen' do |pkg|
+        pkg.depends_on 'activesupport'
+        pkg.depends_on 'bundler'
+        pkg.depends_on 'cucumber'
+        pkg.rake_setup_task = nil
+    end
+
+    cmake_package 'tools/pocolog_cpp'
+    cmake_package 'tools/service_discovery' do |pkg|
+        pkg.define "RUBY_EXECUTABLE", Autoproj.find_in_path(RbConfig::CONFIG['RUBY_INSTALL_NAME'])
+    end
+
+    ruby_package 'tools/autoproj'
+    remove_from_default 'tools/autoproj'
+    ruby_package 'tools/autobuild'
+    remove_from_default 'tools/autobuild'
+
+
+    ruby_package 'tools/syskit' do |pkg|
+        def pkg.update_environment
+            super
+            Autoproj.env_add_path 'ROBY_PLUGIN_PATH', File.join(srcdir, "lib", "syskit", "roby_app/register_plugin.rb")
+        end
+    end
+
+    ruby_package  'tools/orocos.rb' do |pkg|
+        def pkg.update_environment
+            super
+            Autobuild.update_environment srcdir
+            Autoproj.env_set 'ORBInitRef',"NameService=corbaname::127.0.0.1"
+        end
+    end
+
+    ruby_package 'tools/pocolog'
+    orogen_package 'tools/logger'
+    orogen_package 'base/orogen/types' do |pkg|
+        pkg.orogen_file = "base.orogen"
+        if package_selected?('external/sisl')
+            pkg.define "SISL_PREFIX", package('external/sisl').prefix
+        end
+        Autoproj.env_set 'ROCK_PREFIX', File.join(pkg.prefix,'share','rock')
+
+        pkg.remove_obsolete_installed_file "share", "typelib", "ruby", "base.rb"
+    end
+
+    ruby_package 'tools/roby' do |pkg|
+        pkg.doc_dir = File.join('doc', 'html')
+    end
+
+    ruby_package  'tools/log_tools' 
+    
+    
+    # We're getting rid of this
+    ruby_package 'tools/orogen_ros' do |pkg|
+    Autoproj.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.srcdir, "lib", "orogen_ros", "plugin.rb" )
+    end
+    remove_from_default 'tools/orogen_ros'
+end

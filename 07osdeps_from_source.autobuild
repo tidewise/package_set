@@ -14,11 +14,18 @@ in_flavor 'rock1408_rc1' do
     end
     Autoproj.add_osdeps_overrides 'opencv', :package => 'external/opencv'
     remove_from_default 'external/opencv'
-end
 
-only_in_flavor 'rock1408_rc1' do
     setup_package 'external/opencv' do |pkg|
         pkg.importer.relocate "http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.5/opencv-2.4.5.tar.gz"
     end
+    
+    cmake_package 'eigen3' do |pkg|
+        pkg.define "EIGEN_BUILD_PKGCONFIG", "ON"
+        env_add 'PKG_CONFIG_PATH', File.join(pkg.prefix, 'share', 'pkgconfig')
+    end
+    # eigen3 is without prefix, to make transition easier once its 
+    # a system package. Should go into external dir, though.
+    move_package 'eigen3', 'external'
+    remove_from_default 'eigen3'
 end
 
