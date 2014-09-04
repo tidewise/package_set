@@ -1,5 +1,20 @@
 ##### Graphical User Interface related packages 
 in_flavor 'rock1408_rc1' do
+    ruby_package 'gui/vizkit'
+
+    cmake_package 'gui/vizkit3d' do |pkg|
+        if Autoproj.manifest.package_enabled?('rtt', false) # the toolchain is built, add it to the rtt_target
+            pkg.define "OROCOS_TARGET", user_config('rtt_target')
+        end
+        Autoproj.env_add_path 'OSG_FILE_PATH', File.join(pkg.prefix, "share", "vizkit" )
+
+        # Add our prefix to the VIZKIT_PLUGIN_RUBY_PATH. Relevant packages will have
+        # to list the place where they install themselves
+        # TODO the path should be renamed to VIZKIT3D_PLUGIN_PATH
+        Autoproj.env_add_path 'VIZKIT_PLUGIN_RUBY_PATH', File.join(pkg.prefix, 'lib')
+        Autoproj.env_add_path 'VIZKIT_PLUGIN_RUBY_PATH', File.join(pkg.prefix, 'lib', 'vizkit')
+    end
+
     cmake_package 'gui/rock_widget_collection' do |pkg|
         Autoproj.env_add_path 'QT_PLUGIN_PATH', File.join(pkg.prefix, "lib", "qt")
     end
