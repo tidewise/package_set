@@ -8,6 +8,7 @@ avahi:
     fedora: avahi-devel
     arch,manjarolinux: avahi
     opensuse: libavahi-devel
+    darwin: ignore
 
 sigc:
     debian,ubuntu: [libsigc++-2.0-0c2a, libsigc++-2.0-dev]
@@ -15,6 +16,7 @@ sigc:
     fedora: libsigc++-devel
     arch,manjarolinux: libsigc++
     opensuse: libsigc++2-devel libsigc++12-devel
+    macos-brew: libsigc++
 
 rice: gem
 rbtree: gem
@@ -48,12 +50,14 @@ eigen3:
             libeigen3-dev
     fedora: eigen3-devel
     arch,manjarolinux: eigen3
+    macos-brew: eigen
 
 pkg-config:
     debian,ubuntu:
         default: pkg-config
     fedora: pkg-config
     arch,manjarolinux: pkg-config
+    macos-brew: pkg-config
 
 webgen:
     gem: webgen<1.0
@@ -62,32 +66,6 @@ kramdown: gem
 hoe: gem
 hoe-yard: gem
 rice: gem
-
-qt4:
-    # QMake is needed for the CMake macro for Qt4
-    debian,ubuntu:
-        - libqt4-dev
-        - qt4-qmake
-    gentoo:
-        - dev-qt/qtcore 
-        - dev-qt/qtgui
-    fedora: qt-devel
-    darwin: qt4-mac
-    arch: qt4
-
-qt4-opengl:
-    debian,ubuntu: libqt4-opengl-dev
-    gentoo: qt-opengl 
-    fedora: qt-devel
-
-qt4-webkit:
-    debian,ubuntu: libqtwebkit-dev
-    fedora: qt-devel
-
-qt-designer:
-    debian,ubuntu: qt4-designer
-    gentoo: x11-libs/qt-gui
-    fedora: qt-devel
 
 qwt5:
     debian,ubuntu: libqwt5-qt4-dev
@@ -100,12 +78,13 @@ vtk-qt4:
 freeglut3:
     debian,ubuntu: freeglut3-dev
     fedora: freeglut-devel
+    macos-brew: freeglut
 
 osg:
     debian,ubuntu: libopenscenegraph-dev
     gentoo: dev-games/openscenegraph
     fedora: OpenSceneGraph-devel
-    darwin: OpenSceneGraph-devel
+    macos-brew: open-scene-graph
     arch,manjarolinux: openscenegraph
 
 qt4:
@@ -115,18 +94,25 @@ qt4:
         - dev-qt/qtcore 
         - dev-qt/qtgui
     fedora: qt-devel
-    darwin: qt4-mac
+    macos-brew: qt4
     arch,manjarolinux: qt4
 
 qt4-opengl:
     debian,ubuntu: libqt4-opengl-dev
-    gentoo: qt-opengl 
+    gentoo: qt-opengl
     fedora: qt-devel
+    macos-brew: qt4
+
+qt4-webkit:
+    debian,ubuntu: libqtwebkit-dev
+    fedora: qt-devel
+    macos-brew: qt4
 
 qt-designer:
     debian,ubuntu: qt4-designer
     gentoo: x11-libs/qt-gui
     fedora: qt-devel
+    macos-brew: qt4
 
 opencv:
     debian:
@@ -141,10 +127,12 @@ opencv:
     gentoo: media-libs/opencv
     fedora: opencv-devel
     arch,manjarolinux: opencv
+    macos-brew: opencv
 
 jpeg:
     debian,ubuntu: libjpeg-dev
     fedora: libjpeg-turbo-devel
+    macos-brew: jpeg
 
 bundler: gem
 cucumber: gem
