@@ -34,9 +34,9 @@ require File.join(File.dirname(__FILE__), 'rock/flavor_definition')
 require File.join(File.dirname(__FILE__), 'rock/flavor_manager')
 require File.join(File.dirname(__FILE__), 'rock/in_flavor_context')
 
-Rock.flavors.define 'rock1408_rc1'
+Rock.flavors.define 'rock1408'
 
-ROCK_FLAVOR='rock1408_rc1'
+ROCK_FLAVOR='rock1408'
 
 Rock.flavors.select_current_flavor_by_name(
     ENV['ROCK_FORCE_FLAVOR'] || ROCK_FLAVOR)
