@@ -1,7 +1,7 @@
 # Set to true if this is a frozen release branch
 ROCK_FROZEN = false
 # The name of the "current" release
-ROCK_CURRENT_RELEASE = "rock1408_rc1"
+ROCK_CURRENT_RELEASE = "rock1408"
 
 #
 # Orocos Specific ignore rules
