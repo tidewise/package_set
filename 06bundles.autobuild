@@ -1,3 +1,3 @@
-in_flavor 'rock1408_rc1' do
+in_flavor 'rock1408' do
     bundle_package 'bundles/rock'
 end

@@ -1,4 +1,4 @@
-in_flavor 'rock1408_rc1' do
+in_flavor 'rock1408' do
     ruby_package  'tools/telemetry'
 
     cmake_package 'tools/orogen_metadata' do |pkg|

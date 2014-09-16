@@ -1,4 +1,4 @@
-in_flavor 'rock1408_rc1' do
+in_flavor 'rock1408' do
     cmake_package 'external/opencv' do |pkg|
         pkg.define("CMAKE_BUILD_TYPE","Release")
         if not RUBY_PLATFORM.downcase.include?("arm")

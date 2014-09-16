@@ -1,5 +1,5 @@
 
-in_flavor 'rock1408_rc1' do
+in_flavor 'rock1408' do
     cmake_package 'base/console_bridge'
 
         cmake_package 'base/types' do |pkg|
