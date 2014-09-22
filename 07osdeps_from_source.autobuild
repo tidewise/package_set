@@ -1,24 +1,4 @@
-in_flavor 'rock1408' do
-    cmake_package 'external/opencv' do |pkg|
-        pkg.define("CMAKE_BUILD_TYPE","Release")
-        if not RUBY_PLATFORM.downcase.include?("arm")
-           pkg.define("ENABLE_SSE3","ON")
-           pkg.define("ENABLE_SSE41","OFF")
-           pkg.define("ENABLE_SSE42","OFF")
-           pkg.define("ENABLE_SSSE3","OFF")
-        end
-        pkg.define("BUILD_EXAMPLES","OFF")
-        pkg.define("BUILD_NEW_PYTHON_SUPPORT","OFF")
-        pkg.define("WITH_FFMPEG","OFF")
-        pkg.define("BUILD_TESTS","OFF")
-    end
-    Autoproj.add_osdeps_overrides 'opencv', :package => 'external/opencv'
-    remove_from_default 'external/opencv'
-
-    setup_package 'external/opencv' do |pkg|
-        pkg.importer.relocate "http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.5/opencv-2.4.5.tar.gz"
-    end
-    
+in_flavor 'rock1408' do    
     cmake_package 'eigen3' do |pkg|
         pkg.define "EIGEN_BUILD_PKGCONFIG", "ON"
         env_add 'PKG_CONFIG_PATH', File.join(pkg.prefix, 'share', 'pkgconfig')
