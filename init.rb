@@ -65,7 +65,7 @@ current_flavor = Rock.flavors.current_flavor
 Autoproj.change_option('ROCK_SELECTED_FLAVOR', current_flavor.name, true)
 Autoproj.change_option('ROCK_FLAVOR', current_flavor.branch, true)
 Autoproj.change_option('ROCK_BRANCH', current_flavor.branch, true)
-if current_flavor.name != 'master'
+if current_flavor.name != 'master' && Autoproj::PackageSet.respond_to?(:add_source_file)
     Autoproj::PackageSet.add_source_file "source-stable.yml"
 end
 
