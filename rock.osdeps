@@ -18,7 +18,6 @@ sigc:
     opensuse: libsigc++2-devel libsigc++12-devel
     macos-brew: libsigc++
 
-rice: gem
 rbtree: gem
 
 msgpack-ruby: 
@@ -65,7 +64,11 @@ coderay: gem
 kramdown: gem
 hoe: gem
 hoe-yard: gem
-rice: gem
+rice:
+    default:
+        gem: rice
+        # Note: autoconf is an osdep built-in autoproj
+        osdep: autotools
 
 qwt5:
     debian,ubuntu: libqwt5-qt4-dev
