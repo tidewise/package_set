@@ -80,7 +80,7 @@ version_control:
 
     - external/opencv:
         type: archive
-        url: http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.3/OpenCV-2.3.0.tar.bz2
+        url: http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.3.1/OpenCV-2.3.1a.tar.bz2
         update_cached_file: false
 
     - bundles/.*:
