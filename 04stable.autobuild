@@ -1,6 +1,29 @@
 add_packages_to_flavors 'stable' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib', 'rtt_typelib', 'tools/metaruby', 'ocl', 'log4cpp']
 
-in_flavor 'master', 'next', 'stable' do
+in_flavor 'master', 'stable' do
+    ruby_package 'gui/vizkit'
+
+    cmake_package 'gui/vizkit3d' do |pkg|
+        if Autoproj.manifest.package_enabled?('rtt', false) # the toolchain is built, add it to the rtt_target
+            pkg.define "OROCOS_TARGET", user_config('rtt_target')
+        end
+        Autoproj.env_add_path 'OSG_FILE_PATH', File.join(pkg.prefix, "share", "vizkit" )
+
+        # Add our prefix to the VIZKIT_PLUGIN_RUBY_PATH. Relevant packages will have
+        # to list the place where they install themselves
+        # TODO the path should be renamed to VIZKIT3D_PLUGIN_PATH
+        Autoproj.env_add_path 'VIZKIT_PLUGIN_RUBY_PATH', File.join(pkg.prefix, 'lib')
+        Autoproj.env_add_path 'VIZKIT_PLUGIN_RUBY_PATH', File.join(pkg.prefix, 'lib', 'vizkit')
+    end
+
+    cmake_package 'base/console_bridge'
+    ruby_package 'tools/rubigen' do |pkg|
+        pkg.depends_on 'activesupport'
+        pkg.depends_on 'bundler'
+        pkg.depends_on 'cucumber'
+        pkg.rake_setup_task = nil
+    end
+
     bundle_package 'bundles/rock'
     cmake_package 'tools/pocolog_cpp'
     cmake_package 'tools/service_discovery' do |pkg|

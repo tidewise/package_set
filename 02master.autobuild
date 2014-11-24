@@ -1,4 +1,5 @@
 in_flavor 'master' do
+    ruby_package  'tools/telemetry'
     cmake_package 'tools/orogen_metadata' do |pkg|
         Autoproj.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.prefix, 'share', 'orogen', 'plugins')
         pkg.remove_obsolete_installed_file('share', 'orogen', 'plugins', 'metadata_plugin.rb')
