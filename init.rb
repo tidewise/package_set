@@ -49,9 +49,7 @@ configuration_option('ROCK_SELECTED_FLAVOR', 'string',
     :possible_values => ['stable', 'master', ROCK_CURRENT_RELEASE],
     :doc => [
         "Which flavor of Rock do you want to use ?",
-        "Use either the release name #{ROCK_CURRENT_RELEASE} to use this released, known-to work",
-        "version of Rock that is guaranteed to not change. Or use the keywords 'stable' to",
-        "always track the latest release and 'master' for the development branch"])
+        "Use 'stable' to use this released, known-to work version of Rock", "Or use 'master' for the development branch"])
 
 if ROCK_FROZEN
     Rock.flavors.select_current_flavor_by_name(
