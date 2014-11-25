@@ -15,7 +15,7 @@ sigc:
     gentoo: dev-libs/libsigc++
     fedora: libsigc++-devel
     arch,manjarolinux: libsigc++
-    opensuse: libsigc++2-devel libsigc++12-devel
+    opensuse: libsigc++2-devel
     macos-brew: libsigc++
 
 rbtree: gem
@@ -36,7 +36,8 @@ eigen2:
     debian,ubuntu: libeigen2-dev
     fedora: eigen2-devel
     arch,manjarolinux: eigen2
-
+    opensuse: libeigen2-devel
+    
 eigen3:
     debian: 
         default:
@@ -50,11 +51,12 @@ eigen3:
     fedora: eigen3-devel
     arch,manjarolinux: eigen3
     macos-brew: eigen
+    opensuse: eigen3-devel
 
 pkg-config:
     debian,ubuntu:
         default: pkg-config
-    fedora: pkg-config
+    fedora,opensuse: pkg-config
     arch,manjarolinux: pkg-config
     macos-brew: pkg-config
 
@@ -72,15 +74,15 @@ rice:
 
 qwt5:
     debian,ubuntu: libqwt5-qt4-dev
-    fedora: qwt-devel
+    fedora,opensuse: qwt-devel
 
 vtk-qt4:
     debian,ubuntu: libvtk5-qt4-dev
-    fedora: vtk-devel
+    fedora,opensuse: vtk-devel
 
 freeglut3:
     debian,ubuntu: freeglut3-dev
-    fedora: freeglut-devel
+    fedora,opensuse: freeglut-devel
     macos-brew: freeglut
 
 osg:
@@ -89,6 +91,7 @@ osg:
     fedora: OpenSceneGraph-devel
     macos-brew: open-scene-graph
     arch,manjarolinux: openscenegraph
+    # opensuse: libOpenSceneGraph-devel available in repository Application:/Geo
 
 qt4:
     # QMake is needed for the CMake macro for Qt4
@@ -96,25 +99,25 @@ qt4:
     gentoo:
         - dev-qt/qtcore 
         - dev-qt/qtgui
-    fedora: qt-devel
+    fedora,opensuse: qt-devel
     macos-brew: qt4
     arch,manjarolinux: qt4
 
 qt4-opengl:
     debian,ubuntu: libqt4-opengl-dev
     gentoo: qt-opengl
-    fedora: qt-devel
+    fedora,opensuse: qt-devel
     macos-brew: qt4
 
 qt4-webkit:
     debian,ubuntu: libqtwebkit-dev
-    fedora: qt-devel
+    fedora,opensuse: qt-devel
     macos-brew: qt4
 
 qt-designer:
     debian,ubuntu: qt4-designer
     gentoo: x11-libs/qt-gui
-    fedora: qt-devel
+    fedora,opensuse: qt-devel
     macos-brew: qt4
 
 opencv:
@@ -131,11 +134,13 @@ opencv:
     fedora: opencv-devel
     arch,manjarolinux: opencv
     macos-brew: opencv
+    opensuse: opencv-devel
 
 jpeg:
     debian,ubuntu: libjpeg-dev
     fedora: libjpeg-turbo-devel
     macos-brew: jpeg
+    opensuse: libjpeg-devel
 
 bundler: gem
 cucumber: gem
