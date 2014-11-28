@@ -54,6 +54,10 @@ version_control:
       github: rock-core/autobuild
       branch: master
 
+    - tools/rubigen:
+      github: doudou/autobuild
+      branch: master
+
     - base/orogen/interfaces:
       gitorious: rock-toolchain/orogen-base-interfaces
       branch: $ROCK_BRANCH
