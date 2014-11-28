@@ -48,10 +48,10 @@ version_control:
       branch: $ROCK_BRANCH
 
     - tools/autoproj:
-      github: doudou/autoproj
+      github: rock-core/autoproj
       branch: master
     - tools/autobuild:
-      github: doudou/autobuild
+      github: rock-core/autobuild
       branch: master
 
     - base/orogen/interfaces:
@@ -70,10 +70,6 @@ version_control:
     - bundles/.*:
       github: rock-core/bundles-$PACKAGE_BASENAME.git
       branch: $ROCK_BRANCH
-
-    - tools/rubigen:
-      github: doudou/rubigen
-      branch: master
 
     - eigen3: 
       type: archive
