@@ -55,7 +55,7 @@ version_control:
       branch: master
 
     - tools/rubigen:
-      github: doudou/autobuild
+      github: doudou/rubigen
       branch: master
 
     - base/orogen/interfaces:
