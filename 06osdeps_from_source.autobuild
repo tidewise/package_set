@@ -1,4 +1,4 @@
-in_flavor 'master', 'next', 'stable' do
+in_flavor 'master', 'stable' do
     cmake_package 'external/opencv' do |pkg|
         pkg.define("CMAKE_BUILD_TYPE","Release")
         if not RUBY_PLATFORM.downcase.include?("arm")
@@ -14,11 +14,5 @@ in_flavor 'master', 'next', 'stable' do
     end
     Autoproj.add_osdeps_overrides 'opencv', :package => 'external/opencv'
     remove_from_default 'external/opencv'
-end
-
-only_in_flavor 'master', 'next' do
-    setup_package 'external/opencv' do |pkg|
-        pkg.importer.relocate "http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.9/opencv-2.4.9.zip"
-    end
 end
 
