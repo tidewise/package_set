@@ -45,7 +45,7 @@ Rock.flavors.define ROCK_CURRENT_RELEASE
 Rock.flavors.define 'master', :implicit => true
 
 configuration_option('ROCK_SELECTED_FLAVOR', 'string',
-    :default => ROCK_CURRENT_RELEASE,
+    :default => 'stable',
     :possible_values => ['stable', 'master', ROCK_CURRENT_RELEASE],
     :doc => [
         "Which flavor of Rock do you want to use ?",
