@@ -87,6 +87,7 @@ version_control:
       type: archive
       url: http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.9/opencv-2.4.9.zip
       update_cached_file: false
+      archive_dir: opencv-2.4.9
 
 overrides:
     - ^(orogen|typelib|rtt|utilrb|utilmm|rtt_typelib|tools/metaruby)$:
