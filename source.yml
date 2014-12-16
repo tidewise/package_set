@@ -75,10 +75,6 @@ version_control:
       github: rock-core/bundles-$PACKAGE_BASENAME.git
       branch: $ROCK_BRANCH
 
-    - eigen3: 
-      type: archive
-      url: https://bitbucket.org/eigen/eigen/get/3.2.2.tar.gz
-      update_cached_file: false
     - external/sisl:
       type: archive
       url: https://github.com/SINTEF-Geometry/SISL/archive/SISL-4.6.0.tar.gz
