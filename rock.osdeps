@@ -32,12 +32,6 @@ binding_of_caller:
 activesupport:
     gem: activesupport
 
-eigen2:
-    debian,ubuntu: libeigen2-dev
-    fedora: eigen2-devel
-    arch,manjarolinux: eigen2
-    opensuse: libeigen2-devel
-    
 eigen3:
     debian, ubuntu: libeigen3-dev
     fedora: eigen3-devel
