@@ -39,15 +39,7 @@ eigen2:
     opensuse: libeigen2-devel
     
 eigen3:
-    debian: 
-        default:
-            libeigen3-dev
-        '6.0.4,squeeze':
-            nonexistent
-    ubuntu:
-        "10.04,10.10,11.04,11.10": nonexistent
-        default:
-            libeigen3-dev
+    debian, ubuntu: libeigen3-dev
     fedora: eigen3-devel
     arch,manjarolinux: eigen3
     macos-brew: eigen
