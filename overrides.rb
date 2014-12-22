@@ -97,6 +97,13 @@ only_on 'debian' do
   end  
 end
 
+# Manage the Rock standard flag for tests
+Autoproj.post_import do |pkg|
+   if pkg.kind_of?(Autobuild::CMake)
+      pkg.define "ROCK_TEST_ENABLED", pkg.test_utility.enabled?
+   end
+end
+
 # enabling the compile_commands feature for cmake based projects. allows for
 # example usage of semantic c/c++ completion tools.
 #

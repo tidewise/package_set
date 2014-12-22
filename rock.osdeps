@@ -143,6 +143,7 @@ jpeg:
 bundler: gem
 cucumber: gem
 
+
 poco:
     debian,ubuntu: libpoco-dev
     macos-brew: poco
@@ -167,4 +168,7 @@ qtruby:
         osdep: [qt4, qt4-opengl, qt-designer, qt4-webkit]
     gentoo:
         kde-base/kdebindings-ruby
+
+fakefs: gem
+flexmock: gem
 
