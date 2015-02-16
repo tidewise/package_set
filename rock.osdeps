@@ -130,3 +130,6 @@ jpeg:
 
 bundler: gem
 cucumber: gem
+
+poco:
+    debian,ubuntu: libpoco-dev

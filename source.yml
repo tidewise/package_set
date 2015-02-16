@@ -84,6 +84,10 @@ version_control:
       url: http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.9/opencv-2.4.9.zip
       update_cached_file: false
 
+    - tools/class_loader:
+      github: ros/class_loader
+      branch: indigo-devel
+
 overrides:
     - ^(orogen|typelib|rtt|utilrb|utilmm|rtt_typelib|tools/metaruby)$:
       branch: $ROCK_BRANCH
