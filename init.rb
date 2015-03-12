@@ -1,8 +1,4 @@
-# Set to true if this is a frozen release branch
-ROCK_FROZEN = false
-# The name of the "current" release
-ROCK_CURRENT_RELEASE = "rock1408"
-
+ROCK_LATEST_RELEASE = 'rock-14.08'
 #
 # Orocos Specific ignore rules
 #
@@ -39,25 +35,20 @@ require File.join(File.dirname(__FILE__), 'rock/flavor_definition')
 require File.join(File.dirname(__FILE__), 'rock/flavor_manager')
 require File.join(File.dirname(__FILE__), 'rock/in_flavor_context')
 
-Rock.flavors.define 'stable', :branch => ROCK_CURRENT_RELEASE
+Rock.flavors.define 'stable'
 Rock.flavors.alias 'stable', 'next'
-Rock.flavors.define ROCK_CURRENT_RELEASE
+Rock.flavors.define 'rock1408'
 Rock.flavors.define 'master', :implicit => true
 
 configuration_option('ROCK_SELECTED_FLAVOR', 'string',
     :default => 'stable',
-    :possible_values => ['stable', 'master', ROCK_CURRENT_RELEASE],
+    :possible_values => ['stable', 'master', ROCK_LATEST_RELEASE],
     :doc => [
         "Which flavor of Rock do you want to use ?",
-        "Use 'stable' to use this released, known-to work version of Rock", "Or use 'master' for the development branch"])
+        "Use 'stable' to use the a released version of Rock that gets updated with bugfixes", "'master' for the development branch", "Or #{ROCK_LATEST_RELEASE} to get a frozen version of the last Rock release", "See http://rock-robotics.org/stable/documentation/installation.html for more information"])
 
-if ROCK_FROZEN
-    Rock.flavors.select_current_flavor_by_name(
-        ENV['ROCK_FORCE_FLAVOR'] || ROCK_CURRENT_RELEASE)
-else
-    Rock.flavors.select_current_flavor_by_name(
-        ENV['ROCK_FORCE_FLAVOR'] || Autoproj.user_config('ROCK_SELECTED_FLAVOR'))
-end
+Rock.flavors.select_current_flavor_by_name(
+    ENV['ROCK_FORCE_FLAVOR'] || Autoproj.user_config('ROCK_SELECTED_FLAVOR'))
 
 current_flavor = Rock.flavors.current_flavor
 Autoproj.change_option('ROCK_SELECTED_FLAVOR', current_flavor.name, true)

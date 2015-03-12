@@ -12,10 +12,16 @@ base_types.post_import do
     end
 end
 
-current_flavor = Rock.flavors.current_flavor
-
-release = Rock.flavors.flavor_by_name(ROCK_CURRENT_RELEASE)
+# Merge 'rock1408' into 'stable' for backward compatibility. And warn that this
+# is going away
+release = Rock.flavors.flavor_by_name('rock1408')
 stable  = Rock.flavors.flavor_by_name('stable')
+if !release.default_packages.empty?
+    Autoproj.warn "you are using rock1408 as a flavor name in the autoproj configuration"
+    Autoproj.warn "this is deprecated. Use 'stable' instead"
+    Autoproj.warn "support for this will be removed in the near future"
+end
+
 release.default_packages.merge!(stable.default_packages) do |pkg_set, release_pkgs, stable_pkgs|
     release_pkgs | stable_pkgs
 end
