@@ -45,6 +45,7 @@ if !switched_packages.empty?
 end
 
 wrong_branch -= switched_packages
+wrong_branch = wrong_branch.find_all { |pkg| pkg.importer.branch != 'rock-rc' }
 if !wrong_branch.empty?
     pkgs = wrong_branch.map { |pkg| "#{pkg.name}(#{pkg.importer.branch})" }.join(", ")
 
