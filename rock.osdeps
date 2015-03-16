@@ -136,3 +136,6 @@ thin: gem
 grape: gem
 sprockets: gem
 
+thor:
+    debian,ubuntu: ruby-thor
+
