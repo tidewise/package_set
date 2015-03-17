@@ -61,16 +61,16 @@ version_control:
       branch: master
 
     - base/orogen/interfaces:
-      gitorious: rock-toolchain/orogen-base-interfaces
+      github: rock-core/base-orogen-interfaces
       branch: $ROCK_FLAVOR
     - tools/port_proxy:
-      gitorious: rock-toolchain/orogen-$PACKAGE_BASENAME
+      github: rock-core/tools-$PACKAGE_BASENAME
       branch: $ROCK_FLAVOR
     - tools/orogen_ros:
-      gitorious: rock-ros/orogen_ros
+      github: rock-core/tools-$PACKAGE_BASENAME
       branch: $ROCK_FLAVOR
     - base/templates/doc:
-      gitorious: rock/doc_preview
+      github: rock-core/base-templates-$PACKAGE_BASENAME
       branch: $ROCK_FLAVOR
     - eigen3: 
       type: archive
