@@ -125,3 +125,10 @@ cucumber: gem
 
 poco:
     debian,ubuntu: libpoco-dev
+
+faye-websocket: gem
+rack-cors: gem
+thin: gem
+grape: gem
+sprockets: gem
+
