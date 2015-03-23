@@ -125,3 +125,4 @@ cucumber: gem
 
 poco:
     debian,ubuntu: libpoco-dev
+    macos-brew: poco
