@@ -107,7 +107,10 @@ qt-designer:
     macos-brew: qt4
 
 opencv:
-    debian, ubuntu: libopencv-dev
+    debian: libopencv-dev
+    ubuntu:
+        '12.04': nonexistent
+        default: libopencv-dev
     gentoo: media-libs/opencv
     fedora: opencv-devel
     arch,manjarolinux: opencv
