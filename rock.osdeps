@@ -47,7 +47,9 @@ pkg-config:
     macos-brew: pkg-config
 
 webgen:
-    gem: webgen<1.0
+    gem:
+        - webgen<1.0
+        - cmdparse<3.0
 coderay: gem
 kramdown: gem
 hoe: gem
