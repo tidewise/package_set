@@ -138,3 +138,10 @@ thin: gem
 grape: gem
 sprockets: gem
 
+qtruby:
+    default:
+        gem: qtbindings
+        osdep: [qt4, qt4-opengl, qt-designer, qt4-webkit]
+    gentoo:
+        kde-base/kdebindings-ruby
+    arch: kdebindings-qtruby
