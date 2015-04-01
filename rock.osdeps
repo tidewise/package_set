@@ -137,5 +137,9 @@ grape: gem
 sprockets: gem
 
 thor:
-    debian,ubuntu: ruby-thor
+    debian: ruby-thor
+    ubuntu:
+        precise: gem
+        default: ruby-thor
+    default: gem
 
