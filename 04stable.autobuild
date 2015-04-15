@@ -164,12 +164,15 @@ in_flavor 'master', 'stable' do
     cmake_package 'perception/jpeg_conversion' do |pkg|
         pkg.define "RUBY_EXECUTABLE", Autoproj::CmdLine.ruby_executable
     end
+    metapackage 'image_processing/jpeg_conversion', 'perception/jpeg_conversion'
+
     cmake_package 'perception/frame_helper' do |pkg|
         if Autoproj.manifest.package_enabled?('rtt', false) # the toolchain is built, add it to the rtt_target
             pkg.define "OROCOS_TARGET", user_config('rtt_target')
         end
         pkg.define "RUBY_EXECUTABLE", Autoproj::CmdLine.ruby_executable
     end
+    metapackage 'image_processing/frame_helper', 'perception/frame_helper'
 
     ##### Graphical User Interface related packages 
     cmake_package 'gui/rock_widget_collection' do |pkg|
