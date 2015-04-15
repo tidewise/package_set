@@ -161,10 +161,10 @@ in_flavor 'master', 'stable' do
         Autoproj.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.prefix, "share", "orogen", "plugins" )
     end
 
-    cmake_package 'image_processing/jpeg_conversion' do |pkg|
+    cmake_package 'perception/jpeg_conversion' do |pkg|
         pkg.define "RUBY_EXECUTABLE", Autoproj::CmdLine.ruby_executable
     end
-    cmake_package 'image_processing/frame_helper' do |pkg|
+    cmake_package 'perception/frame_helper' do |pkg|
         if Autoproj.manifest.package_enabled?('rtt', false) # the toolchain is built, add it to the rtt_target
             pkg.define "OROCOS_TARGET", user_config('rtt_target')
         end
