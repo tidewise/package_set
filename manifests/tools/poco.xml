@@ -1,0 +1,9 @@
+<package>
+  <description brief="C++ class libraries for network-centric, portable applications">
+    Modern, powerful open source C++ class libraries for building network- and internet-based applications that run on desktop, server, mobile and embedded systems.
+  </description>
+  <author>Günter Obiltschnig/guenter@pocoproject.org</author>
+  <license>Boost Software License - Version 1.0</license>
+  <url>http://www.pocoproject.org/</url>
+  <tags></tags>
+</package>

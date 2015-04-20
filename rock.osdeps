@@ -63,15 +63,18 @@ rice:
 qwt5:
     debian,ubuntu: libqwt5-qt4-dev
     fedora,opensuse: qwt-devel
+    arch: qwt5
 
 vtk-qt4:
     debian,ubuntu: libvtk5-qt4-dev
     fedora,opensuse: vtk-devel
+    arch: vtk
 
 freeglut3:
     debian,ubuntu: freeglut3-dev
     fedora,opensuse: freeglut-devel
     macos-brew: freeglut
+    arch: freeglut
 
 osg:
     debian,ubuntu: libopenscenegraph-dev
@@ -96,6 +99,7 @@ qt4-opengl:
     gentoo: qt-opengl
     fedora,opensuse: qt-devel
     macos-brew: qt4
+    arch: qt4
 
 qt4-webkit:
     debian,ubuntu: libqtwebkit-dev
@@ -124,6 +128,7 @@ jpeg:
     fedora: libjpeg-turbo-devel
     macos-brew: jpeg
     opensuse: libjpeg-devel
+    arch: libjpeg-turbo
 
 bundler: gem
 cucumber: gem
@@ -151,5 +156,4 @@ qtruby:
         osdep: [qt4, qt4-opengl, qt-designer, qt4-webkit]
     gentoo:
         kde-base/kdebindings-ruby
-    arch: kdebindings-qtruby
 
