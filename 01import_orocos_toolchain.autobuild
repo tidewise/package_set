@@ -26,7 +26,7 @@ setup_package 'rtt' do |rtt|
     if rtt.respond_to?(:add_tag)
         rtt.add_tag 'stable'
     end
-    if Autoproj.user_config('USE_OCL')
+    if Autoproj.config.get('USE_OCL')
         rtt.define "PLUGINS_ENABLE_SCRIPTING", "ON"
         rtt.define 'ORO_DISABLE_PORT_DATA_SCRIPTING', 'OFF'
         Autobuild::Orogen.default_type_export_policy = 'all'
@@ -39,7 +39,7 @@ setup_package 'rtt' do |rtt|
     rtt.disable_doc
 end
 
-if !Autoproj.user_config('USE_OCL')
+if !Autoproj.config.get('USE_OCL')
     remove_from_default 'ocl'
     remove_from_default 'log4cpp'
 end

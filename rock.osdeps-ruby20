@@ -1,9 +1,1 @@
-qtruby:
-    gentoo:
-        kde-base/kdebindings-ruby
-    arch: kdebindings-qtruby
-    default:
-        gem: qtbindings
-        osdep: [qt4, qt4-opengl, qt-designer, qt4-webkit]
-
 rake-compiler: gem

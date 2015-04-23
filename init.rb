@@ -48,12 +48,12 @@ configuration_option('ROCK_SELECTED_FLAVOR', 'string',
         "Use 'stable' to use the a released version of Rock that gets updated with bugfixes", "'master' for the development branch", "Or #{ROCK_LATEST_RELEASE} to get a frozen version of the last Rock release", "See http://rock-robotics.org/stable/documentation/installation.html for more information"])
 
 Rock.flavors.select_current_flavor_by_name(
-    ENV['ROCK_FORCE_FLAVOR'] || Autoproj.user_config('ROCK_SELECTED_FLAVOR'))
+    ENV['ROCK_FORCE_FLAVOR'] || user_config('ROCK_SELECTED_FLAVOR'))
 
 current_flavor = Rock.flavors.current_flavor
-Autoproj.change_option('ROCK_SELECTED_FLAVOR', current_flavor.name, true)
-Autoproj.change_option('ROCK_FLAVOR', current_flavor.branch, true)
-Autoproj.change_option('ROCK_BRANCH', current_flavor.branch, true)
+Autoproj.config.set('ROCK_SELECTED_FLAVOR', current_flavor.name, true)
+Autoproj.config.set('ROCK_FLAVOR', current_flavor.branch, true)
+Autoproj.config.set('ROCK_BRANCH', current_flavor.branch, true)
 if current_flavor.name != 'master' && Autoproj::PackageSet.respond_to?(:add_source_file)
     Autoproj::PackageSet.add_source_file "source-stable.yml"
 end

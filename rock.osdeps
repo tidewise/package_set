@@ -47,7 +47,9 @@ pkg-config:
     macos-brew: pkg-config
 
 webgen:
-    gem: webgen<1.0
+    gem:
+        - webgen<1.0
+        - cmdparse<3.0
 coderay: gem
 kramdown: gem
 hoe: gem
@@ -142,4 +144,12 @@ thor:
         precise: gem
         default: ruby-thor
     default: gem
+
+qtruby:
+    default:
+        gem: qtbindings
+        osdep: [qt4, qt4-opengl, qt-designer, qt4-webkit]
+    gentoo:
+        kde-base/kdebindings-ruby
+    arch: kdebindings-qtruby
 
