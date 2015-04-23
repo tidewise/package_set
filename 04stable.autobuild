@@ -127,6 +127,7 @@ in_flavor 'master', 'stable' do
         end
 
         def pkg.invoke_rake(target_name = rake_setup_task)
+            super
             if test_utility.enabled?
                 Autobuild.invoke_make_parallel(self) do |*make_options|
                     make_options = make_options.
@@ -135,7 +136,6 @@ in_flavor 'master', 'stable' do
                     super(test_target)
                 end
             end
-            super
         end
     end
 
