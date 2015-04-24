@@ -14,5 +14,9 @@ in_flavor 'master', 'stable' do
     end
     Autoproj.add_osdeps_overrides 'opencv', :package => 'external/opencv'
     remove_from_default 'external/opencv'
+
+    cmake_package 'tools/poco'
+    Autoproj.add_osdeps_overrides 'poco', :package => 'tools/poco'
+    remove_from_default 'tools/poco'
 end
 
