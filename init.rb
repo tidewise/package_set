@@ -1,4 +1,4 @@
-ROCK_LATEST_RELEASE = 'rock-14.08'
+ROCK_LATEST_RELEASE = 'rock1408'
 #
 # Orocos Specific ignore rules
 #
