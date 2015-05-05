@@ -43,8 +43,8 @@ version_control:
       github: rock-core/drivers-orogen-$PACKAGE_BASENAME
       branch: $ROCK_BRANCH
 
-    - image_processing/.*:
-      github: rock-core/image_processing-$PACKAGE_BASENAME
+    - perception/.*:
+      github: rock-core/perception-$PACKAGE_BASENAME
       branch: $ROCK_BRANCH
 
     - tools/autoproj:
