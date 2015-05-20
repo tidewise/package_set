@@ -1,5 +1,3 @@
-ROCK_LATEST_RELEASE = 'rock-14.08'
-#
 # Orocos Specific ignore rules
 #
 # Ignore log files generated from the orocos/orogen components
@@ -37,20 +35,31 @@ require File.join(File.dirname(__FILE__), 'rock/in_flavor_context')
 
 Rock.flavors.define 'stable'
 Rock.flavors.alias 'stable', 'next'
-Rock.flavors.define 'rock1408'
 Rock.flavors.define 'master', :implicit => true
 
 configuration_option('ROCK_SELECTED_FLAVOR', 'string',
     :default => 'stable',
-    :possible_values => ['stable', 'master', ROCK_LATEST_RELEASE],
+    :possible_values => ['stable', 'master'],
     :doc => [
         "Which flavor of Rock do you want to use ?",
-        "Use 'stable' to use the a released version of Rock that gets updated with bugfixes", "'master' for the development branch", "Or #{ROCK_LATEST_RELEASE} to get a frozen version of the last Rock release", "See http://rock-robotics.org/stable/documentation/installation.html for more information"])
+        "Use 'stable' to use the a released version of Rock that gets updated with bugfixes", "'master' for the development branch","If you want to use a released version of rock, choose 'stable' and then call 'rock-release switch' after the initial bootstrap", "See http://rock-robotics.org/stable/documentation/installation.html for more information"])
+
 
 Rock.flavors.select_current_flavor_by_name(
     ENV['ROCK_FORCE_FLAVOR'] || Autoproj.user_config('ROCK_SELECTED_FLAVOR'))
 
 current_flavor = Rock.flavors.current_flavor
+
+#This check is needed because the overrides file will override the FLAVOR selection.
+#Furthermore a selection != stable can cause a inconsistent layout (cause by in_flavor system in the package_sets)
+if File.exists?(File.join(Autoproj.root_dir, "autoproj", "overrides.d", "25-release.yml")) && current_flavor.branch != "stable" 
+    Autoproj.error ""
+    Autoproj.error "You selected the flavor '#{current_flavor.branch}' but '#{File.join(Autoproj.root_dir,"autoproj", "overrides.d", "25-release.yml")}' exists."
+    Autoproj.error "This means you are on a release; either unselect the release by calling 'rock-release switch master'"
+    Autoproj.error "or call 'autoproj reconfigure' and select the FLAVOR 'stable'"
+    exit 1
+end
+
 Autoproj.change_option('ROCK_SELECTED_FLAVOR', current_flavor.name, true)
 Autoproj.change_option('ROCK_FLAVOR', current_flavor.branch, true)
 Autoproj.change_option('ROCK_BRANCH', current_flavor.branch, true)
