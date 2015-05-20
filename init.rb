@@ -1,5 +1,3 @@
-ROCK_LATEST_RELEASE = 'rock-14.08'
-#
 # Orocos Specific ignore rules
 #
 # Ignore log files generated from the orocos/orogen components
@@ -37,15 +35,15 @@ require File.join(File.dirname(__FILE__), 'rock/in_flavor_context')
 
 Rock.flavors.define 'stable'
 Rock.flavors.alias 'stable', 'next'
-Rock.flavors.define 'rock1408'
 Rock.flavors.define 'master', :implicit => true
 
 configuration_option('ROCK_SELECTED_FLAVOR', 'string',
     :default => 'stable',
-    :possible_values => ['stable', 'master', ROCK_LATEST_RELEASE],
+    :possible_values => ['stable', 'master'],
     :doc => [
         "Which flavor of Rock do you want to use ?",
-        "Use 'stable' to use the a released version of Rock that gets updated with bugfixes", "'master' for the development branch", "Or #{ROCK_LATEST_RELEASE} to get a frozen version of the last Rock release", "See http://rock-robotics.org/stable/documentation/installation.html for more information"])
+        "Use 'stable' to use the a released version of Rock that gets updated with bugfixes", "'master' for the development branch","If you want to use a released version of rock, choose 'stable' and then call 'rock-release switch' after the initial bootstrap", "See http://rock-robotics.org/stable/documentation/installation.html for more information"])
+
 
 Rock.flavors.select_current_flavor_by_name(
     ENV['ROCK_FORCE_FLAVOR'] || Autoproj.user_config('ROCK_SELECTED_FLAVOR'))
