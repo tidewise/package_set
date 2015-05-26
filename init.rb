@@ -97,3 +97,7 @@ def bundle_package(*args, &block)
     end
 end
 
+# rtt doesn't support mqueue on Mac OS X
+if Autobuild.macos?
+    Autobuild::Orogen.transports.delete("mqueue")
+end
