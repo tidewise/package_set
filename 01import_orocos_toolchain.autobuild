@@ -37,6 +37,8 @@ setup_package 'rtt' do |rtt|
         Autobuild::Orogen.orogen_options << "--no-rtt-scripting"
     end
     rtt.disable_doc
+
+    rtt.define 'ENABLE_TESTS', rtt.test_utility.enabled?
 end
 
 if !Autoproj.config.get('USE_OCL')
