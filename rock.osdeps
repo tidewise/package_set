@@ -8,7 +8,7 @@ avahi:
     fedora: avahi-devel
     arch,manjarolinux: avahi
     opensuse: libavahi-devel
-    darwin: ignore
+    macos-port: avahi
 
 sigc:
     debian,ubuntu: [libsigc++-2.0-0c2a, libsigc++-2.0-dev]
@@ -17,6 +17,7 @@ sigc:
     arch,manjarolinux: libsigc++
     opensuse: libsigc++2-devel
     macos-brew: libsigc++
+    macos-port: libsigcxx2
 
 rbtree: gem
 
@@ -37,6 +38,7 @@ eigen3:
     fedora: eigen3-devel
     arch,manjarolinux: eigen3
     macos-brew: eigen
+    macos-port: eigen
     opensuse: eigen3-devel
 
 pkg-config:
@@ -45,6 +47,7 @@ pkg-config:
     fedora,opensuse: pkg-config
     arch,manjarolinux: pkg-config
     macos-brew: pkg-config
+    macos-port: pkg-config
 
 webgen:
     gem:
@@ -74,6 +77,7 @@ freeglut3:
     debian,ubuntu: freeglut3-dev
     fedora,opensuse: freeglut-devel
     macos-brew: freeglut
+    macos-port: freeglut
     arch: freeglut
 
 osg:
@@ -81,6 +85,7 @@ osg:
     gentoo: dev-games/openscenegraph
     fedora: OpenSceneGraph-devel
     macos-brew: open-scene-graph
+    macos-port: OpenSceneGraph
     arch,manjarolinux: openscenegraph
     # opensuse: libOpenSceneGraph-devel available in repository Application:/Geo
 
@@ -92,6 +97,7 @@ qt4:
         - dev-qt/qtgui
     fedora,opensuse: qt-devel
     macos-brew: qt4
+    macos-port: qt4-mac
     arch,manjarolinux: qt4
 
 qt4-opengl:
@@ -121,12 +127,14 @@ opencv:
     fedora: opencv-devel
     arch,manjarolinux: opencv
     macos-brew: opencv
+    macos-port: opencv
     opensuse: opencv-devel
 
 jpeg:
     debian,ubuntu: libjpeg-dev
     fedora: libjpeg-turbo-devel
     macos-brew: jpeg
+    macos-port: jpeg
     opensuse: libjpeg-devel
     arch: libjpeg-turbo
 
@@ -136,6 +144,7 @@ cucumber: gem
 poco:
     debian,ubuntu: libpoco-dev
     macos-brew: poco
+    macos-port: poco
 
 faye-websocket: gem
 rack-cors: gem
