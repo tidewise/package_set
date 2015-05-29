@@ -37,8 +37,7 @@ eigen3:
     debian, ubuntu: libeigen3-dev
     fedora: eigen3-devel
     arch,manjarolinux: eigen3
-    macos-brew: eigen
-    macos-port: eigen
+    darwin: eigen3
     opensuse: eigen3-devel
 
 pkg-config:
@@ -46,8 +45,7 @@ pkg-config:
         default: pkg-config
     fedora,opensuse: pkg-config
     arch,manjarolinux: pkg-config
-    macos-brew: pkg-config
-    macos-port: pkg-config
+    darwin: pkg-config
 
 webgen:
     gem:
@@ -67,17 +65,18 @@ qwt5:
     debian,ubuntu: libqwt5-qt4-dev
     fedora,opensuse: qwt-devel
     arch: qwt5
+    macos-port: qwt
 
 vtk-qt4:
     debian,ubuntu: libvtk5-qt4-dev
     fedora,opensuse: vtk-devel
     arch: vtk
+    macos-port: vtk
 
 freeglut3:
     debian,ubuntu: freeglut3-dev
     fedora,opensuse: freeglut-devel
-    macos-brew: freeglut
-    macos-port: freeglut
+    darwin: freeglut
     arch: freeglut
 
 osg:
@@ -105,18 +104,21 @@ qt4-opengl:
     gentoo: qt-opengl
     fedora,opensuse: qt-devel
     macos-brew: qt4
+    macos-port: qt4-mac
     arch: qt4
 
 qt4-webkit:
     debian,ubuntu: libqtwebkit-dev
     fedora,opensuse: qt-devel
     macos-brew: qt4
+    macos-port: qt4-mac
 
 qt-designer:
     debian,ubuntu: qt4-designer
     gentoo: x11-libs/qt-gui
     fedora,opensuse: qt-devel
     macos-brew: qt4
+    macos-port: qt4-mac
 
 opencv:
     debian: libopencv-dev
