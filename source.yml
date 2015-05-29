@@ -16,7 +16,7 @@ version_control:
     - base/templates/cmake_vizkit_widget:
       github: rock-core/base-templates-vizkit_widget
       branch: $ROCK_BRANCH
-    - base/templates/vizkit:
+    - base/templates/vizkit3d_plugin:
       github: rock-core/base-templates-vizkit3d_plugin
       branch: $ROCK_BRANCH
     - base/doc:
