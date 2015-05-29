@@ -40,8 +40,10 @@ setup_package 'rtt' do |rtt|
 end
 
 if !Autoproj.config.get('USE_OCL')
-    remove_from_default 'ocl'
-    remove_from_default 'log4cpp'
+    #This package can compiled but is unneeded by default
+    remove_from_default 'log4cpp' 
+    #OCL cannot be compiled without setting PLUGINS_ENABLE_SCRIPTING on RTT, therefore exclude it hard
+    Autoproj.manifest.add_exclusion("ocl","USE_OCL is set to false, OCL cannot compiled without this setting.")
 end
 
 move_package 'rtt', 'tools'
