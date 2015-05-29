@@ -37,7 +37,8 @@ eigen3:
     debian, ubuntu: libeigen3-dev
     fedora: eigen3-devel
     arch,manjarolinux: eigen3
-    darwin: eigen3
+    macos-brew: eigen
+    macos-port: eigen3-devel
     opensuse: eigen3-devel
 
 pkg-config:
