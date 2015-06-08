@@ -12,12 +12,13 @@ ignore(/\.sw?$/)
 # Ignore the numerous backup files
 ignore(/~$/)
 
-# Verify that Ruby is NOT 1.8. 1.8 is unsupported
+
+# Ruby 1.8 is completly outdated, if you modify this, take respect to the addition checks below against 1.9 
 if defined?(RUBY_VERSION) && (RUBY_VERSION =~ /^1\.8\./)
     Autoproj.error "Ruby 1.8 is not supported by Rock anymore"
     Autoproj.error ""
     Autoproj.error "Use Rock's bootstrap.sh script to install Rock"
-    Autoproj.error "See http://rock-robotics.org/documentation/installation.html for more information"
+    Autoproj.error "See http://rock-robotics.org/stable/documentation/installation.html for more information"
     exit 1
 end
 
@@ -106,6 +107,23 @@ def bundle_package(*args, &block)
         end
     end
 end
+
+# Verify that a valid ruby version i used
+if defined?(RUBY_VERSION) && (RUBY_VERSION.to_f < 2.0) && Autoproj.config.get('ROCK_FLAVOR') == 'master'
+    Autoproj.error "Ruby below 2.0 is not supported by Rock anymore."
+    Autoproj.error "Please re-bootstrap your installation."
+    Autoproj.error "We recommend ruby 2.1 expect for Ubuntu 14.04 where ruby 2.0 should be used."
+    Autoproj.error "You have also the option to switch to the 'stable' flavor by running 'autoproj reconfigure'"
+    Autoproj.error "or use the rock-15.05 release by first switching to 'stable' and then running 'rock-release switch rock-15.05'."
+    Autoproj.error "If you need to check the state of this installation (to make sure everyting is pushed) you could run"
+    Autoproj.error "'ROCK_IGNORY_RUBY_VERSION=1 autoproj status'."
+    Autoproj.error ""
+    Autoproj.error "See http://rock-robotics.org/documentation/installation.html for more information regarding bootstrapping."
+    if !ENV['ROCK_IGNORY_RUBY_VERSION']
+        exit 1
+    end
+end
+
 
 # rtt doesn't support mqueue on Mac OS X
 if Autobuild.macos?
