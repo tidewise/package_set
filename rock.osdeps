@@ -171,4 +171,4 @@ qtruby:
 
 fakefs: gem
 flexmock: gem
-
+minitest: gem
