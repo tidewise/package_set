@@ -125,6 +125,18 @@ in_flavor 'master', 'stable' do
             Autobuild.update_environment srcdir
             Autoproj.env_set 'ORBInitRef',"NameService=corbaname::127.0.0.1"
         end
+
+        def pkg.invoke_rake(target_name = rake_setup_task)
+            super
+            if test_utility.enabled?
+                Autobuild.invoke_make_parallel(self) do |*make_options|
+                    make_options = make_options.
+                        map { |opt| opt.gsub(',', ';') }
+                    test_target = "setup:orogen_all[1,#{Autobuild::Orogen.transports.join(" ")},'#{make_options.join("' '")}']"
+                    super(test_target)
+                end
+            end
+        end
     end
 
     ruby_package 'tools/pocolog'
