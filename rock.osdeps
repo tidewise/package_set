@@ -172,3 +172,10 @@ qtruby:
 fakefs: gem
 flexmock: gem
 minitest: gem
+
+concurrent-ruby:
+    gem:
+    - concurrent-ruby
+    - concurrent-ruby-ext
+rb-readline: gem
+
