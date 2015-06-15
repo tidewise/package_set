@@ -119,7 +119,7 @@ if defined?(RUBY_VERSION) && (RUBY_VERSION.to_f < 2.0) && Autoproj.config.get('R
     Autoproj.error "'ROCK_IGNORY_RUBY_VERSION=1 autoproj status'."
     Autoproj.error ""
     Autoproj.error "See http://rock-robotics.org/documentation/installation.html for more information regarding bootstrapping."
-    if !ENV['ROCK_IGNORY_RUBY_VERSION']
+    if !ENV['ROCK_IGNORE_RUBY_VERSION']
         exit 1
     end
 end
