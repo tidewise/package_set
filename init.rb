@@ -116,7 +116,7 @@ if defined?(RUBY_VERSION) && (RUBY_VERSION.to_f < 2.0) && Autoproj.config.get('R
     Autoproj.error "You have also the option to switch to the 'stable' flavor by running 'autoproj reconfigure'"
     Autoproj.error "or use the rock-15.05 release by first switching to 'stable' and then running 'rock-release switch rock-15.05'."
     Autoproj.error "If you need to check the state of this installation (to make sure everyting is pushed) you could run"
-    Autoproj.error "'ROCK_IGNORY_RUBY_VERSION=1 autoproj status'."
+    Autoproj.error "'ROCK_IGNORE_RUBY_VERSION=1 autoproj status'."
     Autoproj.error ""
     Autoproj.error "See http://rock-robotics.org/documentation/installation.html for more information regarding bootstrapping."
     if !ENV['ROCK_IGNORE_RUBY_VERSION']
