@@ -54,6 +54,7 @@ webgen:
 coderay: gem
 kramdown: gem
 hoe: gem
+yard: gem
 hoe-yard: gem
 rice:
     default:
