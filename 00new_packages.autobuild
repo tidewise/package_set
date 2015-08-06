@@ -5,6 +5,7 @@ cmake_package 'tools/class_loader' do |pkg|
     pkg.depends_on 'base/console_bridge'
     pkg.depends_on 'poco'
     pkg.define "BUILD_SHARED_LIBS", "ON"
+    pkg.define "CATKIN_DISABLED", "ON"
     pkg.define 'CMAKE_BUILD_TYPE', "Release"
 end
 
