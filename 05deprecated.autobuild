@@ -1,8 +1,4 @@
 #This package should removed during rock-1510 release
 if Rock.flavors.current_flavor.name == "stable"
-    in_flavor 'stable' do
-        orogen_package 'base/orogen/interfaces'
-        remove_from_default 'base/orogen/interfaces'
-    end
 end
 

@@ -13,10 +13,6 @@ version_control:
       type: archive
       url: http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.3.1/OpenCV-2.3.1a.tar.bz2
       update_cached_file: false
-      #Should removed during rock-1510 release period
-    - base/orogen/interfaces:
-      gitorious: rock-toolchain/orogen-base-interfaces
-      branch: $ROCK_BRANCH
 overrides:
     - (ocl|log4cpp):
       branch: toolchain-2.6
