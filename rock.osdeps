@@ -180,3 +180,11 @@ concurrent-ruby:
     - concurrent-ruby-ext
 rb-readline: gem
 
+hooks: gem
+tty: gem
+tty-table: gem
+tty-pager: gem
+tty-platform: gem
+tty-screen: gem
+pastel: gem
+
