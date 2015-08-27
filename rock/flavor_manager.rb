@@ -254,7 +254,7 @@ module Rock
 
                 pkg.dependencies.each do |dep_name|
                     if !flv.include?(dep_name)
-                        raise ConfigError, "#{pkg.name}, in flavor #{flv.name}, depends on #{dep_name} which is not included in this flavor"
+                        raise Autoproj::ConfigError, "#{pkg.name}, in flavor #{flv.name}, depends on #{dep_name} which is not included in this flavor"
                     end
                 end
             end
