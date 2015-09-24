@@ -3,3 +3,5 @@ rake-compiler:
         gem: rake-compiler<0.9.0
     default:
         gem: rake-compiler
+flexmock:
+    gem: "flexmock<2.0"
