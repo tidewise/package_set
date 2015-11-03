@@ -24,7 +24,7 @@ sigc:
 
 rbtree: gem
 
-msgpack-ruby: 
+msgpack-ruby:
     gem : msgpack
 
 websocket-gem:
@@ -38,6 +38,7 @@ activesupport:
 
 eigen3:
     debian, ubuntu: libeigen3-dev
+    gentoo: dev-cpp/eigen
     fedora: eigen3-devel
     arch,manjarolinux: eigen3
     darwin: eigen
@@ -70,18 +71,21 @@ qwt5:
     fedora,opensuse: qwt-devel
     arch: qwt5
     macos-port: qwt
+    gentoo: x11-libs/qwt
 
 vtk-qt4:
     debian,ubuntu: libvtk5-qt4-dev
     fedora,opensuse: vtk-devel
     arch: vtk
     macos-port: vtk
+    gentoo: sci-libs/vtk
 
 freeglut3:
     debian,ubuntu: freeglut3-dev
     fedora,opensuse: freeglut-devel
     darwin: freeglut
     arch: freeglut
+    gentoo: media-libs/freeglut
 
 osg:
     debian,ubuntu: libopenscenegraph-dev
@@ -96,7 +100,7 @@ qt4:
     # QMake is needed for the CMake macro for Qt4
     debian,ubuntu: [libqt4-dev, qt4-qmake]
     gentoo:
-        - dev-qt/qtcore 
+        - dev-qt/qtcore
         - dev-qt/qtgui
     fedora,opensuse: qt-devel
     macos-brew: qt4
@@ -105,7 +109,7 @@ qt4:
 
 qt4-opengl:
     debian,ubuntu: libqt4-opengl-dev
-    gentoo: qt-opengl
+    gentoo: dev-qt/qtopengl
     fedora,opensuse: qt-devel
     macos-brew: qt4
     macos-port: qt4-mac
@@ -143,6 +147,7 @@ jpeg:
     macos-port: jpeg
     opensuse: libjpeg-devel
     arch: libjpeg-turbo
+    gentoo: virtual/jpeg
 
 bundler: gem
 cucumber: gem
