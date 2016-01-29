@@ -34,7 +34,7 @@ binding_of_caller:
     gem: binding_of_caller
 
 activesupport:
-    gem: activesupport
+    gem: activesupport <= 4.2.5.1
 
 eigen3:
     debian, ubuntu: libeigen3-dev
