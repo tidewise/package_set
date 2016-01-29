@@ -34,7 +34,7 @@ binding_of_caller:
     gem: binding_of_caller
 
 activesupport:
-    gem: activesupport
+    gem: activesupport <= 4.2.5.1
 
 eigen3:
     debian, ubuntu: libeigen3-dev
@@ -194,5 +194,7 @@ tty-table: gem
 tty-pager: gem
 tty-platform: gem
 tty-screen: gem
-pastel: gem
+pastel:
+    gem:
+        - pastel<0.6
 
