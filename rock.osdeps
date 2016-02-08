@@ -34,7 +34,10 @@ binding_of_caller:
     gem: binding_of_caller
 
 activesupport:
-    gem: activesupport <= 4.2.5.1
+  ubuntu: ruby-activesupport
+  debian: ruby-activesupport
+  default:
+    gem: activesupport
 
 eigen3:
     debian, ubuntu: libeigen3-dev
@@ -162,6 +165,7 @@ faye-websocket: gem
 rack-cors: gem
 thin: gem
 grape: gem
+
 sprockets: gem
 
 thor:
