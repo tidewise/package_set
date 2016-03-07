@@ -50,6 +50,7 @@ end
 
 move_package 'rtt', 'tools'
 move_package 'typelib', 'tools'
+move_package 'castxml', 'tools'
 move_package 'orogen', 'tools'
 move_package 'ocl', 'tools'
 move_package 'utilmm', 'tools'
