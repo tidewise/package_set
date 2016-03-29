@@ -1,11 +1,16 @@
+manifest = if Autoproj.respond_to?(:workspace)
+               Autoproj.workspace.manifest
+           else Autoproj.manifest
+           end
+
 add_packages_to_flavors 'stable' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib', 'rtt_typelib', 'tools/metaruby', 'ocl', 'log4cpp']
 
 in_flavor 'master', 'stable' do
     ruby_package 'gui/vizkit'
 
     cmake_package 'gui/vizkit3d' do |pkg|
-        if Autoproj.manifest.package_enabled?('rtt', false) # the toolchain is built, add it to the rtt_target
-            pkg.define "OROCOS_TARGET", user_config('rtt_target')
+        if manifest.package_enabled?('rtt', false) # the toolchain is built, add it to the rtt_target
+            pkg.define "OROCOS_TARGET", Autoproj.config.get('rtt_target')
         end
         Autoproj.env_add_path 'OSG_FILE_PATH', File.join(pkg.prefix, "share", "vizkit" )
 
@@ -27,7 +32,7 @@ in_flavor 'master', 'stable' do
     bundle_package 'bundles/rock'
     cmake_package 'tools/pocolog_cpp'
     cmake_package 'tools/service_discovery' do |pkg|
-        pkg.define "RUBY_EXECUTABLE", Autoproj.find_in_path(RbConfig::CONFIG['RUBY_INSTALL_NAME'])
+        pkg.define "RUBY_EXECUTABLE", Autoproj.config.ruby_executable
     end
 
     ruby_package 'tools/autoproj'
@@ -40,7 +45,7 @@ in_flavor 'master', 'stable' do
             pkg.define 'SISL_PREFIX', package('external/sisl').prefix
         end
         Autobuild.env_add_path 'TYPELIB_RUBY_PLUGIN_PATH', File.join(pkg.prefix, "share", "typelib", "ruby")
-	pkg.define "RUBY_EXECUTABLE", Autoproj::CmdLine.ruby_executable
+	pkg.define "RUBY_EXECUTABLE", Autoproj.config.ruby_executable
     end
     cmake_package 'base/cmake' do |pkg|
         Autobuild.env_add_path 'CMAKE_PREFIX_PATH', pkg.prefix
@@ -81,7 +86,14 @@ in_flavor 'master', 'stable' do
             end
             Autoproj.env_source_file bundle_envsh
 
-            if Autoproj.shell_helpers? && shell = ENV['SHELL']
+            
+            shell_helpers =
+                if Autoproj.config.respond_to?(:shell_helpers?)
+                    Autoproj.config.shell_helpers? # Autoproj 2.x
+                else Autoproj.shell_helpers?
+                end
+
+            if shell_helpers && shell = ENV['SHELL']
                 shell_kind = File.basename(shell)
                 if shell_kind =~ /^\w+$/
                     shell_file = File.join(pkg.srcdir, "shell", shell_kind)
@@ -174,15 +186,15 @@ in_flavor 'master', 'stable' do
     end
 
     cmake_package 'perception/jpeg_conversion' do |pkg|
-        pkg.define "RUBY_EXECUTABLE", Autoproj::CmdLine.ruby_executable
+        pkg.define "RUBY_EXECUTABLE", Autoproj.config.ruby_executable
     end
     metapackage 'image_processing/jpeg_conversion', 'perception/jpeg_conversion'
 
     cmake_package 'perception/frame_helper' do |pkg|
-        if Autoproj.manifest.package_enabled?('rtt', false) # the toolchain is built, add it to the rtt_target
-            pkg.define "OROCOS_TARGET", user_config('rtt_target')
+        if manifest.package_enabled?('rtt', false) # the toolchain is built, add it to the rtt_target
+            pkg.define "OROCOS_TARGET", Autoproj.config.get('rtt_target')
         end
-        pkg.define "RUBY_EXECUTABLE", Autoproj::CmdLine.ruby_executable
+        pkg.define "RUBY_EXECUTABLE", Autoproj.config.ruby_executable
     end
     metapackage 'image_processing/frame_helper', 'perception/frame_helper'
 

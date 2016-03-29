@@ -44,7 +44,7 @@ configuration_option('ROCK_SELECTED_FLAVOR', 'string',
 
 
 Rock.flavors.select_current_flavor_by_name(
-    ENV['ROCK_FORCE_FLAVOR'] || user_config('ROCK_SELECTED_FLAVOR'))
+    ENV['ROCK_FORCE_FLAVOR'] || Autoproj.config.get('ROCK_SELECTED_FLAVOR'))
 
 current_flavor = Rock.flavors.current_flavor
 
