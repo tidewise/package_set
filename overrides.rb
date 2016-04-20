@@ -83,7 +83,7 @@ Autoproj.manifest.each_autobuild_package do |pkg|
     end
 
     pkg.optional_dependency 'tools/service_discovery'
-    if !user_config('USE_OCL')
+    if !Autoproj.config.get('USE_OCL')
         pkg.optional_dependencies.delete 'ocl'
     end
 end
