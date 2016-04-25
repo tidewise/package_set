@@ -165,6 +165,7 @@ faye-websocket: gem
 rack-cors: gem
 thin: gem
 grape: gem
+grape_logging: gem
 
 sprockets: gem
 
