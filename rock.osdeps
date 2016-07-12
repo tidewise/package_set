@@ -77,7 +77,10 @@ qwt5:
     gentoo: x11-libs/qwt
 
 vtk-qt4:
-    debian,ubuntu: [libvtk5-qt4-dev,libvtk5-dev]
+    ubuntu:
+      '16.04': [libvtk5-qt4-dev,libvtk5-dev]
+      default: libvtk5-qt4-dev
+    debian: libvtk5-qt4-dev
     fedora,opensuse: vtk-devel
     arch: vtk
     macos-port: vtk
