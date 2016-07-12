@@ -201,9 +201,7 @@ tty-table: gem
 tty-pager: gem
 tty-platform: gem
 tty-screen: gem
-pastel:
-    gem:
-        - pastel<0.6
+pastel: gem
 
 rgl: gem
 autorespawn: gem
