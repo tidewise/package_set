@@ -1,2 +1,16 @@
 rake-compiler: gem
 autorespawn: nonexistent
+thin:
+    gem: 
+        - rack<1.6.5
+        - thin
+sprockets:
+    gem: 
+        - rack<1.6.5
+        - sprockets
+grape:
+    gem: 
+        - rack<1.6.5
+        - grape
+activesupport:
+    gem: "activesupport<4.2.8"
