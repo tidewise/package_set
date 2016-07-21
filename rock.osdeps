@@ -11,7 +11,9 @@ avahi:
     macos-port: avahi
 
 sigc:
-    debian: [libsigc++-2.0-0c2a, libsigc++-2.0-dev]
+    debian:
+      'wheezy,jessie': [libsigc++-2.0-0c2a, libsigc++-2.0-dev]
+      default: [libsigc++-2.0-0v5, libsigc++-2.0-dev]
     ubuntu:
       '12.04,14.04,14.10,15.04': [libsigc++-2.0-0c2a, libsigc++-2.0-dev]
       default: [libsigc++-2.0-0v5, libsigc++-2.0-dev]
@@ -80,7 +82,9 @@ vtk-qt4:
     ubuntu:
       '16.04': [libvtk5-qt4-dev,libvtk5-dev]
       default: libvtk5-qt4-dev
-    debian: libvtk5-qt4-dev
+    debian:
+      'wheezy,jessie': libvtk5-qt4-dev
+      default: nonexistent
     fedora,opensuse: vtk-devel
     arch: vtk
     macos-port: vtk
