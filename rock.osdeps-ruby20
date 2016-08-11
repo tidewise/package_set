@@ -1,17 +1,18 @@
-rake-compiler: gem
+rake-compiler:
+    gem: "rake-compiler<=1.0.1"
 autorespawn: nonexistent
 thin:
     gem: 
         - rack<1.6.5
-        - thin
+        - thin<=1.7.0
 sprockets:
     gem: 
         - rack<1.6.5
-        - sprockets
+        - sprockets<=3.6.1
 grape:
     gem: 
         - rack<1.6.5
-        - grape
+        - grape<=0.16.2
 activesupport:
     gem: "activesupport<4.2.8"
 websocket-gem:
