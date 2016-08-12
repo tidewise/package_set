@@ -1,3 +1,6 @@
 
 rake-compiler: gem
+activesupport:
+    gem: "activesupport<5.0.0"
+        
 
