@@ -2,5 +2,7 @@
 rake-compiler: gem
 activesupport:
     gem: "activesupport<5.0.0"
+rake:
+    gem: 'rack<2.0'
         
 
