@@ -5,7 +5,10 @@ activesupport:
 grape:
     gem: grape
     osdep: activesupport
-rake:
+rack:
     gem: 'rack<2.0'
+rack-cors:
+    gem: rack-cors
+    osdep: rack
         
 
