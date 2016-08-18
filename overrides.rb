@@ -71,7 +71,7 @@ Autoproj.manifest.each_autobuild_package do |pkg|
         end
     when Autobuild::Ruby
         if pkg.respond_to?(:rake_test_options) # autoproj v2 only
-            pkg.rake_test_options << "TESTOPTS=--junit --junit-filename=#{pkg.test_utility.source_dir}/report.xml --junit-jenkins"
+            pkg.rake_test_options << "TESTOPTS=--junit --junit-filename=#{pkg.test_utility.source_dir}/report.junit.xml --junit-jenkins"
         end
     when Autobuild::CMake
         pkg.define "ROCK_TEST_ENABLED", pkg.test_utility.enabled?
