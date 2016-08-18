@@ -2,6 +2,9 @@
 rake-compiler: gem
 activesupport:
     gem: "activesupport<5.0.0"
+grape:
+    gem: grape
+    osdep: activesupport
 rake:
     gem: 'rack<2.0'
         
