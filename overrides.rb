@@ -69,6 +69,10 @@ Autoproj.manifest.each_autobuild_package do |pkg|
         if !Autoproj.config.get('USE_OCL')
             pkg.optional_dependencies.delete 'ocl'
         end
+    when Autobuild::Ruby
+        if pkg.respond_to?(:rake_test_options) # autoproj v2 only
+            pkg.rake_test_options << "TESTOPTS=--junit --junit-filename=#{pkg.test_utility.source_dir}/report.xml --junit-jenkins"
+        end
     when Autobuild::CMake
         pkg.define "ROCK_TEST_ENABLED", pkg.test_utility.enabled?
         pkg.define "CMAKE_EXPORT_COMPILE_COMMANDS", "ON"
