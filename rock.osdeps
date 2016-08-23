@@ -192,6 +192,8 @@ qtruby:
 fakefs: gem
 flexmock: gem
 minitest: gem
+rack-test: gem
+minitest-em-sync: gem
 
 concurrent-ruby:
     gem:
