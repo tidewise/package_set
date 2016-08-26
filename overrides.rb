@@ -70,7 +70,8 @@ Autoproj.manifest.each_autobuild_package do |pkg|
             pkg.optional_dependencies.delete 'ocl'
         end
     when Autobuild::Ruby
-        if pkg.respond_to?(:rake_test_options) # autoproj v2 only
+        if pkg.test_utility.enabled? && pkg.respond_to?(:rake_test_options) # autoproj v2 only
+            pkg.depends_on 'minitest-junit'
             pkg.rake_test_options << "TESTOPTS=--junit --junit-filename=#{pkg.test_utility.source_dir}/report.junit.xml --junit-jenkins"
         end
     when Autobuild::CMake
