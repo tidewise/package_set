@@ -43,7 +43,7 @@ Autoproj.manifest.each_autobuild_package do |pkg|
 
         # Do the git hook setup in a separate setup block since we must do it
         # post-import
-        setup_package(pkg.name) do
+        pkg.post_import do
             if pkg.importer.branch == "next" || pkg.importer.branch == "stable"
                 Rock.install_git_hook pkg, 'git_do_not_commit_hook', 'pre-commit'
             else
