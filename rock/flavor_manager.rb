@@ -49,11 +49,7 @@ module Rock
             end
 
             if flavor_def.implicit?
-                if Autoproj.respond_to?(:workspace) # 2.0
-                    pkg_set = Autoproj.manifest.find_package_definition(pkg).package_set
-                else
-                    pkg_set = Autoproj.manifest.find_package(pkg).package_set
-                end
+                pkg_set = Autoproj.manifest.find_package_definition(pkg).package_set
                 if package_sets.include?(pkg_set)
                     !flavor_def.removed?(pkg)
                 else
