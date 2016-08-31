@@ -70,7 +70,9 @@ Autoproj.manifest.each_autobuild_package do |pkg|
             pkg.optional_dependencies.delete 'ocl'
         end
     when Autobuild::CMake
-        Rock.update_cmake_build_type_from_tags(pkg)
+        pkg.post_import do
+            Rock.update_cmake_build_type_from_tags(pkg)
+        end
         pkg.define "ROCK_TEST_ENABLED", pkg.test_utility.enabled?
         pkg.define "CMAKE_EXPORT_COMPILE_COMMANDS", "ON"
     end
