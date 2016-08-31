@@ -109,11 +109,13 @@ module Rock
 
             flavor = current_flavor
 
-            current_packages = Autoproj.manifest.packages.keys
+            current_packages = Autoproj.manifest.each_package_definition.to_set
             InFlavorContext.new(flavor.name, flavors, options[:strict]).
                 instance_eval(&block)
 
-            new_packages = Autoproj.manifest.packages.keys - current_packages
+            new_packages = Autoproj.manifest.each_package_definition.
+                find_all { |pkg| !current_packages.include?(pkg) }.
+                map(&:name)
             add_packages_to_flavors Autoproj.current_package_set, flavors => new_packages
         end
 
@@ -176,12 +178,13 @@ module Rock
         def finalize
             package_sets.each do |pkg_set|
                 meta = Autoproj.manifest.metapackages[pkg_set.name]
+                meta_package_names = meta.each_package.inject(Set.new) { |s, p| s << p.name }
 
                 if current_flavor.implicit?
                     in_a_flavor = flavors.values.inject(Set.new) do |pkgs, other_flavor| 
                         pkgs | other_flavor.default_packages[pkg_set.name]
                     end
-                    default_packages = (meta.packages.map(&:name).to_set - in_a_flavor) |
+                    default_packages = (meta_package_names - in_a_flavor) |
                         current_flavor.default_packages[pkg_set.name]
                 else
                     default_packages = current_flavor.default_packages[pkg_set.name]
@@ -189,8 +192,9 @@ module Rock
                 default_packages -= current_flavor.removed_packages
                 default_packages = default_packages.to_set
                 current_flavor.default_packages[pkg_set.name] = default_packages
-                meta.packages.delete_if do |pkg|
-                    !default_packages.include?(pkg.name)
+
+                (meta_package_names - default_packages).each do |pkg_name|
+                    meta.remove(pkg_name)
                 end
             end
         end
