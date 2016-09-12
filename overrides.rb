@@ -69,12 +69,20 @@ Autoproj.manifest.each_autobuild_package do |pkg|
         if !Autoproj.config.get('USE_OCL')
             pkg.optional_dependencies.delete 'ocl'
         end
+    when Autobuild::Ruby
+        if pkg.test_utility.enabled? && pkg.respond_to?(:rake_test_options) # autoproj v2 only
+            pkg.depends_on 'minitest-junit'
+            pkg.rake_test_options << "TESTOPTS=--junit --junit-filename=#{pkg.test_utility.source_dir}/report.junit.xml --junit-jenkins"
+        end
     when Autobuild::CMake
         pkg.post_import do
             Rock.update_cmake_build_type_from_tags(pkg)
         end
         pkg.define "ROCK_TEST_ENABLED", pkg.test_utility.enabled?
         pkg.define "CMAKE_EXPORT_COMPILE_COMMANDS", "ON"
+        setup_package(pkg.name) do
+            pkg.define 'ROCK_TEST_LOG_DIR', pkg.test_utility.source_dir
+        end
     end
 end
 
