@@ -209,8 +209,15 @@ module Rock
                 flavors = find_all_flavors_by_branch(pkg.importer.branch)
                 if !flavors.empty? && !flavors.any? { |flv| flv.include?(pkg.name) }
                     vcs_raw = pkg_def.vcs.raw.reverse.
-                        find { |pkg_set_name, options| options['branch'] }
-                    if !vcs_raw || vcs_raw[1]['branch'] !~ /ROCK_FLAVOR|ROCK_BRANCH/
+                        map do |entry|
+                            if entry.kind_of?(Array)
+                                entry[1]
+                            else
+                                entry.vcs
+                            end
+                        end.
+                        find { |vcs_options| vcs_options['branch'] }
+                    if !vcs_raw || vcs_raw['branch'] !~ /ROCK_FLAVOR|ROCK_BRANCH/
                         switched_packages << [pkg, pkg.importer.branch]
                     end
                     pkg.importer.branch = default_branch
