@@ -59,21 +59,4 @@ move_package 'log4cpp', 'tools'
 move_package 'rtt_typelib', 'tools'
 Autoproj.manifest.moved_packages.delete('tools/metaruby')
 
-def override_branches(branch)
-    only_in_flavor branch do
-        setup_package 'ocl' do |pkg|
-            pkg.importer.branch = branch
-        end
-        setup_package 'log4cpp' do |pkg|
-            pkg.importer.branch = branch
-        end
-        setup_package 'rtt' do |pkg|
-            pkg.importer.branch = branch
-        end
-    end
-end
-
-override_branches "master"
-override_branches "stable"
-
 
