@@ -52,8 +52,12 @@ Autoproj.manifest.each_autobuild_package do |pkg|
         end
     end
 
-    case pkg
-    when Autobuild::Orogen
+    # NOTE: do not use a case/when to dispatch the package types.
+    # Autobuild::Orogen is a subclass of Autobuild::CMake - and therefore needs
+    # to get through both ifs. It's not the case with Autobuild::Ruby, but I
+    # think it's easier to just have a bunch of ifs
+
+    if pkg.kind_of?(Autobuild::Orogen)
         if !%w{tools/logger base/orogen/types base/orogen/std}.include?(pkg.name)
             pkg.optional_dependency 'tools/logger'
         end
@@ -69,12 +73,16 @@ Autoproj.manifest.each_autobuild_package do |pkg|
         if !Autoproj.config.get('USE_OCL')
             pkg.optional_dependencies.delete 'ocl'
         end
-    when Autobuild::Ruby
+    end
+
+    if pkg.kind_of?(Autobuild::Ruby)
         if pkg.test_utility.enabled? && pkg.respond_to?(:rake_test_options) # autoproj v2 only
             pkg.depends_on 'minitest-junit'
             pkg.rake_test_options << "TESTOPTS=--junit --junit-filename=#{pkg.test_utility.source_dir}/report.junit.xml --junit-jenkins"
         end
-    when Autobuild::CMake
+    end
+
+    if pkg.kind_of?(Autobuild::CMake)
         pkg.post_import do
             Rock.update_cmake_build_type_from_tags(pkg)
         end
