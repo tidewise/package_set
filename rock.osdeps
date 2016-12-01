@@ -209,6 +209,8 @@ tty-table: gem
 tty-pager: gem
 tty-platform: gem
 tty-screen: gem
+tty-prompt: gem
+tty-cursor: gem
 pastel: gem
 
 rgl: gem
