@@ -16,10 +16,7 @@ module Rock
 
         if !config.has_value_for?('castxml') && os_package_resolver.has?('default_castxml')
             config.set 'typelib_cxx_loader', 'castxml', true
-        end
-
-        # Trigger the choice for C++11 if there is one, and force castxml if it is the case
-        if config.get('cxx11')
+        elsif config.get('cxx11')
             config.set 'typelib_cxx_loader', 'castxml'
         else
             config.set 'typelib_cxx_loader', 'gccxml'
