@@ -66,9 +66,8 @@ version_control:
       branch: $ROCK_BRANCH
 
     - external/sisl:
-      type: archive
-      url: https://github.com/SINTEF-Geometry/SISL/archive/SISL-4.6.0.tar.gz
-      update_cached_file: false
+      github: SINTEF-Geometry/SISL
+
     - external/opencv:
       type: archive
       url: http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.9/opencv-2.4.9.zip
