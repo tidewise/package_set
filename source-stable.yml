@@ -6,9 +6,8 @@ version_control:
       url: https://bitbucket.org/eigen/eigen/get/3.2.1.tar.gz
       update_cached_file: false
     - external/sisl:
-      type: archive
-      url: http://www.sintef.no/upload/IKT/9011/geometri/sisl/sisl-4.5.0.tar.gz
-      update_cached_file: false
+      github: SINTEF-Geometry/SISL
+      tag: SISL_4_5_0
     - external/opencv:
       type: archive
       url: http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.3.1/OpenCV-2.3.1a.tar.bz2
