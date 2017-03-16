@@ -12,8 +12,8 @@ default_castxml:
         '12.04,12.10,13.04,13.10,14.04,14.10,15.04': nonexistent
         default: ignore
     debian:
-        testing,unstable: ignore
-        default: nonexistent
+        squeeze,wheezy,jessie: nonexistent
+        default: ignore
     default: nonexistent
 
 # Check whether the default C++ standard should be C++11 (ignore) or C++98
@@ -23,7 +23,7 @@ default_cxx11:
         '12.04,12.10,13.04,13.10,14.04,14.10,15.04,15.10': nonexistent
         default: ignore
     debian:
-        testing,unstable: ignore
-        default: nonexistent
+        squeeze,wheezy,jessie: nonexistent
+        default: ignore
     default: nonexistent
 
