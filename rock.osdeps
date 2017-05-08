@@ -215,3 +215,5 @@ pastel: gem
 
 rgl: gem
 autorespawn: gem
+stackprof: gem
+rbtrace: gem
