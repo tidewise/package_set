@@ -17,3 +17,5 @@ activesupport:
     gem: "activesupport<4.2.8"
 websocket-gem:
     gem: websocket<=1.2.2
+grape_logging:
+    gem: rack<1.6.5
