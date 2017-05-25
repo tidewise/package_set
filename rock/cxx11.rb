@@ -14,7 +14,7 @@ module Rock
             config.set 'cxx11', false
         end
 
-        if !config.has_value_for?('castxml') && os_package_resolver.has?('default_castxml')
+        if !config.has_value_for?('typelib_cxx_loader') && os_package_resolver.has?('default_castxml')
             config.set 'typelib_cxx_loader', 'castxml', true
         elsif config.get('cxx11')
             config.set 'typelib_cxx_loader', 'castxml'
