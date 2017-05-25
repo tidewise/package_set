@@ -51,11 +51,19 @@ current_flavor = Rock.flavors.current_flavor
 #This check is needed because the overrides file will override the FLAVOR selection.
 #Furthermore a selection != stable can cause a inconsistent layout (cause by in_flavor system in the package_sets)
 if File.exists?(File.join(Autoproj.root_dir, "autoproj", "overrides.d", "25-release.yml")) && current_flavor.branch != "stable" 
-    Autoproj.error ""
-    Autoproj.error "You selected the flavor '#{current_flavor.branch}' but '#{File.join(Autoproj.root_dir,"autoproj", "overrides.d", "25-release.yml")}' exists."
-    Autoproj.error "This means you are on a release; either unselect the release by calling 'rock-release switch master'"
-    Autoproj.error "or call 'autoproj reconfigure' and select the FLAVOR 'stable'"
-    exit 1
+    if ENV['ROCK_RC'] == '1'
+        Autoproj.warn ""
+        Autoproj.warn "Found a release file and the flavor is not master"
+        Autoproj.warn "This would usually be an error, but since ROCK_RC is set to 1,"
+        Autoproj.warn "it is assumed that you're preparing a release candidate"
+        Autoproj.warn ""
+    else
+        Autoproj.error ""
+        Autoproj.error "You selected the flavor '#{current_flavor.branch}' but '#{File.join(Autoproj.root_dir,"autoproj", "overrides.d", "25-release.yml")}' exists."
+        Autoproj.error "This means you are on a release; either unselect the release by calling 'rock-release switch master'"
+        Autoproj.error "or call 'autoproj reconfigure' and select the FLAVOR 'stable'"
+        exit 1
+    end
 end
 
 Autoproj.config.set('ROCK_SELECTED_FLAVOR', current_flavor.name, true)
