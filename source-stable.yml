@@ -1,18 +1,22 @@
 version_control:
     - tools/rubigen:
-      commit: 7b3ccf69d2463a2741b18ef9fca90abef2116496
-    - eigen3: 
-      type: archive
-      url: https://bitbucket.org/eigen/eigen/get/3.2.1.tar.gz
-      update_cached_file: false
+      commit: 15a034f1d6872bea270618460b3039befd17aaca
     - external/sisl:
       github: SINTEF-Geometry/SISL
-      tag: SISL_4_5_0
+      commit: 8526f4182f75901feb0f962fddd6483fb3cf0596
     - external/opencv:
       type: archive
-      url: http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.3.1/OpenCV-2.3.1a.tar.bz2
+      url: http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.9/opencv-2.4.9.zip
       update_cached_file: false
+      archive_dir: opencv-2.4.9
+    - tools/poco:
+      type: archive
+      url: https://github.com/pocoproject/poco/archive/poco-1.6.0-release.zip
+      update_cached_file: false
+      archive_dir: poco-poco-1.6.0-release
+    - tools/class_loader:
+      tag: 0.3.6
 overrides:
     - (ocl|log4cpp):
-      branch: toolchain-2.6
+      branch: toolchain-2.9
 
