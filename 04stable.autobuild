@@ -6,6 +6,27 @@ manifest = if Autoproj.respond_to?(:workspace)
 add_packages_to_flavors 'stable' => ['orogen', 'rtt', 'utilmm', 'utilrb', 'typelib', 'rtt_typelib', 'tools/metaruby', 'ocl', 'log4cpp']
 
 in_flavor 'master', 'stable' do
+    cmake_package 'base/logging'
+
+    cmake_package 'tools/orogen_metadata' do |pkg|
+        Autoproj.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.prefix, 'share', 'orogen', 'plugins')
+        pkg.remove_obsolete_installed_file('share', 'orogen', 'plugins', 'metadata_plugin.rb')
+        pkg.remove_obsolete_installed_file('share', 'typelib', 'ruby', 'metadata_typelib.rb')
+    end
+
+    cmake_package 'tools/class_loader' do |pkg|
+        pkg.depends_on 'base/console_bridge'
+        pkg.depends_on 'poco'
+        pkg.define "BUILD_SHARED_LIBS", "ON"
+        pkg.define "CATKIN_DISABLED", "ON"
+        pkg.define 'CMAKE_BUILD_TYPE', "Release"
+    end
+
+    cmake_package 'gui/rock_webapp'
+    ruby_package 'tools/rest_api' do |pkg|
+        Autoproj.env_set 'ROCK_WEBAPP', File.join(pkg.prefix, 'share', 'rest_api')
+    end
+
     ruby_package 'gui/vizkit'
 
     cmake_package 'gui/vizkit3d' do |pkg|
@@ -185,6 +206,7 @@ in_flavor 'master', 'stable' do
     end
 
     cmake_package 'perception/jpeg_conversion' do |pkg|
+        pkg.test_utility.available = false
         pkg.define "RUBY_EXECUTABLE", Autoproj.config.ruby_executable
     end
     metapackage 'image_processing/jpeg_conversion', 'perception/jpeg_conversion'
