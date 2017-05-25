@@ -202,5 +202,17 @@ in_flavor 'master', 'stable' do
         Autoproj.env_add_path 'QT_PLUGIN_PATH', File.join(pkg.prefix, "lib", "qt")
     end
 
+    ##### Base implementation for data acquisition
+    cmake_package 'drivers/iodrivers_base' do |pkg|
+        pkg.post_import do
+            # CMake will fail if the test program is there 
+            obsolete = File.join(pkg.builddir, "test")
+            if File.exists?(obsolete) && !File.directory?(obsolete)
+                FileUtils.rm_f obsolete
+            end
+        end
+    end
+
+    orogen_package 'drivers/orogen/iodrivers_base'
 end
 
