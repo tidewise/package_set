@@ -7,7 +7,7 @@ module Rock
             @config = Autoproj::Configuration.new
         end
 
-        describe "with C++11 support available and enabled" do
+        describe "with C++11 enabled" do
             before do
                 @os_package_resolver = flexmock
                 flexmock(Rock).should_receive(:has_cxx11_support?).and_return(true)
@@ -27,14 +27,14 @@ module Rock
                 assert_equal 'castxml', @config.get('typelib_cxx_loader')
             end
 
-            it "sets the loader to castxml even if it is not the default on this OS" do
+            it "sets the loader to gccxml if castxml is not the default" do
                 Rock.should_receive(:default_loader_is_castxml?).and_return(false)
                 Rock.setup_cxx11_support(@os_package_resolver, @config)
-                assert_equal 'castxml', @config.get('typelib_cxx_loader')
+                assert_equal 'gccxml', @config.get('typelib_cxx_loader')
             end
         end
 
-        describe "with C++11 support available and disabled" do
+        describe "with C++11 disabled" do
             before do
                 @os_package_resolver = flexmock
                 flexmock(Rock).should_receive(:has_cxx11_support?).and_return(true)
@@ -52,31 +52,6 @@ module Rock
                 Rock.should_receive(:default_loader_is_castxml?).and_return(true)
                 Rock.setup_cxx11_support(@os_package_resolver, @config)
                 assert_equal 'castxml', @config.get('typelib_cxx_loader')
-            end
-
-            it "sets the loader to gccxml if castxml is not the default on this OS" do
-                Rock.should_receive(:default_loader_is_castxml?).and_return(false)
-                Rock.setup_cxx11_support(@os_package_resolver, @config)
-                assert_equal 'gccxml', @config.get('typelib_cxx_loader')
-            end
-        end
-
-        describe "with C++11 support not available" do
-            before do
-                @os_package_resolver = flexmock
-                flexmock(Rock).should_receive(:has_cxx11_support?).and_return(false)
-            end
-
-            it "does not override an existing typelib_cxx_loader" do
-                @config.set 'typelib_cxx_loader', 'something'
-                Rock.setup_cxx11_support(@os_package_resolver, @config)
-                assert_equal 'something', @config.get('typelib_cxx_loader')
-            end
-
-            it "sets the loader to gccxml even if castxml is declared as the default on this OS" do
-                Rock.should_receive(:default_loader_is_castxml?).and_return(true)
-                Rock.setup_cxx11_support(@os_package_resolver, @config)
-                assert_equal 'gccxml', @config.get('typelib_cxx_loader')
             end
 
             it "sets the loader to gccxml if castxml is not the default on this OS" do
