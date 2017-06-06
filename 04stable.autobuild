@@ -203,16 +203,7 @@ in_flavor 'master', 'stable' do
     end
 
     ##### Base implementation for data acquisition
-    cmake_package 'drivers/iodrivers_base' do |pkg|
-        pkg.post_import do
-            # CMake will fail if the test program is there 
-            obsolete = File.join(pkg.builddir, "test")
-            if File.exists?(obsolete) && !File.directory?(obsolete)
-                FileUtils.rm_f obsolete
-            end
-        end
-    end
-
+    cmake_package 'drivers/iodrivers_base'
     orogen_package 'drivers/orogen/iodrivers_base'
 end
 
