@@ -202,5 +202,8 @@ in_flavor 'master', 'stable' do
         Autoproj.env_add_path 'QT_PLUGIN_PATH', File.join(pkg.prefix, "lib", "qt")
     end
 
+    ##### Base implementation for data acquisition
+    cmake_package 'drivers/iodrivers_base'
+    orogen_package 'drivers/orogen/iodrivers_base'
 end
 
