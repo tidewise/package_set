@@ -1,6 +1,12 @@
 module Rock
     def self.default_loader_is_castxml?(os_package_resolver)
-        os_package_resolver.has?('default_castxml')
+        resolver = Autoproj::OSPackageResolver.load(
+            File.join(__dir__, 'cxx11.defaults'),
+            operating_system: os_package_resolver.operating_system,
+            package_managers: os_package_resolver.package_managers,
+            os_package_manager: os_package_resolver.os_package_manager)
+
+        resolver.has?('default_castxml')
     end
 
     # Offer the C++11 option only on systems where we either can install castxml
