@@ -5,14 +5,33 @@ module Rock
     describe "setup_cxx11_support" do
         before do
             @config = Autoproj::Configuration.new
+            flexmock(@config)
+            flexmock(Rock)
+        end
+
+        describe "#default_loader_is_castxml?" do
+            it "returns true if the entry for default_castxml is 'ignore' on this OS" do
+                resolver = flexmock(
+                    operating_system: [['ubuntu'], ['16.04', 'default']],
+                    package_managers: Autoproj::OSPackageResolver::PACKAGE_MANAGERS.dup,
+                    os_package_manager: nil)
+                assert Rock.default_loader_is_castxml?(resolver)
+            end
+
+            it "returns false if the entry for default_castxml is 'nonexistent' on this OS" do
+                resolver = flexmock(
+                    operating_system: [['ubuntu'], ['14.04', 'default']],
+                    package_managers: Autoproj::OSPackageResolver::PACKAGE_MANAGERS.dup,
+                    os_package_manager: nil)
+                refute Rock.default_loader_is_castxml?(resolver)
+            end
         end
 
         describe "with C++11 enabled" do
             before do
                 @os_package_resolver = flexmock
-                flexmock(Rock).should_receive(:has_cxx11_support?).and_return(true)
-                flexmock(@config).should_receive(:get).with('cxx11').and_return(true)
-                flexmock(@config).should_receive(:get).pass_thru
+                @config.should_receive(:get).with('cxx11').and_return(true)
+                @config.should_receive(:get).pass_thru
             end
 
             it "does not override an existing typelib_cxx_loader" do
@@ -37,8 +56,7 @@ module Rock
         describe "with C++11 disabled" do
             before do
                 @os_package_resolver = flexmock
-                flexmock(Rock).should_receive(:has_cxx11_support?).and_return(true)
-                flexmock(@config).should_receive(:get).with('cxx11').and_return(false)
+                @config.should_receive(:get).with('cxx11').and_return(false)
                 @config.should_receive(:get).pass_thru
             end
 
