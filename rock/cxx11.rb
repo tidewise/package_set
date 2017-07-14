@@ -1,10 +1,14 @@
 module Rock
     def self.default_loader_is_castxml?(os_package_resolver)
-        resolver = Autoproj::OSPackageResolver.load(
-            File.join(__dir__, 'cxx11.defaults'),
-            operating_system: os_package_resolver.operating_system,
-            package_managers: os_package_resolver.package_managers,
-            os_package_manager: os_package_resolver.os_package_manager)
+        if defined? Autoproj::OSPackageResolver
+            resolver = Autoproj::OSPackageResolver.load(
+                File.join(__dir__, 'cxx11.defaults'),
+                operating_system: os_package_resolver.operating_system,
+                package_managers: os_package_resolver.package_managers,
+                os_package_manager: os_package_resolver.os_package_manager)
+        else
+            resolver = Autoproj::OSDependencies.load(File.join(__dir__, 'cxx11.defaults'))
+        end
 
         resolver.has?('default_castxml')
     end
