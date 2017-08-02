@@ -223,3 +223,9 @@ pastel: gem
 rgl: gem
 autorespawn: gem
 timecop: gem
+
+libgtest-dev:
+    debian,ubuntu: libgtest-dev
+
+google-mock:
+    debian,ubuntu: google-mock
