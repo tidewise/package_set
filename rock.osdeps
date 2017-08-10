@@ -232,5 +232,5 @@ google-mock:
 # For backward compatibility with the previous definition in the 'rock' package
 # set
 libgtest-dev:
-    osdeps: google-test
+    osdep: google-test
 
