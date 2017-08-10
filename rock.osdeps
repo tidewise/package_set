@@ -224,8 +224,13 @@ rgl: gem
 autorespawn: gem
 timecop: gem
 
-libgtest-dev:
+google-test:
     debian,ubuntu: libgtest-dev
-
 google-mock:
     debian,ubuntu: google-mock
+
+# For backward compatibility with the previous definition in the 'rock' package
+# set
+libgtest-dev:
+    osdeps: google-test
+
