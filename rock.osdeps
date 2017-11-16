@@ -236,3 +236,6 @@ google-mock:
 libgtest-dev:
     osdep: google-test
 
+ruby-listen:
+    gem: listen
+
