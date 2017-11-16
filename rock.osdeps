@@ -223,6 +223,8 @@ pastel: gem
 rgl: gem
 autorespawn: gem
 timecop: gem
+stackprof: gem
+rbtrace: gem
 
 google-test:
     debian,ubuntu: libgtest-dev
