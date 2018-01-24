@@ -239,3 +239,11 @@ libgtest-dev:
 ruby-listen:
     gem: listen
 
+aruba:
+    gem: aruba
+
+rest-client:
+    gem: rest-client
+
+ruby-backports:
+    gem: backports
