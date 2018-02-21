@@ -82,6 +82,7 @@ version_control:
     - tools/class_loader:
       github: ros/class_loader
       branch: indigo-devel
+      tag: 0.3.8
 
 overrides:
     - ^(orogen|typelib|rtt|utilrb|utilmm|rtt_typelib|tools/metaruby)$:
