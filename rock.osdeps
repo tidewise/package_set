@@ -247,3 +247,7 @@ rest-client:
 
 ruby-backports:
     gem: backports
+
+ruby-xmlrpc:
+   gem: xmlrpc
+
