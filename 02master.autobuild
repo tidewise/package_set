@@ -1,4 +1,6 @@
 in_flavor 'master' do
+    bundle_package 'bundles/common_models'
+
     ruby_package  'tools/telemetry'
     cmake_package 'tools/orogen_metadata' do |pkg|
         Autoproj.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.prefix, 'share', 'orogen', 'plugins')
