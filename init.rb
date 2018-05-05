@@ -41,7 +41,7 @@ configuration_option('ROCK_SELECTED_FLAVOR', 'string',
     :possible_values => ['stable', 'master'],
     :doc => [
         "Which flavor of Rock do you want to use ?",
-        "Use 'stable' to use the a released version of Rock that gets updated with bugfixes", "'master' for the development branch","Released version of Rock use 'stable'. Use rock-release switch to change from release to flavors.", "See http://rock-robotics.org/stable/documentation/installation.html for more information"])
+        "Use 'stable' to use a released version of Rock that gets updated with bugfixes", "'master' for the development branch", "Use rock-release switch to change from release to flavors.", "See http://rock-robotics.org/stable/documentation/installation.html for more information"])
 
 if Rock.in_release? && !Autoproj.config.has_value_for?('ROCK_SELECTED_FLAVOR')
     Autoproj.config.set 'ROCK_SELECTED_FLAVOR', 'stable', true
