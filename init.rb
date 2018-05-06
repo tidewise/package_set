@@ -30,6 +30,7 @@ end
 require File.join(File.dirname(__FILE__), 'rock/flavor_definition')
 require File.join(File.dirname(__FILE__), 'rock/flavor_manager')
 require File.join(File.dirname(__FILE__), 'rock/in_flavor_context')
+require File.join(File.dirname(__FILE__), 'rock/current_release')
 
 Rock.flavors.define 'stable'
 Rock.flavors.alias 'stable', 'next'
@@ -40,8 +41,11 @@ configuration_option('ROCK_SELECTED_FLAVOR', 'string',
     :possible_values => ['stable', 'master'],
     :doc => [
         "Which flavor of Rock do you want to use ?",
-        "Use 'stable' to use the a released version of Rock that gets updated with bugfixes", "'master' for the development branch","If you want to use a released version of rock, choose 'stable' and then call 'rock-release switch' after the initial bootstrap", "See http://rock-robotics.org/stable/documentation/installation.html for more information"])
+        "Use 'stable' to use a released version of Rock that gets updated with bugfixes", "'master' for the development branch", "Use rock-release switch to change from release to flavors.", "See http://rock-robotics.org/stable/documentation/installation.html for more information"])
 
+if Rock.in_release? && !Autoproj.config.has_value_for?('ROCK_SELECTED_FLAVOR')
+    Autoproj.config.set 'ROCK_SELECTED_FLAVOR', 'stable', true
+end
 
 Rock.flavors.select_current_flavor_by_name(
     ENV['ROCK_FORCE_FLAVOR'] || Autoproj.config.get('ROCK_SELECTED_FLAVOR'))
@@ -50,7 +54,7 @@ current_flavor = Rock.flavors.current_flavor
 
 #This check is needed because the overrides file will override the FLAVOR selection.
 #Furthermore a selection != stable can cause a inconsistent layout (cause by in_flavor system in the package_sets)
-if File.exists?(File.join(Autoproj.root_dir, "autoproj", "overrides.d", "25-release.yml")) && current_flavor.branch != "stable" 
+if Rock.in_release? && current_flavor.branch != "stable" 
     if ENV['ROCK_RC'] == '1'
         Autoproj.warn ""
         Autoproj.warn "Found a release file and the flavor is not master"
