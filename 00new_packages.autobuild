@@ -1,6 +1,8 @@
 # IMPORTANT: new packages must be added at the top of this file
 # They must NEVER be added to other files
 
+cmake_package 'gui/osgviz'
+
 cmake_package 'base/logging'
 
 cmake_package 'tools/class_loader' do |pkg|
