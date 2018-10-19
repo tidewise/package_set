@@ -1,6 +1,9 @@
 # IMPORTANT: new packages must be added at the top of this file
 # They must NEVER be added to other files
 
+ruby_package 'tools/apaka'
+remove_from_default 'tools/apaka'
+
 cmake_package 'gui/osgviz'
 
 cmake_package 'base/logging'
