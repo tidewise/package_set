@@ -37,11 +37,13 @@ Rock.flavors.alias 'stable', 'next'
 Rock.flavors.define 'master', :implicit => true
 
 configuration_option('ROCK_SELECTED_FLAVOR', 'string',
-    :default => 'stable',
+    :default => 'master',
     :possible_values => ['stable', 'master'],
     :doc => [
         "Which flavor of Rock do you want to use ?",
-        "Use 'stable' to use a released version of Rock that gets updated with bugfixes", "'master' for the development branch", "Use rock-release switch to change from release to flavors.", "See http://rock-robotics.org/stable/documentation/installation.html for more information"])
+        "Stay with the default ('master') if you want to use Rock on the most recent",
+        "distributions (Ubuntu 16.04 and later). Use 'stable' only for ",
+        "now officially unsupported distributions (Ubuntu 14.04)"])
 
 if Rock.in_release? && !Autoproj.config.has_value_for?('ROCK_SELECTED_FLAVOR')
     Autoproj.config.set 'ROCK_SELECTED_FLAVOR', 'stable', true
