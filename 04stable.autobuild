@@ -44,7 +44,6 @@ in_flavor 'master', 'stable' do
         if package_enabled?('external/sisl')
             pkg.define 'SISL_PREFIX', package('external/sisl').prefix
         end
-        Autobuild.env_add_path 'TYPELIB_RUBY_PLUGIN_PATH', File.join(pkg.prefix, "share", "typelib", "ruby")
 	pkg.define "RUBY_EXECUTABLE", Autoproj.config.ruby_executable
     end
     cmake_package 'base/cmake' do |pkg|
