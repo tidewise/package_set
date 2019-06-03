@@ -266,3 +266,5 @@ python-pexpect:
 python-msgpack:
     debian,ubuntu: python-msgpack
     opensuse: python-msgpack
+
+tty-progressbar: gem
