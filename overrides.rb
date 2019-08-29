@@ -75,9 +75,11 @@ Autoproj.manifest.each_autobuild_package do |pkg|
     end
 
     if pkg.kind_of?(Autobuild::Ruby)
-        if pkg.test_utility.enabled? && pkg.respond_to?(:rake_test_options) # autoproj v2 only
-            pkg.depends_on 'minitest-junit'
-            pkg.rake_test_options << "TESTOPTS=--junit --junit-filename=#{pkg.test_utility.source_dir}/report.junit.xml --junit-jenkins"
+        pkg.post_import do
+            if pkg.test_utility.enabled?
+                pkg.depends_on 'minitest-junit'
+                pkg.rake_test_options << "TESTOPTS=--junit --junit-filename=#{pkg.test_utility.source_dir}/report.junit.xml --junit-jenkins"
+            end
         end
     end
 
@@ -87,15 +89,12 @@ Autoproj.manifest.each_autobuild_package do |pkg|
             if File.directory?(File.join(pkg.srcdir, 'viz'))
                 pkg.env_add_path 'VIZKIT_PLUGIN_RUBY_PATH', File.join(pkg.prefix, 'lib')
             end
-        end
-        pkg.define "ROCK_TEST_ENABLED", pkg.test_utility.enabled?
-        pkg.define "CMAKE_EXPORT_COMPILE_COMMANDS", "ON"
-        pkg.env_add_path 'QT_PLUGIN_PATH', File.join(pkg.prefix, 'lib', 'qt')
-        setup_package(pkg.name) do
+            pkg.define "ROCK_TEST_ENABLED", pkg.test_utility.enabled?
             pkg.define 'ROCK_TEST_LOG_DIR', pkg.test_utility.source_dir
         end
-
+        pkg.define "CMAKE_EXPORT_COMPILE_COMMANDS", "ON"
         pkg.define 'ROCK_USE_CXX11', Autoproj.config.get('cxx11')
+        pkg.env_add_path 'QT_PLUGIN_PATH', File.join(pkg.prefix, 'lib', 'qt')
     end
 end
 
