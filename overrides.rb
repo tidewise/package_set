@@ -90,7 +90,11 @@ Autoproj.manifest.each_autobuild_package do |pkg|
                 pkg.env_add_path 'VIZKIT_PLUGIN_RUBY_PATH', File.join(pkg.prefix, 'lib')
             end
             pkg.define "ROCK_TEST_ENABLED", pkg.test_utility.enabled?
-            pkg.define 'ROCK_TEST_LOG_DIR', pkg.test_utility.source_dir
+            if pkg.test_utility.enabled?
+                pkg.define 'ROCK_TEST_LOG_DIR', pkg.test_utility.source_dir
+                pkg.define 'ROCK_TEST_BOOST_FORMAT',
+                           pkg.ws.config.get('rock_test_boost_format', 'XML')
+            end
         end
         pkg.define "CMAKE_EXPORT_COMPILE_COMMANDS", "ON"
         pkg.define 'ROCK_USE_CXX11', Autoproj.config.get('cxx11')
