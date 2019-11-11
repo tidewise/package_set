@@ -91,6 +91,15 @@ version_control:
 overrides:
     - ^(orogen|typelib|rtt|utilrb|utilmm|rtt_typelib|tools/metaruby)$:
       branch: $ROCK_BRANCH
+
+    # pin rtt commit to before the merge of the last major dataflow refactoring
+    #
+    # This refactoring led to massive deadlocking on a lot of dynamic
+    # disconnection scenarios.
+    #
+    # See https://github.com/orocos-toolchain/rtt/pull/302
+    - rtt:
+      commit: baaea5022bc79f94770a962e2e16cc0cb28cde0b
     - (ocl|log4cpp):
       branch: master
 
