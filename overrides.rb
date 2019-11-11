@@ -93,6 +93,8 @@ Autoproj.manifest.each_autobuild_package do |pkg|
             pkg.define 'ROCK_TEST_LOG_DIR', pkg.test_utility.source_dir
         end
         pkg.define "CMAKE_EXPORT_COMPILE_COMMANDS", "ON"
+        pkg.define 'ROCK_TEST_BOOST_FORMAT',
+                   pkg.ws.config.get('rock_test_boost_format', 'XML')
         pkg.define 'ROCK_USE_CXX11', Autoproj.config.get('cxx11')
         pkg.env_add_path 'QT_PLUGIN_PATH', File.join(pkg.prefix, 'lib', 'qt')
     end
