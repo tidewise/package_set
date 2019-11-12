@@ -267,4 +267,28 @@ python-msgpack:
     debian,ubuntu: python-msgpack
     opensuse: python-msgpack
 
+python3:
+    debian,ubuntu: python3-dev
+    opensuse: python3-devel
+
+python3-pip:
+    debian,ubuntu: python3-pip
+    opensuse: python3-pip
+
+python3-nose:
+    debian,ubuntu: python3-nose
+    opensuse: python3-nose
+
+python3-pexpect:
+    debian,ubuntu: python3-pexpect
+    opensuse: python3-pexpect
+
+python3-msgpack:
+    debian,ubuntu: python3-msgpack
+    opensuse: python3-msgpack
+
+cython3:
+    debian, ubuntu: cython3
+    opensuse: python3-Cython
+
 tty-progressbar: gem
