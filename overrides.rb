@@ -72,6 +72,10 @@ Autoproj.manifest.each_autobuild_package do |pkg|
         if !Autoproj.config.get('USE_OCL')
             pkg.optional_dependencies.delete 'ocl'
         end
+
+        pkg.post_import do
+            pkg.orogen_options << "--test" if pkg.test_utility.enabled?
+        end
     end
 
     if pkg.kind_of?(Autobuild::Ruby)
