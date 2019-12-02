@@ -212,6 +212,7 @@ rb-readline: gem
 
 hooks: gem
 tty: gem
+tty-config: gem
 tty-table: gem
 tty-pager: gem
 tty-platform: gem
