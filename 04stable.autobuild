@@ -28,6 +28,7 @@ in_flavor 'master', 'stable' do
         pkg.depends_on 'cucumber'
         pkg.rake_setup_task = nil
     end
+    remove_from_default 'tools/rubigen'
 
     bundle_package 'bundles/rock'
     cmake_package 'tools/pocolog_cpp'
