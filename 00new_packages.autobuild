@@ -1,6 +1,8 @@
 # IMPORTANT: new packages must be added at the top of this file
 # They must NEVER be added to other files
 
+import_package 'tools/apaka-rock_patches'
+remove_from_default 'tools/apaka-rock_patches'
 ruby_package 'tools/apaka'
 remove_from_default 'tools/apaka'
 
