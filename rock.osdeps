@@ -293,3 +293,30 @@ cython3:
     opensuse: python3-Cython
 
 tty-progressbar: gem
+
+apt-utils:
+    debian,ubuntu: apt-utils
+
+cdbs:
+    debian,ubuntu: cdbs
+
+cmake:
+    debian,ubuntu: cmake
+
+cowbuilder:
+    debian,ubuntu: cowbuilder
+
+curl:
+    debian,ubuntu: curl
+
+debian-archive-keyring:
+    debian,ubuntu: debian-archive-keyring
+
+dh-autoreconf:
+    debian,ubuntu: dh-autoreconf
+
+gem2deb:
+    debian,ubuntu: gem2deb
+
+qemu:
+    debian,ubuntu: [qemu-user-static, qemubuilder]
