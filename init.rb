@@ -27,10 +27,11 @@ if !Autoproj.has_source_handler? 'github'
     Autoproj.gitorious_server_configuration('GITHUB', 'github.com', :http_url => 'https://github.com')
 end
 
-require File.join(File.dirname(__FILE__), 'rock/flavor_definition')
-require File.join(File.dirname(__FILE__), 'rock/flavor_manager')
-require File.join(File.dirname(__FILE__), 'rock/in_flavor_context')
-require File.join(File.dirname(__FILE__), 'rock/current_release')
+require File.join(__dir__, 'rock/flavor_definition')
+require File.join(__dir__, 'rock/flavor_manager')
+require File.join(__dir__, 'rock/in_flavor_context')
+require File.join(__dir__, 'rock/current_release')
+require File.join(__dir__, 'rock/python')
 
 Rock.flavors.define 'stable'
 Rock.flavors.alias 'stable', 'next'
