@@ -170,6 +170,12 @@ module Rock
             return auto_resolve_python(ws: ws, version: version)
         end
     end
+    def self.remove_python_shims(root_dir)
+        shim_path = File.join(root_dir, "install","bin","python")
+        if File.exists?(shim_path)
+            FileUtils.rm shim_path
+        end
+    end
 
     def self.rewrite_python_shims(python_executable, root_dir)
         shim_path = File.join(root_dir, "install","bin")
@@ -200,6 +206,12 @@ module Rock
         [bin, version]
     end
 
+    def self.deactivate_python(ws: Autoproj.workspace)
+        remove_python_shims(ws.root_dir)
+        ws.config.reset('python_executable')
+        ws.config.reset('python_version')
+    end
+
     # Allow to update the PYTHONPATH for package, tries to guess the python
     # binary from Autobuild.programs['python'] and system's default setting
     # @param [Autobuild::Package] pkg
@@ -215,5 +227,27 @@ module Rock
                    File.join(pkg.prefix, "lib",
                              "python#{version}","site-packages")
         [bin, version, path]
+    end
+
+    def self.setup_python_configuration_options(ws: Autoproj.workspace)
+        ws.config.declare 'USE_PYTHON', 'boolean',
+            default: 'no',
+            doc: [ "Do you want to activate python?" ]
+
+        value = ws.config.get('USE_PYTHON')
+        if value && !Autoproj::BuildOption::FALSE_STRINGS.include?(value)
+            if !ws.config.has_value_for?('python_executable')
+                remove_python_shims(ws.root_dir)
+                python_bin,_ = auto_resolve_python(ws: ws)
+            end
+
+            ws.config.declare 'python_executable', 'string',
+                default: "#{python_bin}",
+                doc: [ "Select the path to the python executable" ]
+
+            activate_python(ws: ws)
+        else
+            deactivate_python(ws: ws)
+        end
     end
 end
