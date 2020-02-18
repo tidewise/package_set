@@ -149,3 +149,4 @@ if Autobuild.macos?
     Autobuild::Orogen.transports.delete("mqueue")
 end
 
+Rock.setup_python_configuration_options()

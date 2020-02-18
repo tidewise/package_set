@@ -115,5 +115,26 @@ module Rock
             python_version = Rock.get_python_version(python_bin)
             assert(python_version == @ws.config.get('python_version'))
         end
+
+        it "does setup python" do
+            @ws.config.reset
+            @ws.config.set('interactive',false)
+            @ws.config.set('USE_PYTHON',true)
+            Rock.setup_python_configuration_options(ws: @ws)
+            assert(@ws.config.get('USE_PYTHON'))
+            assert(@ws.config.get('python_executable'))
+            assert(@ws.config.get('python_version'))
+
+            @ws.config.reset
+            @ws.config.set('interactive',false)
+            Rock.setup_python_configuration_options(ws: @ws)
+            if Autoproj::VERSION > '2.11.0'
+                assert(!@ws.config.get('USE_PYTHON'))
+            else
+                assert(@ws.config.get('USE_PYTHON') == 'no')
+            end
+            assert(!@ws.config.has_value_for?('python_executable'))
+            assert(!@ws.config.has_value_for?('python_version'))
+        end
     end
 end
