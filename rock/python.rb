@@ -199,8 +199,8 @@ module Rock
                              bin: nil,
                              version: nil)
         bin, version = resolve_python(ws: ws, bin: bin, version: version)
-        ws.config.set('python_executable', bin)
-        ws.config.set('python_version', version)
+        ws.config.set('python_executable', bin, true)
+        ws.config.set('python_version', version, true)
 
         rewrite_python_shims(bin, ws.root_dir)
         [bin, version]
