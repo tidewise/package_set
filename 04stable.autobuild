@@ -12,13 +12,13 @@ in_flavor 'master', 'stable' do
         if manifest.package_enabled?('rtt', false) # the toolchain is built, add it to the rtt_target
             pkg.define "OROCOS_TARGET", Autoproj.config.get('rtt_target')
         end
-        Autoproj.env_add_path 'OSG_FILE_PATH', File.join(pkg.prefix, "share", "vizkit" )
+        pkg.env_add_path 'OSG_FILE_PATH', File.join(pkg.prefix, "share", "vizkit" )
 
         # Add our prefix to the VIZKIT_PLUGIN_RUBY_PATH. Relevant packages will have
         # to list the place where they install themselves
         # TODO the path should be renamed to VIZKIT3D_PLUGIN_PATH
-        Autoproj.env_add_path 'VIZKIT_PLUGIN_RUBY_PATH', File.join(pkg.prefix, 'lib')
-        Autoproj.env_add_path 'VIZKIT_PLUGIN_RUBY_PATH', File.join(pkg.prefix, 'lib', 'vizkit')
+        pkg.env_add_path 'VIZKIT_PLUGIN_RUBY_PATH', File.join(pkg.prefix, 'lib')
+        pkg.env_add_path 'VIZKIT_PLUGIN_RUBY_PATH', File.join(pkg.prefix, 'lib', 'vizkit')
     end
 
     cmake_package 'base/console_bridge'
@@ -48,7 +48,7 @@ in_flavor 'master', 'stable' do
 	pkg.define "RUBY_EXECUTABLE", Autoproj.config.ruby_executable
     end
     cmake_package 'base/cmake' do |pkg|
-        Autobuild.env_add_path 'CMAKE_PREFIX_PATH', pkg.prefix
+        pkg.env_add_path 'CMAKE_PREFIX_PATH', pkg.prefix
     end
     import_package 'base/templates/ruby_lib'
     ruby_package 'base/admin_scripts'
@@ -158,7 +158,7 @@ in_flavor 'master', 'stable' do
         if package_selected?('external/sisl')
             pkg.define "SISL_PREFIX", package('external/sisl').prefix
         end
-        Autoproj.env_set 'ROCK_PREFIX', File.join(pkg.prefix,'share','rock')
+        pkg.env_set 'ROCK_PREFIX', File.join(pkg.prefix,'share','rock')
 
         pkg.remove_obsolete_installed_file "share", "typelib", "ruby", "base.rb"
     end
@@ -170,19 +170,19 @@ in_flavor 'master', 'stable' do
     ruby_package  'tools/log_tools' 
 
     cmake_package 'drivers/aggregator' do |pkg|
-        Autoproj.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.prefix, "share", "orogen", "plugins" )
+        pkg.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.prefix, "share", "orogen", "plugins" )
     end
     cmake_package 'drivers/transformer' do |pkg|
         ## Keep this around as long as the refactored transformer is not in
         ## stable
-        Autoproj.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.prefix, "share", "orogen", "plugins" )
-        Autoproj.env_add_path 'RUBYLIB', File.join(pkg.srcdir, "ruby", "lib")
+        pkg.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.prefix, "share", "orogen", "plugins" )
+        pkg.env_add_path 'RUBYLIB', File.join(pkg.srcdir, "ruby", "lib")
     end
     orogen_package 'drivers/orogen/aggregator' do |pkg|
-        Autoproj.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.prefix, "share", "orogen", "plugins" )
+        pkg.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.prefix, "share", "orogen", "plugins" )
     end
     orogen_package 'drivers/orogen/transformer' do |pkg|
-        Autoproj.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.prefix, "share", "orogen", "plugins" )
+        pkg.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.prefix, "share", "orogen", "plugins" )
     end
 
     cmake_package 'perception/jpeg_conversion' do |pkg|
@@ -200,7 +200,7 @@ in_flavor 'master', 'stable' do
 
     ##### Graphical User Interface related packages 
     cmake_package 'gui/rock_widget_collection' do |pkg|
-        Autoproj.env_add_path 'QT_PLUGIN_PATH', File.join(pkg.prefix, "lib", "qt")
+        pkg.env_add_path 'QT_PLUGIN_PATH', File.join(pkg.prefix, "lib", "qt")
     end
 
     ##### Base implementation for data acquisition
