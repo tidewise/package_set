@@ -60,7 +60,12 @@ in_flavor 'master', 'stable' do
     cmake_package 'base/numeric'
 
     ruby_package 'base/scripts' do |pkg|
-        Autobuild.env_add_path 'ROBY_PLUGIN_PATH', File.join(pkg.srcdir, 'lib', 'rock', 'roby_plugin.rb')
+        if Autoproj.config.get('syskit_use_bundles')
+            Autoproj.env_add_path(
+                'ROBY_PLUGIN_PATH',
+                File.join(pkg.srcdir, 'lib', 'rock', 'roby_plugin.rb')
+            )
+        end
     end
 
     import_package 'base/templates/cmake_lib' do |pkg|
@@ -125,6 +130,8 @@ in_flavor 'master', 'stable' do
     orogen_package 'base/orogen/std'
 
     ruby_package 'tools/syskit' do |pkg|
+        pkg.env_set 'SYSKIT_USE_ROCK_BUNDLES',
+                    (Autoproj.config.get('syskit_use_bundles') ? '1' : '0')
         pkg.env_add_path(
             'ROBY_PLUGIN_PATH',
             File.join(pkg.srcdir, 'lib', 'syskit', 'roby_app', 'register_plugin.rb')
