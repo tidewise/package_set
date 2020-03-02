@@ -149,4 +149,18 @@ if Autobuild.macos?
     Autobuild::Orogen.transports.delete("mqueue")
 end
 
-Rock.setup_python_configuration_options()
+Rock.setup_python_configuration_options
+
+Autoproj.config.declare 'syskit_use_bundles', 'boolean',
+    default: true,
+    short_doc: 'whether Syskit systems should load Rock\'s bundle plugin',
+    doc: ['Whether Syskit bundles should be loading the Rock bundle system',
+          'The Rock bundle system may be loaded in Syskit, to apply the ROCK_BUNDLE_*',
+          'environment variables to the Syskit apps. This is fragile, we recommend',
+          'setting it to OFF and explicitely using Syskit\'s Roby.app.register_app',
+          'mechanism. It is ON by default for backward compatibility reasons']
+
+unless Autoproj.config.has_value_for?('syskit_use_bundles')
+    Autoproj.config.set 'syskit_use_bundles', true, true
+end
+

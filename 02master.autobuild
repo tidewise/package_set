@@ -3,7 +3,7 @@ in_flavor 'master' do
 
     ruby_package  'tools/telemetry'
     cmake_package 'tools/orogen_metadata' do |pkg|
-        Autoproj.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.prefix, 'share', 'orogen', 'plugins')
+        pkg.env_add_path 'OROGEN_PLUGIN_PATH', File.join(pkg.prefix, 'share', 'orogen', 'plugins')
         pkg.remove_obsolete_installed_file('share', 'orogen', 'plugins', 'metadata_plugin.rb')
         pkg.remove_obsolete_installed_file('share', 'typelib', 'ruby', 'metadata_typelib.rb')
     end
@@ -11,9 +11,9 @@ in_flavor 'master' do
     ruby_package 'tools/oropy_bridge' do |pkg|
         def pkg.update_environment
             super
-            Autoproj.env_add_path 'PYTHONPATH', File.join(srcdir, 'python')
-            Autoproj.env_add_path 'RUBYLIB', File.join(srcdir, 'ruby', 'lib')
-            Autoproj.env_add_path 'PATH', File.join(srcdir, 'bin')
+            env_add_path 'PYTHONPATH', File.join(srcdir, 'python')
+            env_add_path 'RUBYLIB', File.join(srcdir, 'ruby', 'lib')
+            env_add_path 'PATH', File.join(srcdir, 'bin')
         end
 
         pkg.post_import do
