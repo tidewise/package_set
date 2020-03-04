@@ -101,7 +101,6 @@ Autoproj.manifest.each_autobuild_package do |pkg|
             end
         end
         pkg.define "CMAKE_EXPORT_COMPILE_COMMANDS", "ON"
-        pkg.define 'ROCK_USE_CXX11', Autoproj.config.get('cxx11')
         pkg.env_add_path 'QT_PLUGIN_PATH', File.join(pkg.prefix, 'lib', 'qt')
     end
 end

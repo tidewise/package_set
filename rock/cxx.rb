@@ -2,12 +2,12 @@ module Rock
     def self.default_loader_is_castxml?(os_package_resolver)
         if defined? Autoproj::OSPackageResolver
             resolver = Autoproj::OSPackageResolver.load(
-                File.join(__dir__, 'cxx11.defaults'),
+                File.join(__dir__, 'cxx.defaults'),
                 operating_system: os_package_resolver.operating_system,
                 package_managers: os_package_resolver.package_managers,
                 os_package_manager: os_package_resolver.os_package_manager)
         else
-            resolver = Autoproj::OSDependencies.load(File.join(__dir__, 'cxx11.defaults'))
+            resolver = Autoproj::OSDependencies.load(File.join(__dir__, 'cxx.defaults'))
         end
 
         resolver.has?('default_castxml')
@@ -18,12 +18,7 @@ module Rock
     #
     # But then, set it to true on OSes where it should. This is controlled by
     # stub osdep entries in defaults.osdeps
-    def self.setup_cxx11_support(os_package_resolver, config)
-        config.declare 'cxx11', 'boolean',
-            default: 'no',
-            doc: "whether C++11 should be enabled for Rock packages"
-        config.get('cxx11')
-
+    def self.setup_cxx_support(os_package_resolver, config)
         if !config.has_value_for?('typelib_cxx_loader')
             if default_loader_is_castxml?(os_package_resolver)
                 config.set 'typelib_cxx_loader', 'castxml'
