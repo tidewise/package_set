@@ -1,6 +1,7 @@
 require 'test_helpers'
 require 'rock/python'
 require 'autoproj/test'
+require 'flexmock'
 
 module Rock
     describe "activate_python" do
@@ -9,6 +10,7 @@ module Rock
             @ws = ws_create
             flexmock(@pkg)
             @pkg.prefix = "/tmp/install/foo/"
+            @env = flexmock(base: Autobuild::Environment)
 
             @test_python = File.join(Dir.tmpdir(), "test-python")
             if !File.exist?(@test_python)
@@ -85,11 +87,18 @@ module Rock
             assert($? == 0, "This test requires python to be available on your"\
                    " system, so please install before running this test")
 
+            @ws.config.set("USE_PYTHON",true)
             Rock.activate_python_path(@pkg, ws: @ws)
 
             found_path = false
             path_pattern = File.join(@pkg.prefix,"lib","python.*","site-packages")
-            @ws.env.environment["PYTHONPATH"].each do |p|
+
+            @env.should_receive(:add_path)
+            op = @pkg.apply_env(@env).first
+
+            assert(op.type == :add_path)
+            assert(op.name == "PYTHONPATH")
+            op.values.each do |p|
                 if p =~ /#{path_pattern}/
                     found_path = true
                 end
@@ -103,6 +112,21 @@ module Rock
             Autobuild.programs["python"] = "no-existing-executable"
             assert_raises { Rock.activate_python_path(@pkg, ws: @ws, version: ">100.0") }
             Autobuild.programs["python"] = nil
+        end
+
+        it "does not update python path" do
+            @ws.config.reset
+            @ws.config.set('interactive',false)
+            @ws.config.set('USE_PYTHON',false)
+
+            pkg = flexmock('testpkg')
+            prefix = File.join(@ws.root_dir,"install","testpkg")
+            pkg.should_receive(:prefix).and_return(prefix)
+            assert(!@ws.config.has_value_for?('python_executable'))
+            assert(!@ws.config.has_value_for?('python_version'))
+
+            bin,version,path = Rock.activate_python_path(pkg)
+            assert(!(bin || version || path))
         end
 
         it "does activate_python" do

@@ -2,7 +2,8 @@ require 'open3'
 require 'rubygems'
 # Usage:
 # In init.rb
-#      Rock.activate_python()
+#      Rock.setup_python_configuration_options()
+# Note, that the setup is done in / part of the rock-core package set
 #
 # In lib.autobuild
 #      cmake_package 'tools/yourpackage' do |pkg|
@@ -73,7 +74,7 @@ module Rock
 
         finders.each do |finder|
             python_bin = finder.call
-            if python_bin
+            if python_bin && !python_bin.empty?
                 python_version, valid = validate_python_version(python_bin, version)
                 if valid
                     return python_bin, python_version
@@ -88,23 +89,22 @@ module Rock
     # but ensure the version constraint matches
     #
     # @return [String, String] Return path and version if the constraints
-    #      are fulfilled [nil,nil] otherwise
+    #      are fulfilled nil otherwise
 
     def self.get_python_from_config(ws: Autoproj.workspace, version: nil)
         config_bin = ws.config.get('python_executable', nil)
-        if config_bin
-            config_version = ws.config.get('python_version', nil)
-            config_version ||= get_python_version(config_bin)
+        return unless config_bin
 
-            # If a version constraint is given, ensure fulfillment
-            if validate_version(config_version, version)
-                return config_bin, config_version
-            else
-                raise RuntimeError, "python_executable in autoproj config with version '#{config_version}'"\
-                    " does not match version constraints '#{version}'"
-            end
+        config_version = ws.config.get('python_version', nil)
+        config_version ||= get_python_version(config_bin)
+
+        # If a version constraint is given, ensure fulfillment
+        if validate_version(config_version, version)
+            return config_bin, config_version
+        else
+            raise RuntimeError, "python_executable in autoproj config with version '#{config_version}'"\
+                " does not match version constraints '#{version}'"
         end
-        [nil, nil]
     end
 
     def self.custom_resolve_python(ws: Autoproj.workspace,
@@ -212,18 +212,24 @@ module Rock
         ws.config.reset('python_version')
     end
 
-    # Allow to update the PYTHONPATH for package, tries to guess the python
-    # binary from Autobuild.programs['python'] and system's default setting
+    # Allow to update the PYTHONPATH for package if autoproj configuration
+    # USE_PYTHON is set to true.
+    # Then tries to guess the python binary from Autobuild.programs['python']
+    # and system's default setting
     # @param [Autobuild::Package] pkg
     # @param [Autoproj.workspace] ws Autoproj workspace
     # @param [String] bin Path to a custom python version
     # @param [String] version version constraint for python executable
+    # @return tuple of [executable, version, site-packages path] if set,
+    #    otherwise nil
     def self.activate_python_path(pkg,
                              ws: Autoproj.workspace,
                              bin: nil,
                              version: nil)
+        return unless ws.config.get('USE_PYTHON',nil)
+
         bin, version = resolve_python(ws: ws, bin: bin, version: version)
-        path = ws.env.add_path 'PYTHONPATH',
+        path = pkg.env_add_path 'PYTHONPATH',
                    File.join(pkg.prefix, "lib",
                              "python#{version}","site-packages")
         [bin, version, path]
@@ -234,8 +240,7 @@ module Rock
             default: 'no',
             doc: [ "Do you want to activate python?" ]
 
-        value = ws.config.get('USE_PYTHON')
-        if value && !Autoproj::BuildOption::FALSE_STRINGS.include?(value)
+        if ws.config.get("USE_PYTHON")
             if !ws.config.has_value_for?('python_executable')
                 remove_python_shims(ws.root_dir)
                 python_bin,_ = auto_resolve_python(ws: ws)
