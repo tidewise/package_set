@@ -82,7 +82,9 @@ Autoproj.manifest.each_autobuild_package do |pkg|
         pkg.post_import do
             if pkg.test_utility.enabled?
                 pkg.depends_on 'minitest-junit'
-                pkg.rake_test_options << "TESTOPTS=--junit --junit-filename=#{pkg.test_utility.source_dir}/report.junit.xml --junit-jenkins"
+                pkg.rake_test_options <<
+                    "TESTOPTS=--junit --junit-jenkins "\
+                    "--junit-filename=#{pkg.test_utility.source_dir}/report.junit.xml"
             end
         end
     end
@@ -90,17 +92,31 @@ Autoproj.manifest.each_autobuild_package do |pkg|
     if pkg.kind_of?(Autobuild::CMake)
         pkg.post_import do
             Rock.update_cmake_build_type_from_tags(pkg)
+
+            # Augment autoproj's autodetection of test tasks to handle
+            # bindings/ruby
+            unless pkg.test_utility.source_dir
+                ruby_test_dir = File.join(pkg.srcdir, 'bindings', 'ruby', 'test')
+                if File.directory?(ruby_test_dir)
+                    pkg.test_utility.source_dir =
+                        File.join(pkg.builddir, 'test', 'results')
+                    FileUtils.mkdir_p File.join(pkg.builddir, 'test', 'results')
+                    pkg.with_tests
+                    pkg.depends_on 'minitest-junit'
+                end
+            end
+
             if File.directory?(File.join(pkg.srcdir, 'viz'))
                 pkg.env_add_path 'VIZKIT_PLUGIN_RUBY_PATH', File.join(pkg.prefix, 'lib')
             end
-            pkg.define "ROCK_TEST_ENABLED", pkg.test_utility.enabled?
+            pkg.define 'ROCK_TEST_ENABLED', pkg.test_utility.enabled?
             if pkg.test_utility.enabled?
                 pkg.define 'ROCK_TEST_LOG_DIR', pkg.test_utility.source_dir
                 pkg.define 'ROCK_TEST_BOOST_FORMAT',
                            pkg.ws.config.get('rock_test_boost_format', 'XML')
             end
         end
-        pkg.define "CMAKE_EXPORT_COMPILE_COMMANDS", "ON"
+        pkg.define 'CMAKE_EXPORT_COMPILE_COMMANDS', 'ON'
         pkg.env_add_path 'QT_PLUGIN_PATH', File.join(pkg.prefix, 'lib', 'qt')
     end
 end
@@ -111,6 +127,6 @@ end
 only_on 'debian' do
     setup_package 'typelib' do |pkg|
         pkg.define "GLIBC_HAVE_LONG_LONG", 1
-    end  
+    end
 end
 
