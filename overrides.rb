@@ -102,7 +102,6 @@ Autoproj.manifest.each_autobuild_package do |pkg|
                         File.join(pkg.builddir, 'test', 'results')
                     FileUtils.mkdir_p File.join(pkg.builddir, 'test', 'results')
                     pkg.with_tests
-                    pkg.depends_on 'minitest-junit'
                 end
             end
 
@@ -111,6 +110,7 @@ Autoproj.manifest.each_autobuild_package do |pkg|
             end
             pkg.define 'ROCK_TEST_ENABLED', pkg.test_utility.enabled?
             if pkg.test_utility.enabled?
+                pkg.depends_on 'minitest-junit'
                 pkg.define 'ROCK_TEST_LOG_DIR', pkg.test_utility.source_dir
                 pkg.define 'ROCK_TEST_BOOST_FORMAT',
                            pkg.ws.config.get('rock_test_boost_format', 'XML')
