@@ -320,3 +320,6 @@ gem2deb:
 
 qemu:
     debian,ubuntu: [qemu-user-static, qemubuilder]
+
+rubocop: gem
+rubocop-rock: gem
