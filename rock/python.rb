@@ -229,9 +229,10 @@ module Rock
         return unless ws.config.get('USE_PYTHON',nil)
 
         bin, version = resolve_python(ws: ws, bin: bin, version: version)
-        path = pkg.env_add_path 'PYTHONPATH',
-                   File.join(pkg.prefix, "lib",
+        path = File.join(pkg.prefix, "lib",
                              "python#{version}","site-packages")
+        pkg.env_add_path 'PYTHONPATH', path
+
         [bin, version, path]
     end
 
