@@ -83,12 +83,16 @@ module Rock
         end
 
         it "does update the python path" do
-            python_bin = `which python`
+            python_bin = `which python`.strip()
             assert($? == 0, "This test requires python to be available on your"\
                    " system, so please install before running this test")
 
             @ws.config.set("USE_PYTHON",true)
-            Rock.activate_python_path(@pkg, ws: @ws)
+            bin, version, sitelib_path = Rock.activate_python_path(@pkg, ws: @ws)
+
+            assert(python_bin == bin)
+            assert(version == Rock.get_python_version(python_bin))
+            assert(sitelib_path == File.join(@pkg.prefix, "lib","python#{version}","site-packages"))
 
             found_path = false
             path_pattern = File.join(@pkg.prefix,"lib","python.*","site-packages")
