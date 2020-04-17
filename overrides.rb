@@ -81,10 +81,12 @@ Autoproj.manifest.each_autobuild_package do |pkg|
     if pkg.kind_of?(Autobuild::Ruby)
         pkg.post_import do
             if pkg.test_utility.enabled?
-                pkg.depends_on 'minitest-junit'
-                pkg.rake_test_options <<
+                pkg.depends_on "minitest-junit"
+                pkg.rake_test_options.concat([
                     "TESTOPTS=--junit --junit-jenkins "\
-                    "--junit-filename=#{pkg.test_utility.source_dir}/report.junit.xml"
+                    "--junit-filename=#{pkg.test_utility.source_dir}/report.junit.xml",
+                    "RUBOCOP=1", "JUNIT=1", "REPORT_DIR=#{pkg.test_utility.source_dir}"
+                ])
             end
         end
     end
