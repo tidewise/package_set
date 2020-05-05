@@ -99,7 +99,7 @@ overrides:
     #
     # See https://github.com/orocos-toolchain/rtt/pull/302
     - rtt:
-      commit: baaea5022bc79f94770a962e2e16cc0cb28cde0b
+      github: rock-core/rtt
     - (ocl|log4cpp):
       branch: master
 
