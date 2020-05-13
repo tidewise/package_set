@@ -265,7 +265,9 @@ python-pexpect:
     opensuse: python-pexpect
 
 python-msgpack:
-    debian,ubuntu: python-msgpack
+    debian,ubuntu:
+        "16.04,18.04,18.10,19.04,19.10": python-msgpack
+        default: nonexistent
     opensuse: python-msgpack
 
 python3:
