@@ -98,10 +98,11 @@ in_flavor 'master', 'stable' do
                 else Autoproj.shell_helpers?
                 end
 
-            if shell_helpers && shell = ENV['SHELL']
-                if shell.nil?
-                    Autoproj.warn("SHELL Variable not set, using fallback detection")
-                    shell ||= %x[ps -p $$ -ocomm= | tr -d '\n']
+            unless shell = ENV['SHELL']
+                Autoproj.warn("SHELL Variable not set, using fallback detection")
+                shell ||= %x[ps -p $$ -ocomm= | tr -d '\n']
+            end
+            if shell_helpers
                 shell_kind = File.basename(shell)
                 if shell_kind =~ /^\w+$/
                     shell_file = File.join(pkg.srcdir, "shell", shell_kind)
