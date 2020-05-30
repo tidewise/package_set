@@ -321,5 +321,7 @@ gem2deb:
 qemu:
     debian,ubuntu: [qemu-user-static, qemubuilder]
 
-rubocop: gem
+rubocop:
+    gem:
+        - rubocop=0.83.0
 rubocop-rock: gem
