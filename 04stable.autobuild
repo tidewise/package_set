@@ -98,11 +98,7 @@ in_flavor 'master', 'stable' do
                 else Autoproj.shell_helpers?
                 end
 
-            unless shell = ENV['SHELL']
-                Autoproj.warn("SHELL Variable not set, using fallback detection")
-                shell ||= %x[ps -p $$ -ocomm= | xargs which].strip
-            end
-            if shell_helpers
+            if shell_helpers && shell=ENV['SHELL']
                 shell_kind = File.basename(shell)
                 if shell_kind =~ /^\w+$/
                     shell_file = File.join(pkg.srcdir, "shell", shell_kind)
@@ -119,6 +115,8 @@ in_flavor 'master', 'stable' do
                         end
                     end
                 end
+            elsif shell.nil?
+                Autoproj.error("Unable to detect shell type. Please set the SHELL environment variable.")
             end
         end
     end
