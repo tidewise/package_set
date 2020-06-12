@@ -98,7 +98,7 @@ in_flavor 'master', 'stable' do
                 else Autoproj.shell_helpers?
                 end
 
-            if shell_helpers && shell = ENV['SHELL']
+            if shell_helpers && (shell = ENV['SHELL'])
                 shell_kind = File.basename(shell)
                 if shell_kind =~ /^\w+$/
                     shell_file = File.join(pkg.srcdir, "shell", shell_kind)
@@ -115,6 +115,8 @@ in_flavor 'master', 'stable' do
                         end
                     end
                 end
+            elsif shell.nil?
+                Autoproj.error("Unable to detect shell type. Please set the SHELL environment variable or disable \nshell helpers altogether by setting the shell_helpers configuration variable to false.")
             end
         end
     end
