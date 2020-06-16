@@ -290,6 +290,14 @@ python3-msgpack:
     debian,ubuntu: python3-msgpack
     opensuse: python3-msgpack
 
+python3-distutils:
+    debian,ubuntu: python3-distutils
+    opensuse: python3-distutils-extra
+
+python3-setuptools:
+    debian,ubuntu: python3-setuptools
+    opensuse: python3-setuptools
+
 cython3:
     debian, ubuntu: cython3
     opensuse: python3-Cython
