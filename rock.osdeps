@@ -192,7 +192,7 @@ thor:
 qtruby:
     default:
         gem: qtbindings
-        osdep: [qt4, qt4-opengl, qt-designer, qt4-webkit, ruby-dev]
+        osdep: [qt4, qt4-opengl, qt-designer, qt4-webkit, ruby-dev, cmake]
     gentoo:
         kde-base/kdebindings-ruby
 
