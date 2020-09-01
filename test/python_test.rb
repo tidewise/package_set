@@ -142,6 +142,12 @@ module Rock
             assert(File.exist?(python_bin))
             python_version = Rock.get_python_version(python_bin)
             assert(python_version == @ws.config.get('python_version'))
+
+            pip_bin = File.join(@ws.root_dir, "install","bin","pip")
+            assert(File.exist?(pip_bin))
+            pip_version = Rock.get_pip_version(pip_bin)
+            expected_pip_version = `#{python_bin} -c "import pip; print(pip.__version__)"`.strip
+            assert(pip_version == expected_pip_version)
         end
 
         it "does setup python" do

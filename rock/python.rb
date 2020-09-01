@@ -43,6 +43,24 @@ module Rock
         end
     end
 
+    def self.get_pip_version(pip_bin)
+        if !File.exist?(pip_bin)
+            raise ArgumentError, "Rock.get_pip_version executable "\
+                        "'#{pip_bin}' does not exist"
+        end
+
+        cmd = "#{pip_bin} --version"
+
+        msg, status = Open3.capture2e(cmd)
+        if status.success?
+            pip_version = msg.split(" ")[1]
+            return pip_version
+        else
+            raise RuntimeError, "Rock.get_pip_version identification"\
+                " of pip version for '#{pip_bin}' failed: #{msg}"
+        end
+    end
+
     def self.validate_version(version, version_constraint)
         if !version_constraint
             return true
@@ -193,6 +211,22 @@ module Rock
         FileUtils.chmod 0755, File.join(shim_path, 'python')
     end
 
+    def self.rewrite_pip_shims(python_executable, root_dir)
+        shim_path = File.join(root_dir, "install","bin")
+        if !File.exist?(shim_path)
+            FileUtils.mkdir_p shim_path
+            Autoproj.warn "Rock.rewrite_pip_shims: creating "\
+                "#{shim_path} - "\
+                "are you operating on a valid autoproj workspace?"
+        end
+
+        File.open(File.join(shim_path, 'pip'), 'w') do |io|
+            io.puts "#! /bin/sh"
+            io.puts "exec #{python_executable} -m pip \"$@\""
+        end
+        FileUtils.chmod 0755, File.join(shim_path, 'pip')
+    end
+
     # Activate configuration for python in the autoproj configuration
     # @return [String,String] python path and python version
     def self.activate_python(ws: Autoproj.workspace,
@@ -203,6 +237,7 @@ module Rock
         ws.config.set('python_version', version, true)
 
         rewrite_python_shims(bin, ws.root_dir)
+        rewrite_pip_shims(bin, ws.root_dir)
         [bin, version]
     end
 
