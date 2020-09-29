@@ -1,0 +1,14 @@
+diff --color -urN ../class_loader/src/class_loader.pc.in ./src/class_loader.pc.in
+--- ../class_loader/src/class_loader.pc.in	2020-09-29 14:49:35.494450037 +0200
++++ ./src/class_loader.pc.in	2020-09-29 14:48:23.101899458 +0200
+@@ -4,9 +4,9 @@
+ includedir=${prefix}/include
+
+ Name: @TARGET_NAME@
+-Description: @PROJECT_DESCRIPTION@
++Description: "Package for loading plugins at runtime"
+ Version: @PROJECT_VERSION@
+-Requires: @PKGCONFIG_REQUIRES@
++Requires: console_bridge @PKGCONFIG_REQUIRES@
+ Libs: -L${libdir} -l@TARGET_NAME@ @PKGCONFIG_LIBS@
+ Cflags: -I${includedir} @PKGCONFIG_CFLAGS@

@@ -83,6 +83,8 @@ version_control:
       github: ros/class_loader
       branch: indigo-devel
       tag: 0.3.8
+      patches:
+          - $AUTOPROJ_SOURCE_DIR/patches/class_loader_pkgconfig.patch
 
     - tools/msgpack-c:
       github: msgpack/msgpack-c
