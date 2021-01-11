@@ -1,0 +1,64 @@
+python:
+    debian,ubuntu: python3-dev
+    opensuse: python3-devel
+
+python-pip:
+    debian,ubuntu: python3-pip
+    opensuse: python3-pip
+
+python-nose:
+    debian,ubuntu: python3-nose
+    opensuse: python3-nose
+
+python-pexpect:
+    debian,ubuntu: python3-pexpect
+    opensuse: python3-pexpect
+
+python-msgpack:
+    debian,ubuntu: python3-msgpack
+    opensuse: python3-msgpack
+
+python-distutils:
+    debian,ubuntu: python3-distutils
+    opensuse: python3-distutils-extra
+
+python-setuptools:
+    debian,ubuntu: python3-setuptools
+    opensuse: python3-setuptools
+
+cython:
+    debian, ubuntu: cython3
+    opensuse: python3-Cython
+
+python3:
+    debian,ubuntu: python3-dev
+    opensuse: python3-devel
+
+python3-pip:
+    debian,ubuntu: python3-pip
+    opensuse: python3-pip
+
+python3-nose:
+    debian,ubuntu: python3-nose
+    opensuse: python3-nose
+
+python3-pexpect:
+    debian,ubuntu: python3-pexpect
+    opensuse: python3-pexpect
+
+python3-msgpack:
+    debian,ubuntu: python3-msgpack
+    opensuse: python3-msgpack
+
+python3-distutils:
+    debian,ubuntu: python3-distutils
+    opensuse: python3-distutils-extra
+
+python3-setuptools:
+    debian,ubuntu: python3-setuptools
+    opensuse: python3-setuptools
+
+cython3:
+    debian, ubuntu: cython3
+    opensuse: python3-Cython
+
