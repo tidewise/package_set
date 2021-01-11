@@ -255,56 +255,6 @@ ruby-backports:
 ruby-xmlrpc:
    gem: xmlrpc
 
-python:
-    debian,ubuntu: python-dev
-    opensuse: python-devel
-
-python-nose:
-    debian,ubuntu: python-nose
-    opensuse: python-nose
-
-python-pexpect:
-    debian,ubuntu: python-pexpect
-    opensuse: python-pexpect
-
-python-msgpack:
-    debian,ubuntu:
-        "16.04,18.04,18.10,19.04,19.10": python-msgpack
-        default: nonexistent
-    opensuse: python-msgpack
-
-python3:
-    debian,ubuntu: python3-dev
-    opensuse: python3-devel
-
-python3-pip:
-    debian,ubuntu: python3-pip
-    opensuse: python3-pip
-
-python3-nose:
-    debian,ubuntu: python3-nose
-    opensuse: python3-nose
-
-python3-pexpect:
-    debian,ubuntu: python3-pexpect
-    opensuse: python3-pexpect
-
-python3-msgpack:
-    debian,ubuntu: python3-msgpack
-    opensuse: python3-msgpack
-
-python3-distutils:
-    debian,ubuntu: python3-distutils
-    opensuse: python3-distutils-extra
-
-python3-setuptools:
-    debian,ubuntu: python3-setuptools
-    opensuse: python3-setuptools
-
-cython3:
-    debian, ubuntu: cython3
-    opensuse: python3-Cython
-
 tty-progressbar: gem
 
 apt-utils:
