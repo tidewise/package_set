@@ -87,6 +87,7 @@ module Rock
                          version: ws.config.get('python_version',nil))
         finders = [
             lambda { Autobuild.programs['python'] },
+            lambda { `which python3`.strip() },
             lambda { `which python`.strip() }
         ]
 
