@@ -338,4 +338,6 @@ rubocop:
     gem:
         - rubocop=0.83.0
 rubocop-rock: gem
-ruby2_keywords: gem
+ruby2_keywords:
+    gem:
+        - ruby2_keywords=0.0.2
