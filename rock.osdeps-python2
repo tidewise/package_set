@@ -1,3 +1,7 @@
+cython:
+    debian, ubuntu: cython
+    opensuse: python-Cython
+
 python:
     debian,ubuntu: python-dev
     opensuse: python-devel
