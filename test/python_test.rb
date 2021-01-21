@@ -54,6 +54,12 @@ module Rock
             python_bin, version = Rock.find_python(ws: @ws, version: "<100.0" )
             assert(File.exist?(python_bin))
             assert(version =~ /[0-9]+\.[0-9]+/)
+
+            # Python3 has higher priority, so should be picked
+            python_path = `which python3`.strip()
+            if File.exists?(python_path)
+                assert(version =~ /3.[0-9]+/)
+            end
         end
 
         it "custom resolve python" do
