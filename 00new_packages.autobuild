@@ -6,6 +6,9 @@ remove_from_default 'tools/apaka-rock_patches'
 ruby_package 'tools/apaka'
 remove_from_default 'tools/apaka'
 
+orogen_package "tools/orogen_syskit_tests"
+remove_from_default "tools/orogen_syskit_tests"
+
 cmake_package 'tools/msgpack-c' do |pkg|
     pkg.define "MSGPACK_BUILD_TESTS", pkg.test_utility.enabled?
 end
